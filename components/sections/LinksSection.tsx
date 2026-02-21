@@ -28,7 +28,7 @@ export default function LinksSection() {
 
       <div className="flex justify-center gap-3 flex-wrap">
         <PixelButton
-          href="https://github.com/TODO-your-username/mlem.vi"
+          href="https://github.com/ml3m/ml3m.github.io"
           external
         >
           <Github size={16} />

@@ -14,14 +14,20 @@ export default function ToolsPage() {
         <GlowText as="h1" color="pink" className="text-xl font-bold">
           Tools
         </GlowText>
-        {tools.map((tool) => (
-          <ToolCard
-            key={tool.slug}
-            title={tool.title}
-            description={tool.description}
-            href={`/tools/${tool.slug}`}
-          />
-        ))}
+        {tools.length === 0 ? (
+          <p className="text-text-muted text-[0.85rem]">
+            nothing here yet. check back later.
+          </p>
+        ) : (
+          tools.map((tool) => (
+            <ToolCard
+              key={tool.slug}
+              title={tool.title}
+              description={tool.description}
+              href={`/tools/${tool.slug}`}
+            />
+          ))
+        )}
       </div>
     </div>
   );

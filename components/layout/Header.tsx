@@ -8,12 +8,12 @@ export default function Header() {
         style={{
           color: "transparent",
           WebkitTextStroke: "2px var(--neon-pink)",
-          textShadow: "0 0 30px #ff4da666, 0 0 60px #cc44ff33",
-          animation: "flicker 8s infinite",
+          textShadow: "0 0 30px #ff4da6aa, 0 0 60px #cc44ff66, 0 0 100px #ff4da644",
+          animation: "flicker 10s infinite",
           fontFamily: "var(--font-mono)",
         }}
       >
-        m/3m
+        m/<span id="logo-three">3</span>m
       </h1>
       <Nav />
     </header>

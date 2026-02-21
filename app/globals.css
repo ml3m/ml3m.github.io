@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s ease-out both;
+}
+
 :root {
   --bg-primary: #100c1a;
   --bg-secondary: #16102a;
@@ -54,22 +69,12 @@ a:hover {
   color: #fff;
 }
 
+html {
+  scrollbar-width: none;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--border-glow);
+  display: none;
 }
 
 @layer utilities {
@@ -162,16 +167,57 @@ a:hover {
 }
 
 @keyframes flicker {
-  0%, 95%, 100% {
+  0%, 19%, 21%, 23%, 55%, 57%, 100% {
     opacity: 1;
+    text-shadow: 0 0 30px #ff4da6aa, 0 0 60px #cc44ff66, 0 0 100px #ff4da644;
   }
-  96% {
+  20%, 56% {
+    opacity: 0.7;
+    text-shadow: 0 0 15px #ff4da655;
+  }
+  22% {
     opacity: 0.85;
+    text-shadow: 0 0 20px #ff4da677;
   }
-  97% {
+  40% {
     opacity: 0.95;
+    text-shadow: 0 0 25px #ff4da688, 0 0 50px #cc44ff44;
   }
-  98% {
-    opacity: 0.88;
+  41% {
+    opacity: 0.75;
+    text-shadow: 0 0 15px #ff4da655;
+  }
+  42% {
+    opacity: 1;
+    text-shadow: 0 0 35px #ff4da6bb, 0 0 70px #cc44ff77, 0 0 100px #ff4da644;
+  }
+  80% {
+    opacity: 1;
+    text-shadow: 0 0 30px #ff4da6aa, 0 0 60px #cc44ff55;
+  }
+  81% {
+    opacity: 0.7;
+    text-shadow: 0 0 15px #ff4da655;
+  }
+  82% {
+    opacity: 0.9;
+    text-shadow: 0 0 22px #ff4da688;
+  }
+  83% {
+    opacity: 1;
+    text-shadow: 0 0 30px #ff4da6aa, 0 0 60px #cc44ff66;
+  }
+}
+
+.neko-glow {
+  animation: neko-pulse 3s ease-in-out infinite;
+}
+
+@keyframes neko-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px #ff4da5) drop-shadow(0 0 6px #ff4da560);
+  }
+  50% {
+    filter: drop-shadow(0 0 6px #ff4da5) drop-shadow(0 0 12px #ff4da5aa);
   }
 }

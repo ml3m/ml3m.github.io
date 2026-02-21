@@ -1,0 +1,737 @@
+export type GrowthStatus = "seedling" | "sprout" | "evergreen";
+
+export type NodeGroup =
+  | "algorithms"
+  | "data-structures"
+  | "mathematics"
+  | "systems"
+  | "crypto"
+  | "graphics"
+  | "ai-ml"
+  | "web"
+  | "geometry"
+  | "languages"
+  | "tools"
+  | "theory"
+  | "projects";
+
+export interface GardenNode {
+  id: string;
+  label: string;
+  group: NodeGroup;
+  description: string;
+  status: GrowthStatus;
+}
+
+export interface GardenEdge {
+  source: string;
+  target: string;
+}
+
+export const GROUP_COLORS: Record<NodeGroup, string> = {
+  algorithms: "#ff4da6",
+  "data-structures": "#ff8844",
+  mathematics: "#ffcc44",
+  systems: "#ff6644",
+  crypto: "#44ffaa",
+  graphics: "#cc44ff",
+  "ai-ml": "#44aaff",
+  web: "#ffaa44",
+  geometry: "#ff6688",
+  languages: "#88ccff",
+  tools: "#88ff88",
+  theory: "#ddaaff",
+  projects: "#ff88cc",
+};
+
+export const GROUP_LABELS: Record<NodeGroup, string> = {
+  algorithms: "Algorithms",
+  "data-structures": "Data Structures",
+  mathematics: "Mathematics",
+  systems: "Systems",
+  crypto: "Crypto & Security",
+  graphics: "Graphics",
+  "ai-ml": "AI / ML",
+  web: "Web",
+  geometry: "Comp. Geometry",
+  languages: "Languages",
+  tools: "Tools",
+  theory: "Theory",
+  projects: "Projects",
+};
+
+// Helper to create nodes compactly
+function n(id: string, label: string, group: NodeGroup, description: string, status: GrowthStatus): GardenNode {
+  return { id, label, group, description, status };
+}
+
+export const nodes: GardenNode[] = [
+  // ═══════════════════════════════════════
+  // ALGORITHMS
+  // ═══════════════════════════════════════
+  n("algo-design", "Algorithm Design", "algorithms", "Problem-solving stages, pseudocode, correctness verification.", "evergreen"),
+  n("complexity", "Complexity Analysis", "algorithms", "Big O, Theta, Omega. Best/worst/average case analysis.", "evergreen"),
+  n("insertion-sort", "Insertion Sort", "algorithms", "Elementary O(n²) sorting, stable, in-place.", "evergreen"),
+  n("selection-sort", "Selection Sort", "algorithms", "Elementary O(n²) sorting by finding minimums.", "evergreen"),
+  n("bubble-sort", "Bubble Sort", "algorithms", "Elementary O(n²) sorting by adjacent swaps.", "evergreen"),
+  n("quicksort", "Quicksort", "algorithms", "Divide and conquer, O(n log n) average, pivot selection.", "evergreen"),
+  n("mergesort", "Merge Sort", "algorithms", "Stable O(n log n) divide and conquer sort.", "evergreen"),
+  n("heapsort", "Heapsort", "algorithms", "O(n log n) in-place using heap data structure.", "evergreen"),
+  n("binary-search", "Binary Search", "algorithms", "O(log n) search on sorted data.", "evergreen"),
+  n("divide-conquer", "Divide and Conquer", "algorithms", "Break problems into subproblems, solve recursively.", "evergreen"),
+  n("dynamic-prog", "Dynamic Programming", "algorithms", "Optimal substructure, memoization, tabulation.", "evergreen"),
+  n("greedy", "Greedy Algorithms", "algorithms", "Locally optimal choices. Knapsack, activity selection.", "evergreen"),
+  n("backtracking", "Backtracking", "algorithms", "Exhaustive search with pruning. Permutations, subsets.", "evergreen"),
+  n("graph-coloring", "Graph Coloring", "algorithms", "Chromatic number, vertex/edge coloring.", "sprout"),
+  n("bfs", "BFS", "algorithms", "Breadth-first search. Level-order traversal, shortest path.", "evergreen"),
+  n("dfs", "DFS", "algorithms", "Depth-first search. Topological sort, cycle detection.", "evergreen"),
+  n("dijkstra", "Dijkstra's Algorithm", "algorithms", "Shortest path in weighted graphs.", "evergreen"),
+  n("kruskal", "Kruskal's Algorithm", "algorithms", "Minimum spanning tree via edge sorting.", "sprout"),
+  n("prim", "Prim's Algorithm", "algorithms", "Minimum spanning tree via vertex growing.", "sprout"),
+  n("ford-fulkerson", "Ford-Fulkerson", "algorithms", "Max-flow min-cut theorem. Network flows.", "sprout"),
+  n("a-star", "A* Search", "algorithms", "Informed search with heuristics.", "sprout"),
+  n("minimax", "Minimax", "algorithms", "Game tree search, alpha-beta pruning.", "sprout"),
+  n("huffman", "Huffman Encoding", "algorithms", "Optimal prefix codes for data compression.", "evergreen"),
+  n("rle", "Run-Length Encoding", "algorithms", "Simple compression for repeated symbols.", "sprout"),
+  n("bwt", "Burrows-Wheeler Transform", "algorithms", "Block-sorting compression preprocessing.", "sprout"),
+  n("recursion", "Recursion", "algorithms", "Self-referential problem solving. Base cases.", "evergreen"),
+  n("sorting-general", "Sorting Algorithms", "algorithms", "Comparison and non-comparison based sorting.", "evergreen"),
+  n("searching", "Searching Algorithms", "algorithms", "Linear, binary, interpolation search.", "evergreen"),
+  n("page-replacement", "Page Replacement", "algorithms", "FIFO, LRU, Optimal. Virtual memory.", "sprout"),
+  n("scheduling-algos", "Scheduling Algorithms", "algorithms", "FCFS, SJF, Round Robin, Priority.", "sprout"),
+  n("gauss-elim", "Gaussian Elimination", "algorithms", "Solving linear systems. Row reduction.", "sprout"),
+  n("newton-raphson", "Newton-Raphson", "algorithms", "Root finding via tangent line iteration.", "sprout"),
+  n("runge-kutta", "Runge-Kutta Methods", "algorithms", "Numerical ODE solving. RK4.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // DATA STRUCTURES
+  // ═══════════════════════════════════════
+  n("arrays", "Arrays", "data-structures", "Contiguous memory, O(1) access, fixed size.", "evergreen"),
+  n("linked-list", "Linked Lists", "data-structures", "Singly, doubly linked. Dynamic size.", "evergreen"),
+  n("stacks", "Stacks", "data-structures", "LIFO. Push/pop. Call stack, expression parsing.", "evergreen"),
+  n("queues", "Queues", "data-structures", "FIFO. Enqueue/dequeue. BFS, scheduling.", "evergreen"),
+  n("skip-lists", "Skip Lists", "data-structures", "Probabilistic O(log n) search structure.", "sprout"),
+  n("hash-tables", "Hash Tables", "data-structures", "Key-value pairs, chaining, open addressing.", "evergreen"),
+  n("heaps", "Heaps", "data-structures", "Min/max heap. Priority queues. Heap property.", "evergreen"),
+  n("bst", "Binary Search Trees", "data-structures", "Ordered tree. O(log n) average operations.", "evergreen"),
+  n("avl-trees", "AVL Trees", "data-structures", "Self-balancing BST. Rotations, height balance.", "evergreen"),
+  n("red-black", "Red-Black Trees", "data-structures", "Self-balancing BST. Color invariants.", "sprout"),
+  n("splay-trees", "Splay Trees", "data-structures", "Self-adjusting BST. Amortized O(log n).", "sprout"),
+  n("tries", "Tries", "data-structures", "Prefix trees. String search, autocomplete.", "sprout"),
+  n("graphs-ds", "Graphs", "data-structures", "Adjacency list/matrix. Directed, undirected, weighted.", "evergreen"),
+  n("trees-general", "Trees", "data-structures", "Hierarchical structure. Root, leaves, subtrees.", "evergreen"),
+
+  // ═══════════════════════════════════════
+  // MATHEMATICS
+  // ═══════════════════════════════════════
+  n("set-theory", "Set Theory", "mathematics", "Sets, operations, relations, functions.", "evergreen"),
+  n("math-induction", "Mathematical Induction", "mathematics", "Proof by base case and inductive step.", "evergreen"),
+  n("combinatorics", "Combinatorics", "mathematics", "Permutations, combinations, counting principles.", "evergreen"),
+  n("number-theory", "Number Theory", "mathematics", "Primes, GCD, modular arithmetic.", "sprout"),
+  n("linear-algebra", "Linear Algebra", "mathematics", "Matrices, determinants, vector spaces.", "sprout"),
+  n("eigenvalues", "Eigenvalues & Eigenvectors", "mathematics", "Matrix decomposition, spectral analysis.", "sprout"),
+  n("calculus", "Calculus", "mathematics", "Limits, derivatives, integrals.", "sprout"),
+  n("multivariable-calc", "Multivariable Calculus", "mathematics", "Partial derivatives, gradients, Lagrange multipliers.", "sprout"),
+  n("series-sequences", "Series & Sequences", "mathematics", "Convergence, power series, Taylor polynomials.", "sprout"),
+  n("fourier", "Fourier Series", "mathematics", "Periodic function decomposition into sinusoids.", "seedling"),
+  n("probability", "Probability Theory", "mathematics", "Sample spaces, events, Bayes' theorem.", "sprout"),
+  n("distributions", "Probability Distributions", "mathematics", "Normal, Binomial, Poisson, Exponential.", "sprout"),
+  n("statistics", "Statistics", "mathematics", "Descriptive stats, hypothesis testing, confidence intervals.", "sprout"),
+  n("regression", "Linear Regression", "mathematics", "Fitting lines to data. Least squares.", "sprout"),
+  n("odes", "Ordinary Differential Equations", "mathematics", "First/second order, Laplace transform.", "sprout"),
+  n("numerical-methods", "Numerical Methods", "mathematics", "Approximation, interpolation, integration.", "sprout"),
+  n("interpolation", "Interpolation", "mathematics", "Newton, Lagrange, spline functions.", "sprout"),
+  n("numerical-integration", "Numerical Integration", "mathematics", "Trapezoidal, Simpson's, Gaussian quadrature.", "seedling"),
+  n("vector-geometry", "Vector Geometry", "mathematics", "Dot/cross product, projections, planes.", "sprout"),
+  n("complex-numbers", "Complex Numbers", "mathematics", "Imaginary unit, polar form, Euler's formula.", "sprout"),
+  n("generating-functions", "Generating Functions", "mathematics", "Formal power series for counting.", "seedling"),
+  n("graph-theory", "Graph Theory", "mathematics", "Euler paths, Hamilton cycles, planarity.", "sprout"),
+  n("inclusion-exclusion", "Inclusion-Exclusion", "mathematics", "Counting principle for overlapping sets.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // THEORY OF COMPUTATION
+  // ═══════════════════════════════════════
+  n("propositional-logic", "Propositional Logic", "theory", "Truth tables, connectives, tautologies.", "evergreen"),
+  n("predicate-logic", "Predicate Logic", "theory", "Quantifiers, variables, satisfiability.", "sprout"),
+  n("boolean-functions", "Boolean Functions", "theory", "Complete sets of connectives, circuit design.", "sprout"),
+  n("cnf-dnf", "Normal Forms (CNF/DNF)", "theory", "Conjunctive/disjunctive normal form.", "sprout"),
+  n("resolution", "Resolution Method", "theory", "Clause-based automated theorem proving.", "sprout"),
+  n("formal-verification", "Formal Verification", "theory", "Proving program correctness formally.", "seedling"),
+  n("chomsky", "Chomsky Hierarchy", "theory", "Regular, context-free, context-sensitive, type-0.", "sprout"),
+  n("dfa", "Deterministic Finite Automata", "theory", "State machines for regular languages.", "sprout"),
+  n("nfa", "Nondeterministic FA", "theory", "NFA, epsilon-NFA, subset construction.", "sprout"),
+  n("regex", "Regular Expressions", "theory", "Pattern matching, equivalence to DFA.", "evergreen"),
+  n("pumping-lemma", "Pumping Lemma", "theory", "Proving languages are not regular.", "sprout"),
+  n("cfg", "Context-Free Grammars", "theory", "Derivation trees, parse trees, ambiguity.", "sprout"),
+  n("pda", "Pushdown Automata", "theory", "Stack-based machines for context-free languages.", "sprout"),
+  n("turing-machines", "Turing Machines", "theory", "Universal computation model.", "sprout"),
+  n("undecidability", "Undecidability", "theory", "Halting problem, limits of computation.", "sprout"),
+  n("haskell", "Haskell", "theory", "Pure functional programming, lazy evaluation.", "seedling"),
+  n("prolog", "Prolog", "theory", "Logic programming, unification, backtracking.", "seedling"),
+  n("functional-prog", "Functional Programming", "theory", "Immutability, higher-order functions, pattern matching.", "seedling"),
+  n("type-systems", "Type Systems", "theory", "Static/dynamic typing, type inference.", "seedling"),
+
+  // ═══════════════════════════════════════
+  // SYSTEMS
+  // ═══════════════════════════════════════
+  n("os-concepts", "Operating Systems", "systems", "Process management, memory, file systems.", "sprout"),
+  n("processes", "Processes", "systems", "Process states, PCB, creation, termination.", "sprout"),
+  n("threads", "Threads", "systems", "User/kernel threads, multithreading models.", "sprout"),
+  n("ipc", "Inter-Process Communication", "systems", "Pipes, shared memory, message passing.", "sprout"),
+  n("semaphores", "Semaphores & Mutexes", "systems", "Synchronization primitives, critical sections.", "sprout"),
+  n("deadlocks", "Deadlocks", "systems", "Conditions, detection, avoidance, Banker's algorithm.", "sprout"),
+  n("memory-mgmt", "Memory Management", "systems", "Paging, segmentation, virtual memory.", "sprout"),
+  n("virtual-memory", "Virtual Memory", "systems", "Demand paging, page tables, TLB.", "sprout"),
+  n("cpu-scheduling", "CPU Scheduling", "systems", "FCFS, SJF, Round Robin, priority queues.", "sprout"),
+  n("comp-arch", "Computer Architecture", "systems", "Von Neumann, pipelines, ISA.", "sprout"),
+  n("digital-logic", "Digital Logic", "systems", "Combinatorial/sequential circuits, gates.", "sprout"),
+  n("cache", "Cache Systems", "systems", "L1/L2/L3 cache, locality, coherence.", "sprout"),
+  n("assembly-x86", "x86-64 Assembly", "systems", "NASM syntax, registers, syscalls.", "evergreen"),
+  n("assembly-arm", "ARM Assembly", "systems", "RISC architecture, instruction set.", "sprout"),
+  n("binary-exploit", "Binary Exploitation", "systems", "Buffer overflows, CTF challenges.", "sprout"),
+  n("networking", "Computer Networks", "systems", "OSI model, TCP/IP, protocols.", "sprout"),
+  n("osi-model", "OSI Model", "systems", "7-layer network architecture.", "sprout"),
+  n("tcp-ip", "TCP/IP", "systems", "Connection-oriented reliable transport.", "sprout"),
+  n("udp", "UDP", "systems", "Connectionless unreliable transport.", "sprout"),
+  n("ip-addressing", "IP Addressing", "systems", "IPv4, IPv6, subnetting, NAT.", "sprout"),
+  n("routing", "Routing", "systems", "RIP, OSPF, distance vector, link state.", "sprout"),
+  n("dns", "DNS", "systems", "Domain name resolution, hierarchy.", "sprout"),
+  n("http", "HTTP", "systems", "Request/response, methods, status codes.", "sprout"),
+  n("sockets", "BSD Sockets", "systems", "Network programming API.", "sprout"),
+  n("ethernet", "Ethernet", "systems", "LAN technology, MAC addresses, switches.", "sprout"),
+  n("firewalls", "Firewalls", "systems", "Network security, packet filtering.", "seedling"),
+  n("net-admin", "Network Administration", "systems", "DNS, DHCP, VPN, system admin.", "seedling"),
+  n("shell-impl", "Shell Implementation", "systems", "mlemsh — a shell written in C.", "sprout"),
+  n("linux", "Linux", "systems", "Unix-like OS, kernel, distributions.", "evergreen"),
+
+  // ═══════════════════════════════════════
+  // CRYPTOGRAPHY & SECURITY
+  // ═══════════════════════════════════════
+  n("sha256", "SHA256", "crypto", "Implementation in x86-64 Assembly.", "evergreen"),
+  n("hashing", "Hashing", "crypto", "MD5, SHA family, hash functions.", "sprout"),
+  n("symmetric-enc", "Symmetric Encryption", "crypto", "AES, Blowfish, ChaCha20.", "sprout"),
+  n("asymmetric-enc", "Asymmetric Encryption", "crypto", "RSA, key exchange, public/private keys.", "sprout"),
+  n("chacha20", "ChaCha20", "crypto", "Stream cipher, modern encryption.", "sprout"),
+  n("blowfish", "Blowfish", "crypto", "Block cipher, Feistel network.", "sprout"),
+  n("rsa", "RSA", "crypto", "Public-key cryptosystem, factoring.", "sprout"),
+  n("key-exchange", "Key Exchange", "crypto", "Diffie-Hellman, ECDH.", "seedling"),
+  n("digital-sigs", "Digital Signatures", "crypto", "Message authentication, non-repudiation.", "seedling"),
+  n("blockchain", "Blockchain", "crypto", "Distributed ledger, consensus mechanisms.", "seedling"),
+  n("smart-contracts", "Smart Contracts", "crypto", "Self-executing contracts on-chain.", "seedling"),
+  n("ethereum", "Ethereum", "crypto", "EVM, Solidity, DeFi.", "seedling"),
+  n("sui", "Sui", "crypto", "Move language, object-centric blockchain.", "seedling"),
+  n("eth-sui-bridge", "ETH-Sui Bridge", "crypto", "IBT transfer bridge, burn/mint.", "seedling"),
+
+  // ═══════════════════════════════════════
+  // GRAPHICS
+  // ═══════════════════════════════════════
+  n("ray-tracing", "Ray Tracing", "graphics", "Whitted-style ray tracer in C++.", "evergreen"),
+  n("rendering-pipeline", "Rendering Pipeline", "graphics", "Vertex → rasterization → fragment.", "sprout"),
+  n("opengl", "OpenGL", "graphics", "Graphics API, GLUT/freeglut.", "sprout"),
+  n("transformations-3d", "3D Transformations", "graphics", "Translation, rotation, scaling matrices.", "sprout"),
+  n("projection", "Projections", "graphics", "Perspective, orthographic, view frustum.", "sprout"),
+  n("illumination", "Illumination Models", "graphics", "Phong, direct/global illumination.", "sprout"),
+  n("z-buffer", "Z-Buffer", "graphics", "Depth testing for visibility.", "sprout"),
+  n("texturing", "Texturing", "graphics", "UV mapping, texture filtering.", "sprout"),
+  n("clipping", "Clipping Algorithms", "graphics", "Cohen-Sutherland, view volume clipping.", "seedling"),
+
+  // ═══════════════════════════════════════
+  // AI / MACHINE LEARNING
+  // ═══════════════════════════════════════
+  n("ai-intro", "Artificial Intelligence", "ai-ml", "Search, reasoning, planning, learning.", "sprout"),
+  n("search-uninformed", "Uninformed Search", "ai-ml", "BFS, DFS, iterative deepening.", "sprout"),
+  n("search-informed", "Informed Search", "ai-ml", "A*, heuristics, greedy best-first.", "sprout"),
+  n("csp", "Constraint Satisfaction", "ai-ml", "Backtracking search, constraint propagation.", "sprout"),
+  n("knowledge-rep", "Knowledge Representation", "ai-ml", "Semantic networks, frames, ontologies.", "seedling"),
+  n("expert-systems", "Expert Systems", "ai-ml", "Rule-based reasoning, inference engine.", "seedling"),
+  n("decision-trees", "Decision Trees", "ai-ml", "Classification, information gain, pruning.", "sprout"),
+  n("clustering", "Clustering", "ai-ml", "K-means, hierarchical, unsupervised learning.", "sprout"),
+  n("supervised-learning", "Supervised Learning", "ai-ml", "Classification, regression, labeled data.", "sprout"),
+  n("unsupervised-learning", "Unsupervised Learning", "ai-ml", "Clustering, dimensionality reduction.", "sprout"),
+  n("reinforcement-learning", "Reinforcement Learning", "ai-ml", "Reward-based learning, agents.", "seedling"),
+  n("neural-networks", "Neural Networks", "ai-ml", "Perceptrons, backpropagation, layers.", "sprout"),
+  n("cnns", "CNNs", "ai-ml", "Convolutional neural networks, image tasks.", "sprout"),
+  n("rnns", "RNNs", "ai-ml", "Recurrent networks, sequence modeling.", "seedling"),
+  n("autoencoders", "Autoencoders", "ai-ml", "Compression, feature extraction, reconstruction.", "seedling"),
+  n("gans", "GANs", "ai-ml", "Generative adversarial networks.", "seedling"),
+  n("pinns", "PINNs", "ai-ml", "Physics-Informed Neural Networks for PDEs.", "sprout"),
+  n("multi-agent", "Multi-Agent Systems", "ai-ml", "MESA, intelligent agents, simulation.", "sprout"),
+  n("nlp-basics", "NLP Basics", "ai-ml", "Natural language understanding fundamentals.", "seedling"),
+  n("genre-classification", "Music Genre Classification", "ai-ml", "TuneType — ML + audio signal processing.", "sprout"),
+  n("image-classification", "Image Classification", "ai-ml", "fruit-Image-Classifier, CNN-based.", "seedling"),
+  n("bci", "Brain-Computer Interfaces", "ai-ml", "EEG signals, BCI systems, neurotechnology.", "seedling"),
+  n("eeg", "EEG Signal Processing", "ai-ml", "Time/frequency domain, feature extraction.", "seedling"),
+  n("semantic-seg", "Semantic Segmentation", "ai-ml", "Pixel-level classification in images.", "seedling"),
+  n("pytorch", "PyTorch", "ai-ml", "Deep learning framework, autograd.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // COMPUTATIONAL GEOMETRY
+  // ═══════════════════════════════════════
+  n("convex-hull", "Convex Hulls", "geometry", "QuickHull, Graham scan, gift wrapping.", "evergreen"),
+  n("convex-hull-3d", "3D Convex Hull", "geometry", "Mesh to hull in MATLAB.", "sprout"),
+  n("delaunay", "Delaunay Triangulation", "geometry", "Optimal triangulation, circumcircle property.", "sprout"),
+  n("voronoi", "Voronoi Diagrams", "geometry", "Nearest neighbor regions, dual of Delaunay.", "sprout"),
+  n("triangulations", "Triangulations", "geometry", "Polygon/point set triangulation.", "sprout"),
+  n("mesh-gen", "Mesh Generation", "geometry", "CGAL, gmsh, quality meshes.", "sprout"),
+  n("intersection", "Intersection Algorithms", "geometry", "Line/segment/polygon intersection.", "sprout"),
+  n("motion-planning", "Motion Planning", "geometry", "Path finding among obstacles.", "seedling"),
+  n("collision-detection", "Collision Detection", "geometry", "Bounding volumes, spatial partitioning.", "seedling"),
+  n("point-location", "Point Location", "geometry", "Trapezoidal decomposition, localization.", "seedling"),
+  n("convex-layers", "Convex Layers", "geometry", "Iterative hull peeling, onion peeling.", "sprout"),
+  n("comp-geo-general", "Computational Geometry", "geometry", "Geometric algorithms and spatial computation.", "evergreen"),
+
+  // ═══════════════════════════════════════
+  // WEB DEVELOPMENT
+  // ═══════════════════════════════════════
+  n("nextjs", "Next.js", "web", "React framework, SSR, static export.", "sprout"),
+  n("react", "React", "web", "Component-based UI library.", "sprout"),
+  n("tailwind", "Tailwind CSS", "web", "Utility-first CSS framework.", "sprout"),
+  n("typescript-web", "TypeScript", "web", "Type-safe JavaScript for web.", "sprout"),
+  n("html-css", "HTML/CSS", "web", "Markup and styling fundamentals.", "evergreen"),
+  n("javascript-web", "JavaScript", "web", "Dynamic web scripting.", "evergreen"),
+  n("nodejs", "Node.js", "web", "Server-side JavaScript runtime.", "sprout"),
+  n("fastapi", "FastAPI", "web", "Async Python web framework.", "seedling"),
+  n("websockets", "WebSockets", "web", "Real-time bidirectional communication.", "seedling"),
+  n("rest-apis", "REST APIs", "web", "HTTP-based API design.", "sprout"),
+  n("android-dev", "Android Development", "web", "Android Studio, activities, UI/UX.", "sprout"),
+  n("ios-dev", "iOS Development", "web", "SwiftUI, WanderPath travel app.", "seedling"),
+  n("javafx", "JavaFX", "web", "Java GUI framework.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // DATABASES
+  // ═══════════════════════════════════════
+  n("sql", "SQL", "systems", "SELECT, JOIN, DDL, DML.", "sprout"),
+  n("relational-model", "Relational Model", "systems", "Relations, attributes, integrity constraints.", "sprout"),
+  n("normalization", "Normalization", "systems", "1NF through 5NF, functional dependencies.", "sprout"),
+  n("er-modeling", "ER Modeling", "systems", "Entity-relationship diagrams, mapping.", "sprout"),
+  n("nosql", "NoSQL", "systems", "Key-value, document, graph databases.", "seedling"),
+  n("transactions", "Transactions", "systems", "ACID, isolation levels, concurrency control.", "sprout"),
+  n("indexing", "Indexing", "systems", "B-trees, hash indexes, query optimization.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // SOFTWARE ENGINEERING
+  // ═══════════════════════════════════════
+  n("agile", "Agile / Scrum", "tools", "Sprints, stand-ups, retrospectives.", "sprout"),
+  n("tdd", "Test-Driven Development", "tools", "Write tests first, red-green-refactor.", "sprout"),
+  n("uml", "UML Diagrams", "tools", "Class, sequence, use case, activity.", "sprout"),
+  n("design-patterns", "Design Patterns", "tools", "Singleton, factory, observer, strategy.", "seedling"),
+  n("requirements-eng", "Requirements Engineering", "tools", "Functional/non-functional requirements.", "sprout"),
+  n("version-control", "Version Control (Git)", "tools", "Branching, merging, pull requests.", "evergreen"),
+
+  // ═══════════════════════════════════════
+  // PROGRAMMING LANGUAGES
+  // ═══════════════════════════════════════
+  n("python", "Python", "languages", "Scripting, ML, automation. Most used language.", "evergreen"),
+  n("c-lang", "C", "languages", "Systems programming, OS coursework, shell.", "evergreen"),
+  n("cpp", "C++", "languages", "Ray tracer, genomics, OOP, STL, templates.", "evergreen"),
+  n("java", "Java", "languages", "OOP, JVM, collections, Maven, JUnit.", "evergreen"),
+  n("rust", "Rust", "languages", "Crypto algorithms, Advent of Code, safety.", "sprout"),
+  n("go", "Go", "languages", "Huffman, CompGeoVault, graph combinatorics.", "sprout"),
+  n("javascript", "JavaScript", "languages", "Web dev, DOM, async, Node.js.", "sprout"),
+  n("typescript", "TypeScript", "languages", "Type-safe JS, Next.js, antland.", "sprout"),
+  n("swift", "Swift", "languages", "iOS development, WanderPath.", "seedling"),
+  n("assembly", "Assembly", "languages", "x86-64, ARM, NASM, low-level.", "sprout"),
+  n("sql-lang", "SQL", "languages", "Database querying and manipulation.", "sprout"),
+  n("shell-lang", "Shell/Bash", "languages", "Scripting, automation, dotfiles.", "evergreen"),
+  n("lua", "Lua", "languages", "Neovim configuration, scripting.", "sprout"),
+  n("matlab", "MATLAB", "languages", "3D convex hull, numerical computing.", "seedling"),
+  n("latex", "LaTeX", "languages", "Scientific writing, thesis, papers.", "sprout"),
+  n("r-lang", "R", "languages", "Statistical computing, data analysis.", "seedling"),
+  n("german", "German Language", "languages", "A2-B1 level, 4 semesters completed.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // TOOLS & ENVIRONMENT
+  // ═══════════════════════════════════════
+  n("neovim", "Neovim", "tools", "Customized editor, LSP, Lua config.", "evergreen"),
+  n("tmux", "tmux", "tools", "Terminal multiplexer, sessions.", "evergreen"),
+  n("docker", "Docker", "tools", "Containers, Dockerfiles, compose.", "sprout"),
+  n("ansible", "Ansible", "tools", "Automation playbooks, env setup.", "seedling"),
+  n("gnu-stow", "GNU Stow", "tools", "Symlink farm manager for dotfiles.", "sprout"),
+  n("obsidian", "Obsidian", "tools", "Knowledge base, linked notes.", "evergreen"),
+  n("maven", "Maven", "tools", "Java build tool, dependency management.", "sprout"),
+  n("junit", "JUnit", "tools", "Java unit testing framework.", "sprout"),
+  n("pytest", "PyTest/PyUnit", "tools", "Python testing frameworks.", "sprout"),
+  n("android-studio", "Android Studio", "tools", "Android IDE, emulator, Gradle.", "sprout"),
+  n("dotfiles", "Dotfiles", "tools", "macOS + Linux config, i3, Kitty, Zsh.", "evergreen"),
+  n("cgal", "CGAL", "tools", "Computational geometry library, C++.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // OOP & PARADIGMS
+  // ═══════════════════════════════════════
+  n("oop", "Object-Oriented Programming", "theory", "Classes, inheritance, polymorphism, encapsulation.", "evergreen"),
+  n("generics", "Generics / Templates", "theory", "Parametric polymorphism, type parameters.", "sprout"),
+  n("stl", "C++ STL", "theory", "Containers, algorithms, iterators.", "evergreen"),
+  n("collections-java", "Java Collections", "theory", "List, Set, Map, streams, generics.", "sprout"),
+  n("exception-handling", "Exception Handling", "theory", "try-catch, error propagation.", "evergreen"),
+  n("memory-management", "Memory Management", "theory", "Pointers, malloc/free, RAII, ownership.", "evergreen"),
+  n("concurrency", "Concurrency", "theory", "Threads, synchronization, race conditions.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // PROJECTS
+  // ═══════════════════════════════════════
+  n("proj-raytracer", "Whitted Ray Tracer", "projects", "C++ ray tracer inspired by Peter Shirley.", "evergreen"),
+  n("proj-genomics", "Genomic Data Processing", "projects", "FASTA parsing, GC content, C++.", "sprout"),
+  n("proj-railway", "Smart Railway Simulation", "projects", "Multi-agent MESA simulation.", "sprout"),
+  n("proj-mlemhouse", "MlemHouse", "projects", "IoT dashboard, FastAPI, WebSocket.", "seedling"),
+  n("proj-pinn", "PINN DE Playground", "projects", "Physics-informed neural networks, PyTorch.", "sprout"),
+  n("proj-tunetype", "TuneType", "projects", "Music genre classification with ML.", "sprout"),
+  n("proj-crypto", "Crypto Algorithms", "projects", "Symmetric/asymmetric encryption in Rust.", "sprout"),
+  n("proj-sha256", "SHA256 in Assembly", "projects", "SHA256 implemented in x86-64 ASM.", "evergreen"),
+  n("proj-quickhull", "QuickHull Convex Layers", "projects", "Convex hull visualization, Python.", "sprout"),
+  n("proj-huffman", "Huffman Study", "projects", "Compression benchmark in Go.", "sprout"),
+  n("proj-huffman-viz", "Huffman Visualizer", "projects", "Tree drawing, encoding visualization.", "sprout"),
+  n("proj-brok", "Legacy of Brok", "projects", "Pygame game, OOP practice.", "sprout"),
+  n("proj-dutchbuddy", "DutchBuddy", "projects", "Dutch vocab app, Android/Java.", "sprout"),
+  n("proj-mlemfetch", "mlemfetch", "projects", "Terminal system info with a cat.", "sprout"),
+  n("proj-sorting-viz", "Sorting Visualizer", "projects", "Pygame algorithm visualization.", "sprout"),
+  n("proj-wanderpath", "WanderPath", "projects", "iOS travel management app, Swift.", "seedling"),
+  n("proj-ctf", "Comp Arch CTF", "projects", "Binary exploitation challenges.", "sprout"),
+  n("proj-os", "OS Coursework", "projects", "Process scheduling, memory, IPC in C.", "sprout"),
+  n("proj-antland", "antland", "projects", "Ant simulation in TypeScript.", "seedling"),
+  n("proj-banksy", "Bank Management System", "projects", "C CLI app with authentication.", "sprout"),
+  n("proj-mlemsh", "mlemsh", "projects", "A shell made in C.", "sprout"),
+  n("proj-url-short", "URL Shortener", "projects", "Simple URL shortener in Rust.", "seedling"),
+  n("proj-aoc", "Advent of Code", "projects", "Puzzle solving in Rust.", "sprout"),
+  n("proj-termicat", "TermiCat", "projects", "Cat game in terminal, Go.", "seedling"),
+  n("proj-compgeovault", "CompGeoVault", "projects", "Geometry algorithms in Go.", "sprout"),
+  n("proj-graphcombo", "GraphCombinatorics", "projects", "Graph algorithms in Go.", "sprout"),
+  n("proj-pocketwise", "PocketWise", "projects", "Personal finance app, C++.", "seedling"),
+  n("proj-recipe", "Recipe Generator", "projects", "Recipe website, TypeScript.", "seedling"),
+  n("proj-amazon", "Amazon Clone", "projects", "Functional clone, JavaScript.", "seedling"),
+  n("proj-youtube", "YouTube Clone", "projects", "YouTube clone, HTML/CSS.", "seedling"),
+  n("proj-musicshop", "ChordBox/MusicShop", "projects", "Music store system, Java.", "sprout"),
+  n("proj-spotiplay", "spotiplay", "projects", "Spotify-related project, TypeScript.", "seedling"),
+  n("proj-volunteer", "Volunteer Platform", "projects", "Platform in TypeScript.", "seedling"),
+  n("proj-blockchain", "BlockchainVault", "projects", "Blockchain course work, Python.", "seedling"),
+  n("proj-bridge", "ETH-Sui Bridge", "projects", "Token bridge between Ethereum and Sui.", "seedling"),
+  n("proj-fruit-class", "Fruit Image Classifier", "projects", "Image classification, Python.", "seedling"),
+  n("proj-network", "Networking Playground", "projects", "Computer networks scripts, Python.", "seedling"),
+  n("proj-csmap", "Map of Computer Science", "projects", "CS knowledge map in Obsidian.", "evergreen"),
+  n("proj-dotfiles", "Dotfiles", "projects", "macOS/Linux configs, Stow, Neovim, tmux.", "evergreen"),
+  n("proj-flashcards", "SE Flashcards", "projects", "Software engineering flashcard game.", "seedling"),
+  n("proj-mlemvi", "mlem.vi", "projects", "This website. Next.js + Tailwind.", "sprout"),
+  n("proj-idle", "Idle Adventure", "projects", "Idle game in TypeScript.", "seedling"),
+  n("proj-balatro", "Elemental Balatro-like", "projects", "Card game in TypeScript.", "seedling"),
+  n("proj-3dhull", "Convex Hull 3D Mesh", "projects", "3D hull algorithm in MATLAB.", "sprout"),
+  n("proj-cgal", "CGAL Playground", "projects", "Mesh generation with CGAL/gmsh.", "sprout"),
+];
+
+export const edges: GardenEdge[] = [
+  // ── Sorting algorithms to each other and to data structures ──
+  { source: "insertion-sort", target: "sorting-general" },
+  { source: "selection-sort", target: "sorting-general" },
+  { source: "bubble-sort", target: "sorting-general" },
+  { source: "quicksort", target: "sorting-general" },
+  { source: "mergesort", target: "sorting-general" },
+  { source: "heapsort", target: "sorting-general" },
+  { source: "quicksort", target: "divide-conquer" },
+  { source: "mergesort", target: "divide-conquer" },
+  { source: "binary-search", target: "divide-conquer" },
+  { source: "heapsort", target: "heaps" },
+  { source: "sorting-general", target: "complexity" },
+  { source: "sorting-general", target: "arrays" },
+
+  // ── Algorithm paradigms ──
+  { source: "divide-conquer", target: "algo-design" },
+  { source: "dynamic-prog", target: "algo-design" },
+  { source: "greedy", target: "algo-design" },
+  { source: "backtracking", target: "algo-design" },
+  { source: "recursion", target: "algo-design" },
+  { source: "recursion", target: "divide-conquer" },
+
+  // ── Graph algorithms ──
+  { source: "bfs", target: "graphs-ds" },
+  { source: "dfs", target: "graphs-ds" },
+  { source: "dijkstra", target: "graphs-ds" },
+  { source: "kruskal", target: "graphs-ds" },
+  { source: "prim", target: "graphs-ds" },
+  { source: "ford-fulkerson", target: "graphs-ds" },
+  { source: "graph-coloring", target: "graphs-ds" },
+  { source: "graph-theory", target: "graphs-ds" },
+  { source: "a-star", target: "dijkstra" },
+
+  // ── Data structures internal ──
+  { source: "linked-list", target: "stacks" },
+  { source: "linked-list", target: "queues" },
+  { source: "bst", target: "trees-general" },
+  { source: "avl-trees", target: "bst" },
+  { source: "red-black", target: "bst" },
+  { source: "splay-trees", target: "bst" },
+  { source: "heaps", target: "trees-general" },
+  { source: "tries", target: "trees-general" },
+  { source: "skip-lists", target: "linked-list" },
+  { source: "hash-tables", target: "arrays" },
+
+  // ── Compression ──
+  { source: "huffman", target: "trees-general" },
+  { source: "huffman", target: "bwt" },
+  { source: "huffman", target: "rle" },
+
+  // ── Theory connections ──
+  { source: "propositional-logic", target: "boolean-functions" },
+  { source: "propositional-logic", target: "cnf-dnf" },
+  { source: "cnf-dnf", target: "resolution" },
+  { source: "predicate-logic", target: "propositional-logic" },
+  { source: "formal-verification", target: "predicate-logic" },
+  { source: "chomsky", target: "dfa" },
+  { source: "chomsky", target: "cfg" },
+  { source: "dfa", target: "nfa" },
+  { source: "dfa", target: "regex" },
+  { source: "cfg", target: "pda" },
+  { source: "nfa", target: "pumping-lemma" },
+  { source: "turing-machines", target: "undecidability" },
+  { source: "turing-machines", target: "pda" },
+  { source: "haskell", target: "functional-prog" },
+  { source: "prolog", target: "predicate-logic" },
+  { source: "functional-prog", target: "type-systems" },
+  { source: "functional-prog", target: "recursion" },
+
+  // ── OOP / paradigms ──
+  { source: "oop", target: "cpp" },
+  { source: "oop", target: "java" },
+  { source: "oop", target: "python" },
+  { source: "generics", target: "stl" },
+  { source: "generics", target: "collections-java" },
+  { source: "stl", target: "cpp" },
+  { source: "collections-java", target: "java" },
+  { source: "exception-handling", target: "java" },
+  { source: "exception-handling", target: "cpp" },
+  { source: "memory-management", target: "c-lang" },
+  { source: "memory-management", target: "cpp" },
+  { source: "concurrency", target: "threads" },
+  { source: "concurrency", target: "java" },
+
+  // ── Mathematics ──
+  { source: "set-theory", target: "propositional-logic" },
+  { source: "combinatorics", target: "graph-theory" },
+  { source: "combinatorics", target: "inclusion-exclusion" },
+  { source: "combinatorics", target: "generating-functions" },
+  { source: "linear-algebra", target: "eigenvalues" },
+  { source: "linear-algebra", target: "gauss-elim" },
+  { source: "calculus", target: "multivariable-calc" },
+  { source: "calculus", target: "series-sequences" },
+  { source: "calculus", target: "odes" },
+  { source: "series-sequences", target: "fourier" },
+  { source: "probability", target: "distributions" },
+  { source: "probability", target: "statistics" },
+  { source: "statistics", target: "regression" },
+  { source: "numerical-methods", target: "gauss-elim" },
+  { source: "numerical-methods", target: "newton-raphson" },
+  { source: "numerical-methods", target: "runge-kutta" },
+  { source: "numerical-methods", target: "interpolation" },
+  { source: "numerical-methods", target: "numerical-integration" },
+  { source: "numerical-methods", target: "odes" },
+  { source: "vector-geometry", target: "linear-algebra" },
+
+  // ── Systems ──
+  { source: "processes", target: "os-concepts" },
+  { source: "threads", target: "os-concepts" },
+  { source: "ipc", target: "os-concepts" },
+  { source: "semaphores", target: "ipc" },
+  { source: "deadlocks", target: "semaphores" },
+  { source: "memory-mgmt", target: "os-concepts" },
+  { source: "virtual-memory", target: "memory-mgmt" },
+  { source: "cpu-scheduling", target: "os-concepts" },
+  { source: "scheduling-algos", target: "cpu-scheduling" },
+  { source: "page-replacement", target: "virtual-memory" },
+  { source: "digital-logic", target: "comp-arch" },
+  { source: "cache", target: "comp-arch" },
+  { source: "assembly-x86", target: "comp-arch" },
+  { source: "assembly-arm", target: "comp-arch" },
+  { source: "binary-exploit", target: "assembly-x86" },
+  { source: "os-concepts", target: "c-lang" },
+  { source: "shell-impl", target: "c-lang" },
+  { source: "linux", target: "os-concepts" },
+  { source: "linux", target: "shell-lang" },
+
+  // ── Networking ──
+  { source: "osi-model", target: "networking" },
+  { source: "tcp-ip", target: "networking" },
+  { source: "udp", target: "networking" },
+  { source: "ip-addressing", target: "networking" },
+  { source: "routing", target: "networking" },
+  { source: "dns", target: "networking" },
+  { source: "http", target: "networking" },
+  { source: "sockets", target: "networking" },
+  { source: "ethernet", target: "networking" },
+  { source: "firewalls", target: "networking" },
+  { source: "net-admin", target: "networking" },
+  { source: "routing", target: "dijkstra" },
+
+  // ── Databases ──
+  { source: "sql", target: "relational-model" },
+  { source: "normalization", target: "relational-model" },
+  { source: "er-modeling", target: "relational-model" },
+  { source: "nosql", target: "relational-model" },
+  { source: "transactions", target: "relational-model" },
+  { source: "indexing", target: "relational-model" },
+
+  // ── Crypto ──
+  { source: "sha256", target: "hashing" },
+  { source: "sha256", target: "assembly-x86" },
+  { source: "symmetric-enc", target: "chacha20" },
+  { source: "symmetric-enc", target: "blowfish" },
+  { source: "asymmetric-enc", target: "rsa" },
+  { source: "asymmetric-enc", target: "key-exchange" },
+  { source: "digital-sigs", target: "asymmetric-enc" },
+  { source: "blockchain", target: "hashing" },
+  { source: "smart-contracts", target: "blockchain" },
+  { source: "ethereum", target: "blockchain" },
+  { source: "sui", target: "blockchain" },
+  { source: "eth-sui-bridge", target: "ethereum" },
+  { source: "eth-sui-bridge", target: "sui" },
+
+  // ── Graphics ──
+  { source: "ray-tracing", target: "illumination" },
+  { source: "ray-tracing", target: "cpp" },
+  { source: "ray-tracing", target: "comp-geo-general" },
+  { source: "rendering-pipeline", target: "opengl" },
+  { source: "transformations-3d", target: "linear-algebra" },
+  { source: "transformations-3d", target: "opengl" },
+  { source: "projection", target: "opengl" },
+  { source: "z-buffer", target: "rendering-pipeline" },
+  { source: "texturing", target: "rendering-pipeline" },
+  { source: "clipping", target: "rendering-pipeline" },
+
+  // ── AI/ML ──
+  { source: "search-uninformed", target: "ai-intro" },
+  { source: "search-informed", target: "ai-intro" },
+  { source: "csp", target: "ai-intro" },
+  { source: "knowledge-rep", target: "ai-intro" },
+  { source: "expert-systems", target: "knowledge-rep" },
+  { source: "decision-trees", target: "supervised-learning" },
+  { source: "clustering", target: "unsupervised-learning" },
+  { source: "neural-networks", target: "supervised-learning" },
+  { source: "cnns", target: "neural-networks" },
+  { source: "rnns", target: "neural-networks" },
+  { source: "autoencoders", target: "neural-networks" },
+  { source: "gans", target: "neural-networks" },
+  { source: "pinns", target: "neural-networks" },
+  { source: "pinns", target: "odes" },
+  { source: "multi-agent", target: "ai-intro" },
+  { source: "nlp-basics", target: "ai-intro" },
+  { source: "genre-classification", target: "supervised-learning" },
+  { source: "image-classification", target: "cnns" },
+  { source: "bci", target: "eeg" },
+  { source: "eeg", target: "neural-networks" },
+  { source: "semantic-seg", target: "cnns" },
+  { source: "pytorch", target: "neural-networks" },
+  { source: "pytorch", target: "python" },
+  { source: "supervised-learning", target: "probability" },
+  { source: "regression", target: "supervised-learning" },
+  { source: "minimax", target: "ai-intro" },
+  { source: "search-informed", target: "a-star" },
+
+  // ── Geometry ──
+  { source: "convex-hull", target: "comp-geo-general" },
+  { source: "convex-hull-3d", target: "convex-hull" },
+  { source: "delaunay", target: "comp-geo-general" },
+  { source: "voronoi", target: "delaunay" },
+  { source: "triangulations", target: "comp-geo-general" },
+  { source: "mesh-gen", target: "delaunay" },
+  { source: "intersection", target: "comp-geo-general" },
+  { source: "motion-planning", target: "comp-geo-general" },
+  { source: "collision-detection", target: "comp-geo-general" },
+  { source: "point-location", target: "comp-geo-general" },
+  { source: "convex-layers", target: "convex-hull" },
+  { source: "comp-geo-general", target: "vector-geometry" },
+
+  // ── Web ──
+  { source: "nextjs", target: "react" },
+  { source: "react", target: "javascript-web" },
+  { source: "tailwind", target: "html-css" },
+  { source: "typescript-web", target: "javascript-web" },
+  { source: "nodejs", target: "javascript-web" },
+  { source: "fastapi", target: "python" },
+  { source: "websockets", target: "fastapi" },
+  { source: "rest-apis", target: "http" },
+  { source: "android-dev", target: "java" },
+  { source: "ios-dev", target: "swift" },
+  { source: "javafx", target: "java" },
+
+  // ── Language cross-links ──
+  { source: "rust", target: "memory-management" },
+  { source: "go", target: "concurrency" },
+  { source: "c-lang", target: "memory-management" },
+  { source: "assembly", target: "assembly-x86" },
+  { source: "assembly", target: "assembly-arm" },
+
+  // ── Tools ──
+  { source: "neovim", target: "lua" },
+  { source: "neovim", target: "dotfiles" },
+  { source: "tmux", target: "dotfiles" },
+  { source: "gnu-stow", target: "dotfiles" },
+  { source: "obsidian", target: "proj-csmap" },
+  { source: "maven", target: "java" },
+  { source: "junit", target: "java" },
+  { source: "pytest", target: "python" },
+  { source: "docker", target: "ansible" },
+  { source: "android-studio", target: "android-dev" },
+  { source: "cgal", target: "mesh-gen" },
+  { source: "version-control", target: "agile" },
+  { source: "tdd", target: "junit" },
+  { source: "tdd", target: "pytest" },
+  { source: "uml", target: "requirements-eng" },
+
+  // ── Project connections ──
+  { source: "proj-raytracer", target: "ray-tracing" },
+  { source: "proj-raytracer", target: "cpp" },
+  { source: "proj-genomics", target: "cpp" },
+  { source: "proj-railway", target: "multi-agent" },
+  { source: "proj-railway", target: "python" },
+  { source: "proj-mlemhouse", target: "fastapi" },
+  { source: "proj-mlemhouse", target: "websockets" },
+  { source: "proj-pinn", target: "pinns" },
+  { source: "proj-pinn", target: "pytorch" },
+  { source: "proj-tunetype", target: "genre-classification" },
+  { source: "proj-tunetype", target: "python" },
+  { source: "proj-crypto", target: "symmetric-enc" },
+  { source: "proj-crypto", target: "asymmetric-enc" },
+  { source: "proj-crypto", target: "rust" },
+  { source: "proj-sha256", target: "sha256" },
+  { source: "proj-quickhull", target: "convex-hull" },
+  { source: "proj-quickhull", target: "convex-layers" },
+  { source: "proj-huffman", target: "huffman" },
+  { source: "proj-huffman", target: "go" },
+  { source: "proj-huffman-viz", target: "huffman" },
+  { source: "proj-brok", target: "python" },
+  { source: "proj-dutchbuddy", target: "android-dev" },
+  { source: "proj-mlemfetch", target: "shell-lang" },
+  { source: "proj-sorting-viz", target: "sorting-general" },
+  { source: "proj-sorting-viz", target: "python" },
+  { source: "proj-wanderpath", target: "ios-dev" },
+  { source: "proj-ctf", target: "binary-exploit" },
+  { source: "proj-os", target: "os-concepts" },
+  { source: "proj-os", target: "c-lang" },
+  { source: "proj-antland", target: "typescript" },
+  { source: "proj-banksy", target: "c-lang" },
+  { source: "proj-mlemsh", target: "shell-impl" },
+  { source: "proj-url-short", target: "rust" },
+  { source: "proj-aoc", target: "rust" },
+  { source: "proj-termicat", target: "go" },
+  { source: "proj-compgeovault", target: "comp-geo-general" },
+  { source: "proj-compgeovault", target: "go" },
+  { source: "proj-graphcombo", target: "graph-theory" },
+  { source: "proj-graphcombo", target: "go" },
+  { source: "proj-pocketwise", target: "cpp" },
+  { source: "proj-recipe", target: "typescript" },
+  { source: "proj-amazon", target: "javascript" },
+  { source: "proj-youtube", target: "html-css" },
+  { source: "proj-musicshop", target: "java" },
+  { source: "proj-spotiplay", target: "typescript" },
+  { source: "proj-volunteer", target: "typescript" },
+  { source: "proj-blockchain", target: "blockchain" },
+  { source: "proj-bridge", target: "eth-sui-bridge" },
+  { source: "proj-fruit-class", target: "image-classification" },
+  { source: "proj-network", target: "networking" },
+  { source: "proj-csmap", target: "obsidian" },
+  { source: "proj-dotfiles", target: "dotfiles" },
+  { source: "proj-mlemvi", target: "nextjs" },
+  { source: "proj-mlemvi", target: "tailwind" },
+  { source: "proj-idle", target: "typescript" },
+  { source: "proj-balatro", target: "typescript" },
+  { source: "proj-3dhull", target: "convex-hull-3d" },
+  { source: "proj-3dhull", target: "matlab" },
+  { source: "proj-cgal", target: "cgal" },
+  { source: "proj-cgal", target: "mesh-gen" },
+];

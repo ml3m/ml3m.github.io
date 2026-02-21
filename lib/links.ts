@@ -1,4 +1,4 @@
-import { Github, Mail, Coffee, MessageCircle, Globe } from "lucide-react";
+import { Github, Mail, MessageCircle, Gamepad2, Twitter } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
 export interface SocialLink {
@@ -9,19 +9,21 @@ export interface SocialLink {
 }
 
 export const socialLinks: SocialLink[] = [
-  // TODO: replace with your real links
-  { label: "GitHub", href: "https://github.com/TODO-your-username", badgeColor: "#24292e", icon: Github },
-  { label: "Email", href: "mailto:TODO@example.com", badgeColor: "#4a4a8a", icon: Mail },
-  { label: "Ko-Fi", href: "https://ko-fi.com/TODO", badgeColor: "#ff5e5b", icon: Coffee },
-  { label: "Discord", href: "https://discord.gg/TODO", badgeColor: "#5865f2", icon: MessageCircle },
-  { label: "Website", href: "https://mlem.vi", badgeColor: "#7b35cc", icon: Globe },
+  { label: "GitHub", href: "https://github.com/ml3m", badgeColor: "#24292e", icon: Github },
+  { label: "Email", href: "mailto:ml3ml3m@proton.me", badgeColor: "#6d4aff", icon: Mail },
+  { label: "Twitter", href: "https://x.com/ml3ml3m", badgeColor: "#000000", icon: Twitter },
+  { label: "Discord", href: "#", badgeColor: "#5865f2", icon: MessageCircle },
+  { label: "Steam", href: "https://steamcommunity.com/id/ml3ml3m/", badgeColor: "#1b2838", icon: Gamepad2 },
 ];
 
 export const linkTable = [
-  // TODO: replace with your real links
-  { label: "GitHub", href: "https://github.com/TODO-your-username" },
-  { label: "Email", href: "mailto:TODO@example.com" },
-  { label: "Ko-Fi", href: "https://ko-fi.com/TODO" },
-  { label: "Discord", href: "https://discord.gg/TODO" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/TODO" },
+  { label: "GitHub", href: "https://github.com/ml3m" },
+  { label: "GitLab", href: "https://gitlab.com/ml3ml3m" },
+  { label: "Email", href: "mailto:ml3ml3m@proton.me" },
+  { label: "Twitter", href: "https://x.com/ml3ml3m" },
+  { label: "Mastodon", href: "https://mastodon.social/@ml3m" },
+  { label: "Bluesky", href: "https://bsky.app/profile/ml3ml3m.bsky.social" },
+  { label: "Matrix", href: "https://matrix.to/#/@ml3mml3mml3m:matrix.org" },
+  { label: "Steam", href: "https://steamcommunity.com/id/ml3ml3m/" },
+  { label: "Discord", href: "@m13w" },
 ];
