@@ -1,19 +1,15 @@
-import { Github, Mail, MessageCircle, Gamepad2, Twitter } from "lucide-react";
-import { LucideIcon } from "lucide-react";
-
 export interface SocialLink {
   label: string;
   href: string;
   badgeColor: string;
-  icon?: LucideIcon;
 }
 
 export const socialLinks: SocialLink[] = [
-  { label: "GitHub", href: "https://github.com/ml3m", badgeColor: "#24292e", icon: Github },
-  { label: "Email", href: "mailto:ml3ml3m@proton.me", badgeColor: "#6d4aff", icon: Mail },
-  { label: "Twitter", href: "https://x.com/ml3ml3m", badgeColor: "#000000", icon: Twitter },
-  { label: "Discord", href: "#", badgeColor: "#5865f2", icon: MessageCircle },
-  { label: "Steam", href: "https://steamcommunity.com/id/ml3ml3m/", badgeColor: "#1b2838", icon: Gamepad2 },
+  { label: "GitHub", href: "https://github.com/ml3m", badgeColor: "#24292e" },
+  { label: "Email", href: "mailto:ml3ml3m@proton.me", badgeColor: "#6d4aff" },
+  { label: "Twitter", href: "https://x.com/ml3ml3m", badgeColor: "#000000" },
+  { label: "Discord", href: "#", badgeColor: "#5865f2" },
+  { label: "Steam", href: "https://steamcommunity.com/id/ml3ml3m/", badgeColor: "#1b2838" },
 ];
 
 export const linkTable = [

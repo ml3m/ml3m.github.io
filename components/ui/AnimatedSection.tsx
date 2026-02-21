@@ -1,5 +1,3 @@
-"use client";
-
 interface AnimatedSectionProps {
   children: React.ReactNode;
   delay?: number;

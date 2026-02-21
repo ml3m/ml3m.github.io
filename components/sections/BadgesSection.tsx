@@ -1,5 +1,14 @@
+import { Github, Mail, MessageCircle, Gamepad2, Twitter, type LucideIcon } from "lucide-react";
 import NeonBadge from "@/components/ui/NeonBadge";
 import { socialLinks } from "@/lib/links";
+
+const SOCIAL_ICONS: Record<string, LucideIcon> = {
+  GitHub: Github,
+  Email: Mail,
+  Twitter: Twitter,
+  Discord: MessageCircle,
+  Steam: Gamepad2,
+};
 
 export default function BadgesSection() {
   return (
@@ -14,7 +23,7 @@ export default function BadgesSection() {
             label={link.label}
             href={link.href}
             bgColor={link.badgeColor}
-            icon={link.icon}
+            icon={SOCIAL_ICONS[link.label]}
           />
         ))}
       </div>

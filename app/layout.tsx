@@ -46,6 +46,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" href="/img/oneko.gif" as="image" />
+      </head>
       <body className={`${spaceMono.variable} font-mono antialiased`}>
         <div className="min-h-screen flex flex-col">
           <Header />
