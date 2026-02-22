@@ -16,7 +16,7 @@ export const linkTable = [
   { label: "GitHub", href: "https://github.com/ml3m" },
   { label: "GitLab", href: "https://gitlab.com/ml3ml3m" },
   { label: "Email", href: "mailto:ml3ml3m@proton.me" },
-  { label: "Twitter", href: "https://x.com/ml3ml3m" },
+  { label: "Twitter", href: "https://twitter.com/ml3ml3m" },
   { label: "Mastodon", href: "https://mastodon.social/@ml3m" },
   { label: "Bluesky", href: "https://bsky.app/profile/ml3ml3m.bsky.social" },
   { label: "Matrix", href: "https://matrix.to/#/@ml3mml3mml3m:matrix.org" },
