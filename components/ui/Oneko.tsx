@@ -110,8 +110,8 @@ export default function Oneko() {
       const el = document.getElementById("logo-three");
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      nekoPosX = rect.left + rect.width / 2.1;
-      nekoPosY = rect.top + rect.height * 0.16;
+      nekoPosX = rect.left + rect.width / 2;
+      nekoPosY = rect.top + rect.height * 0.29 - 16;
       mousePosX = nekoPosX;
       mousePosY = nekoPosY;
       nekoEl!.style.left = `${nekoPosX - 16}px`;
