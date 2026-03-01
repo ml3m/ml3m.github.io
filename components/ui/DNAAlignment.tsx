@@ -52,7 +52,7 @@ function render(
     const start = Math.floor(offset);
     const shiftX = -(offset - start) * CH_W;
 
-    ctx.fillStyle = "#150E26"; // dark purple matching card bg
+    ctx.fillStyle = "#1A1230"; // dark purple matching card bg
     ctx.fillRect(0, 0, w, h);
 
     // Calculate vertical centering
