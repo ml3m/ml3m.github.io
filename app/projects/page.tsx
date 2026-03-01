@@ -5,7 +5,7 @@ import BentoCard, { BentoProject } from "@/components/ui/BentoCard";
 export const metadata: Metadata = { title: "Projects" };
 
 const projects: BentoProject[] = [
-  // ── Row 1-2: hero(8×2) | tall(4×2) ──────────────────────────────────────
+  // ── Rows 1-2: hero(8×2) | tall(4×2) ─────────────────────────────────────
   {
     name: "mlem.vi",
     description:
@@ -29,28 +29,66 @@ const projects: BentoProject[] = [
     statLabel: "ray depth",
   },
 
-  // ── Row 3: wide(8×1) | small(4×1) ────────────────────────────────────────
+  // ── Rows 3-6: square-sm(4×4) | hero(8×2) + hero(8×2) ────────────────────
   {
-    name: "Genomic Data Processing",
+    name: "mlemfetch",
     description:
-      "analyzes FASTA genomic data, calculates GC content per sequence, built for alignment, variant calling & genome assembly.",
-    tags: ["c++", "bioinformatics", "genomics"],
-    github:
-      "https://github.com/ml3m/Genomic-Data-Processing-and-Analysis-Algorithms-for-DNA-Sequences",
-    variant: "wide",
+      "colorful terminal system info tool — neofetch-inspired, with a rainbow ASCII cat animation.",
+    tags: ["shell", "terminal", "neofetch"],
+    github: "https://github.com/ml3m/mlemfetch",
+    variant: "square-sm",
+    accent: "lavender",
+    stat: "$ mlemfetch",
+    statLabel: "run it",
+    special: "mlemfetch-cat",
+  },
+  {
+    name: "PINN Framework",
+    description:
+      "physics-informed neural networks for solving differential equations by embedding governing physical laws directly into the loss function.",
+    tags: ["python", "pytorch", "physics", "neural networks"],
+    github_private: "https://github.com/ml3m/pinn",
+    variant: "hero",
+    accent: "magenta",
+    stat: "PINN Framework",
+    statLabel: "Bachelor Thesis",
+    special: "lorenz-attractor",
+  },
+  {
+    name: "QuickHull Convex Layers",
+    description:
+      "computation and animation of convex hull layers using a QuickHull-based algorithm with detailed 2D point-set visualization.",
+    tags: ["python", "computational geometry", "visualization"],
+    github: "https://github.com/ml3m/QuickHull_Convex_Layers_Study",
+    variant: "hero",
     accent: "lavender",
   },
+
+  // ── Rows 7-11: square-md(6×5) | square-md(6×5) ───────────────────────────
   {
-    name: "Smart Railway Sim",
+    name: "TuneType",
     description:
-      "multi-agent railway simulation with MESA — intelligent trains, signaling, dispatching.",
-    tags: ["python", "mesa", "multi-agent"],
+      "music genre classification system using ML and audio signal processing to identify the genre of any track from raw audio.",
+    tags: ["python", "ml", "audio", "classification"],
+    github: "https://github.com/ml3m/TuneType",
+    variant: "square-md",
+    accent: "pink",
+    stat: "~92%",
+    statLabel: "accuracy",
+  },
+  {
+    name: "Smart Railway Network Simulation",
+    description:
+      "multi-agent railway network simulation built with MESA — intelligent trains, dynamic signaling, centralized dispatching, passenger behavior, and real-time analytics.",
+    tags: ["python", "mesa", "multi-agent", "simulation"],
     github: "https://github.com/ml3m/smart-railway-network-simulation",
-    variant: "small",
-    accent: "magenta",
+    variant: "square-md",
+    accent: "purple",
+    stat: "20+ agents",
+    statLabel: "concurrent",
   },
 
-  // ── Row 4: small(4×1) | small(4×1) | small(4×1) ──────────────────────────
+  // ── Row 12: small(4) × 3 ─────────────────────────────────────────────────
   {
     name: "ETH-Sui Bridge",
     description:
@@ -63,7 +101,7 @@ const projects: BentoProject[] = [
   {
     name: "MlemHouse",
     description:
-      "real-time IoT dashboard. smart bulbs, thermostats, cameras & meters via WebSocket.",
+      "real-time IoT dashboard. smart bulbs, thermostats, cameras via WebSocket.",
     tags: ["python", "fastapi", "iot"],
     github: "https://github.com/ml3m/MlemHouse",
     variant: "small",
@@ -72,148 +110,102 @@ const projects: BentoProject[] = [
   {
     name: "PINN Diff. Equations",
     description:
-      "physics-informed neural networks for solving ODEs and PDEs with auto-diff.",
+      "physics-informed neural networks for solving ODEs and PDEs.",
     tags: ["python", "pytorch", "physics"],
     github: "https://github.com/ml3m/PINN_DE_playground",
     variant: "small",
     accent: "lavender",
   },
 
-  // ── Row 5-6: tall(4×2) | hero(8×2) ───────────────────────────────────────
+  // ── Rows 13-14: tall(4×2) | hero(8×2) ────────────────────────────────────
   {
-    name: "TuneType",
+    name: "Huffman Encoding Study",
     description:
-      "music genre classification using ML and audio signal processing to identify the genre of any track.",
-    tags: ["python", "ml", "audio"],
-    github: "https://github.com/ml3m/TuneType",
+      "benchmark comparing Huffman, Burrows-Wheeler, and Run-Length encoding in Go.",
+    tags: ["go", "compression", "benchmarking"],
+    github: "https://github.com/ml3m/huffman_encoding_study",
     variant: "tall",
-    accent: "pink",
-    stat: "~92%",
-    statLabel: "accuracy",
+    accent: "magenta",
   },
   {
-    name: "Cryptography Algorithms Exploration",
+    name: "Genomic Data Processing",
     description:
-      "implementations of symmetric & asymmetric encryption, hashing, and key exchange techniques — all in Rust.",
-    tags: ["rust", "cryptography", "security"],
-    github: "https://github.com/ml3m/cryptography-algorithms-exploration",
+      "analyzes FASTA genomic data, calculates GC content per sequence. built for sequence alignment, variant calling, and genome assembly.",
+    tags: ["c++", "bioinformatics", "genomics"],
+    github:
+      "https://github.com/ml3m/Genomic-Data-Processing-and-Analysis-Algorithms-for-DNA-Sequences",
     variant: "hero",
-    accent: "magenta",
-    stat: "AES·RSA·SHA",
-    statLabel: "and more",
+    accent: "lavender",
   },
 
-  // ── Row 7: small(4×1) | wide(8×1) ────────────────────────────────────────
+  // ── Row 15: small(4) × 3 ─────────────────────────────────────────────────
   {
     name: "SHA256 in ASM",
-    description:
-      "SHA256 hashing algorithm in x86-64 assembly using NASM syntax.",
+    description: "SHA256 hashing in x86-64 assembly using NASM syntax.",
     tags: ["assembly", "x86-64", "crypto"],
     github: "https://github.com/ml3m/SHA256-ASM-X86-64",
     variant: "small",
     accent: "purple",
   },
   {
-    name: "QuickHull Convex Layers",
-    description:
-      "computation and animation of convex hull layers using a QuickHull-based algorithm with detailed 2D visualization.",
-    tags: ["python", "computational geometry", "visualization"],
-    github: "https://github.com/ml3m/QuickHull_Convex_Layers_Study",
-    variant: "wide",
-    accent: "lavender",
-  },
-
-  // ── Row 8: wide(8×1) | small(4×1) ────────────────────────────────────────
-  {
-    name: "Huffman Encoding Study",
-    description:
-      "benchmark comparing Huffman encoding, Burrows-Wheeler transform, and Run-Length encoding in Go.",
-    tags: ["go", "compression", "benchmarking"],
-    github: "https://github.com/ml3m/huffman_encoding_study",
-    variant: "wide",
-    accent: "pink",
-  },
-  {
     name: "Huffman Visualizer",
-    description:
-      "Huffman encoding visualizer in Go with tree drawing.",
+    description: "Huffman encoding visualizer in Go with tree drawing.",
     tags: ["go", "visualization"],
     github: "https://github.com/ml3m/Huffman-encoding-visualizer",
     variant: "small",
-    accent: "magenta",
-  },
-
-  // ── Row 9: small | small | small ─────────────────────────────────────────
-  {
-    name: "Map of Computer Science",
-    description:
-      "a comprehensive CS knowledge map built in Obsidian.",
-    tags: ["obsidian", "knowledge", "cs"],
-    github: "https://github.com/ml3m/Map_Of_Computer_Science",
-    variant: "small",
-    accent: "purple",
-  },
-  {
-    name: "Legacy of Brok",
-    description:
-      "a full game crafted in Pygame. OOP & game dev exercise.",
-    tags: ["python", "pygame", "game dev"],
-    github: "https://github.com/ml3m/Legacy_of_Brok",
-    variant: "small",
     accent: "pink",
   },
   {
-    name: "DutchBuddy",
-    description:
-      "Android app for learning Dutch vocabulary via flashcards & quizzes.",
-    tags: ["java", "android", "language"],
-    github: "https://github.com/ml3m/DutchBuddy",
+    name: "Map of Computer Science",
+    description: "a comprehensive CS knowledge map built in Obsidian.",
+    tags: ["obsidian", "knowledge", "cs"],
+    github: "https://github.com/ml3m/Map_Of_Computer_Science",
     variant: "small",
     accent: "lavender",
   },
 
-  // ── Row 10-11: hero(8×2) | tall(4×2) ────────────────────────────────────
+  // ── Row 16: small(4) | wide(8×1) ─────────────────────────────────────────
   {
-    name: "mlemfetch",
-    description:
-      "a colorful terminal system info tool — because the best projects come from creative boredom. neofetch-inspired, fully custom.",
-    tags: ["shell", "terminal", "neofetch"],
-    github: "https://github.com/ml3m/mlemfetch",
-    variant: "hero",
-    accent: "lavender",
-    stat: "$ mlemfetch",
-    statLabel: "run it",
-    special: "mlemfetch-cat",
-  },
-  {
-    name: "Sorting Visualizer",
-    description:
-      "sorting algorithm visualizer with Pygame — watch algorithms work in real time.",
-    tags: ["python", "pygame", "algorithms"],
-    github: "https://github.com/ml3m/sorting_visualizer",
-    variant: "tall",
-    accent: "purple",
-    stat: "O(n²)",
-    statLabel: "worst case",
-  },
-
-  // ── Row 12: small(4×1) | wide(8×1) ───────────────────────────────────────
-  {
-    name: "WanderPath",
-    description:
-      "travel management app for iOS — built it because I couldn't find a good one.",
-    tags: ["swift", "ios", "travel"],
-    github: "https://github.com/ml3m/WanderPath",
+    name: "Legacy of Brok",
+    description: "a full game built in Pygame. OOP & game dev exercise.",
+    tags: ["python", "pygame", "game dev"],
+    github: "https://github.com/ml3m/Legacy_of_Brok",
     variant: "small",
     accent: "magenta",
   },
   {
     name: "Comp Arch CTF",
     description:
-      "capture-the-flag inspired challenges from the computer architecture course. binary exploration and low-level systems programming.",
+      "capture-the-flag inspired challenges from computer architecture course. binary exploration and low-level systems programming.",
     tags: ["python", "ctf", "assembly", "security"],
     github: "https://github.com/ml3m/comp_arch_ctf_like",
     variant: "wide",
+    accent: "pink",
+  },
+
+  // ── Row 17: small(4) × 3 ─────────────────────────────────────────────────
+  {
+    name: "DutchBuddy",
+    description: "Android app for learning Dutch vocabulary via flashcards.",
+    tags: ["java", "android", "language"],
+    github: "https://github.com/ml3m/DutchBuddy",
+    variant: "small",
+    accent: "purple",
+  },
+  {
+    name: "WanderPath",
+    description: "travel management iOS app — built it because I needed one.",
+    tags: ["swift", "ios", "travel"],
+    github: "https://github.com/ml3m/WanderPath",
+    variant: "small",
+    accent: "lavender",
+  },
+  {
+    name: "Sorting Visualizer",
+    description: "sorting algorithm visualizer with Pygame.",
+    tags: ["python", "pygame", "algorithms"],
+    github: "https://github.com/ml3m/sorting_visualizer",
+    variant: "small",
     accent: "pink",
   },
 ];
@@ -230,10 +222,18 @@ export default function ProjectsPage() {
         </p>
       </div>
 
-      {/* Bento grid — always a solid rectangle, no gaps */}
+      {/*
+        Bento grid — 12-column, auto rows of min 70px.
+        Every row of projects sums to exactly 12 columns → no gaps, solid rectangle.
+        Variants: hero(8×2), tall(4×2), wide(8×1), small(4×1),
+                  square-sm(4×4), square-md(6×5)
+      */}
       <div
         className="grid gap-2"
-        style={{ gridTemplateColumns: "repeat(12, 1fr)" }}
+        style={{
+          gridTemplateColumns: "repeat(12, 1fr)",
+          gridAutoRows: "minmax(70px, auto)",
+        }}
       >
         {projects.map((project) => (
           <BentoCard key={project.name} project={project} />

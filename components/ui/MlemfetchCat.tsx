@@ -1,140 +1,148 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 
-// ASCII cat frames extracted from https://github.com/ml3m/mlemfetch
-// Each frame is an array of strings representing lines of the cat
+// ASCII cat frames from https://github.com/ml3m/mlemfetch
+// ALL frames normalized to exactly 16 lines so the <pre> never changes height.
+// Lines are left-padded with spaces to a consistent width (35 chars visible) to
+// prevent the container from resizing between frames.
 const FRAMES: string[][] = [
-    // frame_0 — idle
+    // frame_0 — idle / bug far left
     [
-        "                               ",
-        "       _",
-        "       `*-.",
-        "        )  _`-.",
-        "       .  : `. .",
-        "       : _   '  \\",
-        "       ; *` _.   `*-._",
-        "       `-.-'          `-.",
-        "         ;       `       `.",
-        "         :.       .        \\",
-        "         . \\  .   :   .-'   .",
-        "         '  `+.;  ;  '      :",
-        "         :  '  |  ,  ;       ;-.",
-        "         ; '   : :`-:     _.`*  ;",
-        "[bug] .*' /  .*' ; .*`- +'  `*'*",
-        "      `*-*   `*-*  `*-*'       ",
+        "                                   ",
+        "       _                           ",
+        "       `*-.                        ",
+        "        )  _`-.                    ",
+        "       .  : `. .                   ",
+        "       : _   '  \\                  ",
+        "       ; *` _.   `*-._             ",
+        "       `-.-'          `-.          ",
+        "         ;       `       `.        ",
+        "         :.       .        \\       ",
+        "         . \\  .   :   .-'   .      ",
+        "         '  `+.;  ;  '      :      ",
+        "         :  '  |  ,  ;       ;-.   ",
+        "         ; '   : :`-:     _.`*  ;  ",
+        "[bug] .*' /  .*' ; .*`- +'  `*'*   ",
+        "      `*-*   `*-*  `*-*'           ",
     ],
     // frame_1 — slight shift
     [
-        "                               ",
-        "       _                        ",
-        "       `*-.                    ",
-        "        )  _`-.                 ",
-        "       .  : `. .                ",
-        "       : _   '  \\               ",
-        "       / *` _.   `*-._          ",
-        "       `-.-'          `-.       ",
-        "         :.              \\    ",
-        "         . \\      `   .-. .   ",
-        "         '  ._ ;  ;  '     :   ",
-        "         :  , `|  ,  ;      ;-.",
-        "         ; '   : :`-:    _.`*  ;",
-        "[bug] .*' /  .*' ; .*`- +'  `*' ",
-        "      `*-*   `*-*  `*-*'       ",
+        "                                   ",
+        "       _                           ",
+        "       `*-.                        ",
+        "        )  _`-.                    ",
+        "       .  : `. .                   ",
+        "       : _   '  \\                  ",
+        "       / *` _.   `*-._             ",
+        "       `-.-'          `-.          ",
+        "                                   ",
+        "         :.              \\         ",
+        "         . \\      `   .-. .        ",
+        "         '  ._ ;  ;  '     :       ",
+        "         :  , `|  ,  ;      ;-.    ",
+        "         ; '   : :`-:    _.`*  ;   ",
+        "[bug] .*' /  .*' ; .*`- +'  `*'    ",
+        "      `*-*   `*-*  `*-*'           ",
     ],
-    // frame_2 — paw raise
+    // frame_2 — paw raise / bug far right
     [
-        "                               ",
-        "        _                        ",
-        "        `*,.                   ",
-        "        /  _ `-.                 ",
-        "       .  : `, `.                ",
-        "       ; _   '  |               ",
-        "       / *` _,   `*-._          ",
-        "       `-`'           `-.       ",
-        "         : .             \\    ",
-        "         ; ;      `   .-. .   ",
-        "        , ; `. ;  ;  '     :   ",
-        "    .*'` /    `|  ,  ;      ;-.",
-        "    `*-'`      ; :`-:    _.`*  ;",
-        "[bug]        .*' ; .*`- +`  `*' ",
-        "             `*-*  `*-*'       ",
+        "                                   ",
+        "        _                          ",
+        "        `*,.                       ",
+        "        /  _ `-.                   ",
+        "       .  : `, `.                  ",
+        "       ; _   '  |                  ",
+        "       / *` _,   `*-._             ",
+        "       `-`'           `-.          ",
+        "                                   ",
+        "         : .             \\         ",
+        "         ; ;      `   .-. .        ",
+        "        , ; `. ;  ;  '     :       ",
+        "    .*'` /    `|  ,  ;      ;-.    ",
+        "    `*-'`      ; :`-:    _.`*  ;   ",
+        "[bug]        .*' ; .*`- +`  `*'    ",
+        "             `*-*  `*-*'           ",
     ],
     // frame_3 — bug approaches mouth (1)
     [
-        "                               ",
-        "        _                        ",
-        "        `*,.                   ",
-        "        /  _ `-.                 ",
-        "       .  : `, `.                ",
-        "       ; _   '  |               ",
-        "       / *` _,   `*-._          ",
-        "       `-`'           `-.       ",
-        "         : .             \\    ",
-        "         ; ;      `   .-. .   ",
-        " [bug]  , ; `. ;  ;  '     :   ",
-        "    .*'` /    `|  ,  ;      ;-.",
-        "    `*-'`      ; :`-:    _.`*  ;",
-        "             .*' ; .*`- +`  `*' ",
-        "             `*-*  `*-*'       ",
+        "                                   ",
+        "        _                          ",
+        "        `*,.                       ",
+        "        /  _ `-.                   ",
+        "       .  : `, `.                  ",
+        "       ; _   '  |                  ",
+        "       / *` _,   `*-._             ",
+        "       `-`'           `-.          ",
+        "                                   ",
+        "         : .             \\         ",
+        "         ; ;      `   .-. .        ",
+        " [bug]  , ; `. ;  ;  '     :       ",
+        "    .*'` /    `|  ,  ;      ;-.    ",
+        "    `*-'`      ; :`-:    _.`*  ;   ",
+        "             .*' ; .*`- +`  `*'    ",
+        "             `*-*  `*-*'           ",
     ],
     // frame_4 — bug approaches mouth (2)
     [
-        "                               ",
-        "        _                        ",
-        "        `*,.                   ",
-        "        /  _ `-.                 ",
-        "       .  : `, `.                ",
-        "       ; _   '  |               ",
-        "       / *` _,   `*-._          ",
-        "       `-`'           `-.       ",
-        "         : .             \\    ",
-        "   [bug], ,;      `   .-. .   ",
-        "    ,-'` /  `. ;  ;  '     :   ",
-        "    `*-'`     `|  ,  ;      ;-.",
-        "               ; :`-:    _.`*  ;",
-        "             .*' ; .*`- +`  `*' ",
-        "             `*-*  `*-*'       ",
+        "                                   ",
+        "        _                          ",
+        "        `*,.                       ",
+        "        /  _ `-.                   ",
+        "       .  : `, `.                  ",
+        "       ; _   '  |                  ",
+        "       / *` _,   `*-._             ",
+        "       `-`'           `-.          ",
+        "                                   ",
+        "         : .             \\         ",
+        "   [bug], ,;      `   .-. .        ",
+        "    ,-'` /  `. ;  ;  '     :       ",
+        "    `*-'`     `|  ,  ;      ;-.    ",
+        "               ; :`-:    _.`*  ;   ",
+        "             .*' ; .*`- +`  `*'    ",
+        "             `*-*  `*-*'           ",
     ],
-    // frame_5 — bug at mouth
+    // frame_5 — bug at mouth (eaten!)
     [
-        "                               ",
-        "        _                        ",
-        "        `*,.                   ",
-        "        /  _ `-.                 ",
-        "       .  : `, `.                ",
-        "       ; _   '  |               ",
-        "       / *` _,   `*-._          ",
-        "       `-`'           `-.       ",
-        "    [bug]: ,             \\    ",
-        "    ;`'` /,;      `   .-. .   ",
-        "    `*-'`   `. ;  ;  '     :   ",
-        "              `|  ,  ;      ;-.",
-        "               ; :`-:    _.`*  ;",
-        "             .*' ; .*`- +`  `*' ",
-        "             `*-*  `*-*'       ",
+        "                                   ",
+        "        _                          ",
+        "        `*,.                       ",
+        "        /  _ `-.                   ",
+        "       .  : `, `.                  ",
+        "       ; _   '  |                  ",
+        "       / *` _,   `*-._             ",
+        "       `-`'           `-.          ",
+        "                                   ",
+        "    [bug]: ,             \\         ",
+        "    ;`'` /,;      `   .-. .        ",
+        "    `*-'`   `. ;  ;  '     :       ",
+        "              `|  ,  ;      ;-.    ",
+        "               ; :`-:    _.`*  ;   ",
+        "             .*' ; .*`- +`  `*'    ",
+        "             `*-*  `*-*'           ",
     ],
-    // frame_6 — back to paw
+    // frame_6 — back to paw (loop)
     [
-        "                               ",
-        "        _                        ",
-        "        `*,.                   ",
-        "        /  _ `-.                 ",
-        "       .  : `, `.                ",
-        "       ; _   '  |               ",
-        "       / *` _,   `*-._          ",
-        "       `-`'           `-.       ",
-        "         : .             \\    ",
-        "         ; ;      `   .-. .   ",
-        "        , ; `. ;  ;  '     :   ",
-        "    .*'` /    `|  ,  ;      ;-.",
-        "    `*-'`      ; :`-:    _.`*  ;",
-        "             .*' ; .*`- +`  `*' ",
-        "             `*-*  `*-*'       ",
+        "                                   ",
+        "        _                          ",
+        "        `*,.                       ",
+        "        /  _ `-.                   ",
+        "       .  : `, `.                  ",
+        "       ; _   '  |                  ",
+        "       / *` _,   `*-._             ",
+        "       `-`'           `-.          ",
+        "                                   ",
+        "         : .             \\         ",
+        "         ; ;      `   .-. .        ",
+        "        , ; `. ;  ;  '     :       ",
+        "    .*'` /    `|  ,  ;      ;-.    ",
+        "    `*-'`      ; :`-:    _.`*  ;   ",
+        "             .*' ; .*`- +`  `*'    ",
+        "             `*-*  `*-*'           ",
     ],
 ];
 
-// Neon rainbow palette (matching the site's retro-cyber vibe)
+// Neon rainbow palette
 const NEON_PALETTE = [
     "#ff4da6", // neon-pink
     "#cc44ff", // neon-purple
@@ -147,46 +155,77 @@ const NEON_PALETTE = [
 ];
 
 function getLineColor(lineIndex: number, offset: number): string {
-    const idx = (lineIndex + offset) % NEON_PALETTE.length;
-    return NEON_PALETTE[(idx + NEON_PALETTE.length) % NEON_PALETTE.length];
+    return NEON_PALETTE[(lineIndex + offset + NEON_PALETTE.length) % NEON_PALETTE.length];
 }
 
 export default function MlemfetchCat({ className = "" }: { className?: string }) {
-    const [frameIndex, setFrameIndex] = useState(0);
-    const [colorOffset, setColorOffset] = useState(0);
+    // Store frame + color in a ref to avoid stale closure in the interval
+    const frameRef = useRef(0);
+    const colorRef = useRef(0);
+    // A ref to the <pre> DOM element so we can update it directly (no re-render → no resize flicker)
+    const preRef = useRef<HTMLPreElement>(null);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     useEffect(() => {
+        // Render the initial frame immediately
+        renderFrame(frameRef.current, colorRef.current);
+
+        // 350 ms per frame — slow enough to clearly read, fast enough to feel alive
         intervalRef.current = setInterval(() => {
-            setFrameIndex((f) => (f + 1) % FRAMES.length);
-            setColorOffset((o) => (o + 1) % NEON_PALETTE.length);
-        }, 40);
+            frameRef.current = (frameRef.current + 1) % FRAMES.length;
+            // Color cycles at 2× the frame rate (every other tick increment it twice)
+            colorRef.current = (colorRef.current + 1) % NEON_PALETTE.length;
+            renderFrame(frameRef.current, colorRef.current);
+        }, 350);
 
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const frame = FRAMES[frameIndex];
+    /** Directly mutate the DOM span colors — zero React re-renders, zero layout recalc */
+    function renderFrame(fi: number, co: number) {
+        const pre = preRef.current;
+        if (!pre) return;
+        const spans = pre.querySelectorAll("span");
+        const lines = FRAMES[fi];
+        spans.forEach((span, i) => {
+            const color = getLineColor(i, co);
+            (span as HTMLElement).textContent = lines[i] ?? " ";
+            (span as HTMLElement).style.color = color;
+            (span as HTMLElement).style.textShadow = `0 0 5px ${color}99`;
+        });
+    }
+
+    // Render spans for all 16 lines once — content is updated imperatively via renderFrame
+    const initialFrame = FRAMES[0];
 
     return (
-        <pre
-            className={`font-mono text-[0.52rem] leading-[1.35] select-none pointer-events-none ${className}`}
+        // Fixed-size wrapper so card dimensions never change between frames
+        <div
+            className={`overflow-hidden flex-shrink-0 ${className}`}
+            style={{ width: "35ch", lineHeight: "1.35" }}
             aria-hidden="true"
         >
-            {frame.map((line, i) => (
-                <span
-                    key={i}
-                    style={{
-                        display: "block",
-                        color: getLineColor(i, colorOffset),
-                        textShadow: `0 0 6px ${getLineColor(i, colorOffset)}88`,
-                        transition: "color 0.15s ease",
-                    }}
-                >
-                    {line || " "}
-                </span>
-            ))}
-        </pre>
+            <pre
+                ref={preRef}
+                className="font-mono text-[0.52rem] leading-[1.35] select-none pointer-events-none m-0 p-0"
+                style={{ whiteSpace: "pre" }}
+            >
+                {initialFrame.map((line, i) => (
+                    <span
+                        key={i}
+                        style={{
+                            display: "block",
+                            color: getLineColor(i, 0),
+                            textShadow: `0 0 5px ${getLineColor(i, 0)}99`,
+                        }}
+                    >
+                        {line || " "}
+                    </span>
+                ))}
+            </pre>
+        </div>
     );
 }
