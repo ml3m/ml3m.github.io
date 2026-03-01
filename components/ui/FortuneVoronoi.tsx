@@ -297,9 +297,6 @@ export default function FortuneVoronoi({ width = 210, height = 210 }: FortuneVor
     );
 }
 
-
-
-
 function renderEdges(
     ctx: CanvasRenderingContext2D,
     vedges: VEdge[],
@@ -357,7 +354,11 @@ function renderBeach(
         for (let x = x0; x <= x1; x += 0.6) {
             const py = arcY(s, sweepY, x);
             if (py < 0 || py > h) { pen = false; continue; }
-            pen ? ctx.lineTo(x, py) : ctx.moveTo(x, py);
+            if (pen) {
+                ctx.lineTo(x, py);
+            } else {
+                ctx.moveTo(x, py);
+            }
             pen = true;
         }
         ctx.stroke();

@@ -18,7 +18,7 @@ import {
   type NodeGroup,
 } from "@/lib/garden";
 
-interface SimNode extends SimulationNodeDatum, GardenNode {}
+interface SimNode extends SimulationNodeDatum, GardenNode { }
 interface SimLink extends SimulationLinkDatum<SimNode> {
   source: SimNode | string;
   target: SimNode | string;
@@ -104,7 +104,7 @@ export default function ForceGraph({ nodes, edges }: ForceGraphProps) {
     });
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [defaultTransform, viewModified]);
 
   const screenToWorld = useCallback(
     (sx: number, sy: number): { x: number; y: number } => {
@@ -510,7 +510,7 @@ export default function ForceGraph({ nodes, edges }: ForceGraphProps) {
     transformRef.current = defaultTransform(dimensions.width, dimensions.height);
     setViewModified(false);
     scheduleRedraw();
-  }, [scheduleRedraw]);
+  }, [scheduleRedraw, defaultTransform, dimensions.width, dimensions.height]);
 
   return (
     <div ref={containerRef} className="w-full relative">
@@ -537,8 +537,8 @@ export default function ForceGraph({ nodes, edges }: ForceGraphProps) {
             ),
             top: Math.max(
               tooltip.screenY -
-                STATUS_RADIUS[tooltip.node.status] * transformRef.current.k -
-                60,
+              STATUS_RADIUS[tooltip.node.status] * transformRef.current.k -
+              60,
               10
             ),
           }}

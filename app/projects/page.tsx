@@ -131,12 +131,13 @@ const projects: BentoProject[] = [
   {
     name: "Genomic Data Processing",
     description:
-      "analyzes FASTA genomic data, calculates GC content per sequence. built for sequence alignment, variant calling, and genome assembly.",
+      "analyzes FASTA genomic data — GC content, Needleman-Wunsch sequence alignment, variant calling. right: live alignment view.",
     tags: ["c++", "bioinformatics", "genomics"],
     github:
       "https://github.com/ml3m/Genomic-Data-Processing-and-Analysis-Algorithms-for-DNA-Sequences",
     variant: "hero",
     accent: "lavender",
+    special: "dna-alignment",
   },
 
   // ── Row 15: small(4) × 3 ─────────────────────────────────────────────────
