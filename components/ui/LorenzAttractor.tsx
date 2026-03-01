@@ -95,8 +95,14 @@ export default function LorenzAttractor({
     const rafRef = useRef<number>(0);
     const stateRef = useRef({
         count: 0,
-        angle: -0.25,   // starting Y-rotation (shows the butterfly from a nice angle)
+        angle: -0.25,   // starting Y-rotation
         done: false,
+    });
+    // Drag interaction state (kept in a ref — no re-renders needed)
+    const dragRef = useRef({
+        active: false,
+        startX: 0,
+        angleAtStart: 0,
     });
 
     useEffect(() => {
@@ -114,27 +120,28 @@ export default function LorenzAttractor({
         ctx.scale(dpr, dpr);
 
         const w = width, h = height;
+        const DRAW_PER_FRAME = 100;
+        const ROT_SPEED = 0.005;
+        const DRAG_SENS = 0.008; // radians per pixel dragged
 
-        // Tune these for feel:
-        const DRAW_PER_FRAME = 100; // points added per frame during build-up phase
-        const ROT_SPEED = 0.005; // rad/frame during rotation phase
-
+        /* ── render loop ── */
         function draw() {
             ctx.clearRect(0, 0, w, h);
 
             const s = stateRef.current;
+            const d = dragRef.current;
 
             if (!s.done) {
                 s.count = Math.min(s.count + DRAW_PER_FRAME, TOTAL);
                 if (s.count >= TOTAL) s.done = true;
-            } else {
+            } else if (!d.active) {
+                // Only auto-rotate when the user isn't dragging
                 s.angle += ROT_SPEED;
             }
 
             const count = s.count;
             const angle = s.angle;
 
-            // Draw trail in pre-baked color segments
             for (let seg = 0; seg < SEGMENTS; seg++) {
                 const start = seg * SEG_SIZE;
                 if (start >= count - 1) break;
@@ -147,7 +154,6 @@ export default function LorenzAttractor({
 
                 const [x0, y0] = project(BUF[start * 3], BUF[start * 3 + 1], BUF[start * 3 + 2], angle, w, h);
                 ctx.moveTo(x0, y0);
-
                 for (let i = start + 1; i <= end; i++) {
                     const [sx, sy] = project(BUF[i * 3], BUF[i * 3 + 1], BUF[i * 3 + 2], angle, w, h);
                     ctx.lineTo(sx, sy);
@@ -172,16 +178,48 @@ export default function LorenzAttractor({
             rafRef.current = requestAnimationFrame(draw);
         }
 
+        /* ── drag / pointer handlers ── */
+        const onDown = (e: PointerEvent) => {
+            dragRef.current.active = true;
+            dragRef.current.startX = e.clientX;
+            dragRef.current.angleAtStart = stateRef.current.angle;
+            canvas.setPointerCapture(e.pointerId);
+            canvas.style.cursor = "grabbing";
+        };
+
+        const onMove = (e: PointerEvent) => {
+            if (!dragRef.current.active) return;
+            const dx = e.clientX - dragRef.current.startX;
+            stateRef.current.angle = dragRef.current.angleAtStart + dx * DRAG_SENS;
+        };
+
+        const onUp = () => {
+            dragRef.current.active = false;
+            canvas.style.cursor = "grab";
+        };
+
+        canvas.addEventListener("pointerdown", onDown);
+        canvas.addEventListener("pointermove", onMove);
+        canvas.addEventListener("pointerup", onUp);
+        canvas.addEventListener("pointerleave", onUp);
+        canvas.style.cursor = "grab";
+
         rafRef.current = requestAnimationFrame(draw);
-        return () => cancelAnimationFrame(rafRef.current);
+        return () => {
+            cancelAnimationFrame(rafRef.current);
+            canvas.removeEventListener("pointerdown", onDown);
+            canvas.removeEventListener("pointermove", onMove);
+            canvas.removeEventListener("pointerup", onUp);
+            canvas.removeEventListener("pointerleave", onUp);
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <canvas
             ref={canvasRef}
-            style={{ display: "block", background: "transparent" }}
-            aria-hidden="true"
+            style={{ display: "block", background: "transparent", touchAction: "none" }}
+            aria-label="Interactive Lorenz attractor — drag to rotate"
         />
     );
 }
