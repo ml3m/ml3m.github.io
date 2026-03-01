@@ -57,11 +57,12 @@ const projects: BentoProject[] = [
   {
     name: "QuickHull Convex Layers",
     description:
-      "computation and animation of convex hull layers using a QuickHull-based algorithm with detailed 2D point-set visualization.",
+      "computation and animation of convex hull layers using a QuickHull-based algorithm. left: Fortune's sweep-line algorithm building a Voronoi diagram in real time.",
     tags: ["python", "computational geometry", "visualization"],
     github: "https://github.com/ml3m/QuickHull_Convex_Layers_Study",
     variant: "hero",
     accent: "lavender",
+    special: "fortune-voronoi",
   },
 
   // ── Rows 7-11: square-md(6×5) | square-md(6×5) ───────────────────────────

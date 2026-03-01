@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 
 const MlemfetchCat = dynamic(() => import("./MlemfetchCat"), { ssr: false });
 const LorenzAttractor = dynamic(() => import("./LorenzAttractor"), { ssr: false });
+const FortuneVoronoi = dynamic(() => import("./FortuneVoronoi"), { ssr: false });
 
 export type BentoVariant = "hero" | "tall" | "wide" | "small" | "square-sm" | "square-md";
 export type NeonAccent = "pink" | "purple" | "lavender" | "magenta";
@@ -20,7 +21,7 @@ export interface BentoProject {
     accent?: NeonAccent;
     stat?: string;
     statLabel?: string;
-    special?: "mlemfetch-cat" | "lorenz-attractor";
+    special?: "mlemfetch-cat" | "lorenz-attractor" | "fortune-voronoi";
 }
 
 // Tailwind span classes — complete literals for Tailwind scanner
@@ -117,6 +118,7 @@ export default function BentoCard({ project }: { project: BentoProject }) {
     const isHero = variant === "hero";
     const hasCat = project.special === "mlemfetch-cat";
     const hasLorenz = project.special === "lorenz-attractor";
+    const hasFortune = project.special === "fortune-voronoi";
 
     return (
         <div
@@ -136,11 +138,10 @@ export default function BentoCard({ project }: { project: BentoProject }) {
             <div className={`absolute top-0 left-0 h-8 w-[2px] ${c.barBg} opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
 
             {/* ══════════════════════════════════════════════════
-                LORENZ LAYOUT — horizontal split (text | canvas)
+                LORENZ — text left | canvas right
                ══════════════════════════════════════════════════ */}
             {hasLorenz ? (
                 <div className="flex flex-row items-center gap-4 flex-1">
-                    {/* Left: text content */}
                     <div className="flex flex-col flex-1 min-w-0 gap-1.5">
                         {project.stat && (
                             <div className="mb-0.5">
@@ -163,10 +164,40 @@ export default function BentoCard({ project }: { project: BentoProject }) {
                         <div className="flex-1" />
                         <TagsAndLinks project={project} c={c} isSmall={false} />
                     </div>
-
-                    {/* Right: Lorenz attractor canvas */}
                     <div className="flex-shrink-0 opacity-90 group-hover:opacity-100 transition-opacity duration-500">
                         <LorenzAttractor width={210} height={210} />
+                    </div>
+                </div>
+
+                /* ══════════════════════════════════════════════════
+                    FORTUNE — canvas left | text right
+                   ══════════════════════════════════════════════════ */
+            ) : hasFortune ? (
+                <div className="flex flex-row items-center gap-4 flex-1">
+                    <div className="flex-shrink-0 opacity-85 group-hover:opacity-100 transition-opacity duration-500">
+                        <FortuneVoronoi width={150} height={150} />
+                    </div>
+                    <div className="flex flex-col flex-1 min-w-0 gap-1.5">
+                        {project.stat && (
+                            <div className="mb-0.5">
+                                <div className={`font-bold leading-none tracking-tight ${c.text} text-xl`}>
+                                    {project.stat}
+                                </div>
+                                {project.statLabel && (
+                                    <div className="text-text-muted text-[0.6rem] mt-0.5 tracking-widest uppercase">
+                                        {project.statLabel}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        <h2 className={`font-bold leading-tight ${c.text} text-sm`}>
+                            {project.name}
+                        </h2>
+                        <p className="text-text-secondary text-[0.7rem] leading-relaxed line-clamp-4">
+                            {project.description}
+                        </p>
+                        <div className="flex-1" />
+                        <TagsAndLinks project={project} c={c} isSmall={false} />
                     </div>
                 </div>
 
