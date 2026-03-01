@@ -271,7 +271,7 @@ export default function BentoCard({ project }: { project: BentoProject }) {
                     {hasCat && (
                         <div
                             className="flex items-end overflow-hidden mt-2 mb-1"
-                            style={{ minHeight: "155px", maxHeight: "155px" }}
+                            style={{ minHeight: "230px", maxHeight: "230px" }}
                         >
                             <MlemfetchCat />
                         </div>

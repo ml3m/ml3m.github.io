@@ -27,7 +27,9 @@ const FRAMES: string[][] = [
         "      `*-*   `*-*  `*-*'           ",
     ],
     // frame_1 — slight shift
+    //
     [
+        "                                   ",
         "                                   ",
         "       _                           ",
         "       `*-.                        ",
@@ -36,7 +38,6 @@ const FRAMES: string[][] = [
         "       : _   '  \\                  ",
         "       / *` _.   `*-._             ",
         "       `-.-'          `-.          ",
-        "                                   ",
         "         :.              \\         ",
         "         . \\      `   .-. .        ",
         "         '  ._ ;  ;  '     :       ",
@@ -48,6 +49,7 @@ const FRAMES: string[][] = [
     // frame_2 — paw raise / bug far right
     [
         "                                   ",
+        "                                   ",
         "        _                          ",
         "        `*,.                       ",
         "        /  _ `-.                   ",
@@ -55,7 +57,6 @@ const FRAMES: string[][] = [
         "       ; _   '  |                  ",
         "       / *` _,   `*-._             ",
         "       `-`'           `-.          ",
-        "                                   ",
         "         : .             \\         ",
         "         ; ;      `   .-. .        ",
         "        , ; `. ;  ;  '     :       ",
@@ -67,6 +68,7 @@ const FRAMES: string[][] = [
     // frame_3 — bug approaches mouth (1)
     [
         "                                   ",
+        "                                   ",
         "        _                          ",
         "        `*,.                       ",
         "        /  _ `-.                   ",
@@ -74,7 +76,6 @@ const FRAMES: string[][] = [
         "       ; _   '  |                  ",
         "       / *` _,   `*-._             ",
         "       `-`'           `-.          ",
-        "                                   ",
         "         : .             \\         ",
         "         ; ;      `   .-. .        ",
         " [bug]  , ; `. ;  ;  '     :       ",
@@ -86,6 +87,7 @@ const FRAMES: string[][] = [
     // frame_4 — bug approaches mouth (2)
     [
         "                                   ",
+        "                                   ",
         "        _                          ",
         "        `*,.                       ",
         "        /  _ `-.                   ",
@@ -93,7 +95,6 @@ const FRAMES: string[][] = [
         "       ; _   '  |                  ",
         "       / *` _,   `*-._             ",
         "       `-`'           `-.          ",
-        "                                   ",
         "         : .             \\         ",
         "   [bug], ,;      `   .-. .        ",
         "    ,-'` /  `. ;  ;  '     :       ",
@@ -105,6 +106,7 @@ const FRAMES: string[][] = [
     // frame_5 — bug at mouth (eaten!)
     [
         "                                   ",
+        "                                   ",
         "        _                          ",
         "        `*,.                       ",
         "        /  _ `-.                   ",
@@ -112,7 +114,6 @@ const FRAMES: string[][] = [
         "       ; _   '  |                  ",
         "       / *` _,   `*-._             ",
         "       `-`'           `-.          ",
-        "                                   ",
         "    [bug]: ,             \\         ",
         "    ;`'` /,;      `   .-. .        ",
         "    `*-'`   `. ;  ;  '     :       ",
@@ -124,6 +125,7 @@ const FRAMES: string[][] = [
     // frame_6 — back to paw (loop)
     [
         "                                   ",
+        "                                   ",
         "        _                          ",
         "        `*,.                       ",
         "        /  _ `-.                   ",
@@ -131,7 +133,6 @@ const FRAMES: string[][] = [
         "       ; _   '  |                  ",
         "       / *` _,   `*-._             ",
         "       `-`'           `-.          ",
-        "                                   ",
         "         : .             \\         ",
         "         ; ;      `   .-. .        ",
         "        , ; `. ;  ;  '     :       ",
@@ -205,12 +206,12 @@ export default function MlemfetchCat({ className = "" }: { className?: string })
         // Fixed-size wrapper so card dimensions never change between frames
         <div
             className={`overflow-hidden flex-shrink-0 ${className}`}
-            style={{ width: "35ch", lineHeight: "1.35" }}
+            style={{ width: "35ch", lineHeight: "2.35" }}
             aria-hidden="true"
         >
             <pre
                 ref={preRef}
-                className="font-mono text-[0.52rem] leading-[1.35] select-none pointer-events-none m-0 p-0"
+                className="font-mono text-[0.7rem] leading-[1.35] select-none pointer-events-none m-0 p-0"
                 style={{ whiteSpace: "pre" }}
             >
                 {initialFrame.map((line, i) => (

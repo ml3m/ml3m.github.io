@@ -106,7 +106,7 @@ html {
   .neon-card:hover {
     border-color: var(--border-glow);
     box-shadow: 0 0 12px #ff00cc;
-    transition-duration: 0.35s; /* short for hover-in */
+    transition-duration: 0.1s; /* short for hover-in */
   }
 
   .neon-card:not(:hover) {
