@@ -398,7 +398,9 @@ function BookInfoCard({
 
 // ─── Main component ──────────────────────────────────────────────────────────
 export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps) {
-    const [selected, setSelected] = useState<Bookmark | null>(null);
+    const [selected, setSelected] = useState<Bookmark | null>(() => {
+        return bookmarks.find(b => b.title === "Rosé Pine") || null;
+    });
 
     if (bookmarks.length === 0) return null;
 

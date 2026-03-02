@@ -11,7 +11,7 @@ interface BookmarksViewManagerProps {
 }
 
 export default function BookmarksViewManager({ bookmarks }: BookmarksViewManagerProps) {
-    const [view, setView] = useState<"deck" | "bookshelf" | "list">("deck");
+    const [view, setView] = useState<"deck" | "bookshelf" | "list">("bookshelf");
 
     // A subtle toggle UI matching the neon styles
     return (

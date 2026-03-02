@@ -8,8 +8,8 @@ const navLinks = [
   { title: "Home", href: "/" },
   { title: "Projects", href: "/projects" },
   { title: "Yapping", href: "/yapping" },
-  { title: "Garden", href: "/garden" },
   { title: "Bookmarks", href: "/bookmarks" },
+  { title: "Garden", href: "/garden" },
 ];
 
 // Characters used for the scramble effect
@@ -135,8 +135,8 @@ function GlitchLink({
     <Link
       href={href}
       className={`transition-colors duration-200 select-none ${isActive
-          ? "text-neon-pink glow-pink"
-          : "text-neon-lavender hover:text-neon-pink"
+        ? "text-neon-pink glow-pink"
+        : "text-neon-lavender hover:text-neon-pink"
         }`}
       onMouseEnter={startScramble}
       onMouseLeave={stopScramble}
