@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const navLinks = [
   { title: "Home", href: "/" },
@@ -134,14 +135,22 @@ function GlitchLink({
   return (
     <Link
       href={href}
-      className={`transition-colors duration-200 select-none ${isActive
+      className={`relative px-3 py-1.5 transition-colors duration-200 select-none ${isActive
         ? "text-neon-pink glow-pink"
         : "text-neon-lavender hover:text-neon-pink"
         }`}
       onMouseEnter={startScramble}
       onMouseLeave={stopScramble}
     >
-      {displayed}
+      {isActive && (
+        <motion.span
+          layoutId="nav-active"
+          className="absolute inset-0 bg-neon-pink/10 border border-neon-pink/30 rounded flex-shrink-0"
+          style={{ zIndex: -1 }}
+          transition={{ type: "spring", stiffness: 350, damping: 30 }}
+        />
+      )}
+      <span className="relative z-10">{displayed}</span>
     </Link>
   );
 }

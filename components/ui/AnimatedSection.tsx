@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 interface AnimatedSectionProps {
   children: React.ReactNode;
   delay?: number;
@@ -10,11 +14,14 @@ export default function AnimatedSection({
   className = "",
 }: AnimatedSectionProps) {
   return (
-    <div
-      className={`animate-fade-up ${className}`}
-      style={{ animationDelay: `${delay}s` }}
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
