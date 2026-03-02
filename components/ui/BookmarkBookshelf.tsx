@@ -133,10 +133,12 @@ function IsoBook({
     bookmark,
     posX,
     onClick,
+    isSelected,
 }: {
     bookmark: Bookmark;
     posX: number;
     onClick: () => void;
+    isSelected: boolean;
 }) {
     const accent = (bookmark.accent as NeonAccent) ?? "lavender";
     const c = accentColors[accent];
@@ -157,9 +159,10 @@ function IsoBook({
                 title={bookmark.title}
                 className="group relative w-full h-full focus:outline-none cursor-pointer"
                 style={{ transformStyle: "preserve-3d" }}
+                data-selected={isSelected}
             >
                 <div
-                    className="absolute inset-0 transition-transform duration-300 ease-out group-hover:-translate-y-2"
+                    className={`absolute inset-0 transition-transform duration-300 ease-out ${isSelected ? "-translate-y-2" : "group-hover:-translate-y-2"}`}
                     style={{ transformStyle: "preserve-3d" }}
                 >
                     {/* Top face */}
@@ -168,7 +171,7 @@ function IsoBook({
                         style={{
                             background: `linear-gradient(135deg, ${c.top}cc 0%, ${c.top}88 60%, ${c.top}44 100%)`,
                             transform: `translateZ(${BOOK_Z}px)`,
-                            boxShadow: `0 0 18px ${c.glow}88`,
+                            boxShadow: `0 0 10px ${c.glow}50`,
                         }}
                     >
                         {/* Glass specular on top */}
@@ -176,6 +179,15 @@ function IsoBook({
                             className="absolute inset-0 pointer-events-none"
                             style={{
                                 background: "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 40%, transparent 65%)",
+                                mixBlendMode: "screen",
+                            }}
+                        />
+                        {/* Lit top face overlay */}
+                        <div
+                            className={`absolute inset-0 transition-opacity duration-500 ease-in-out pointer-events-none ${isSelected ? "opacity-100 delay-0" : "opacity-0 group-hover:opacity-100 delay-0"
+                                }`}
+                            style={{
+                                background: `linear-gradient(135deg, ${c.glow}bb 0%, ${c.glow}66 100%)`,
                                 mixBlendMode: "screen",
                             }}
                         />
@@ -189,15 +201,24 @@ function IsoBook({
                             transform: "rotateX(-90deg)",
                         }}
                     >
-                        {/* Gloss stripe on front */}
+                        {/* Lit front face overlay */}
                         <div
-                            className="absolute top-0 left-0 w-full pointer-events-none"
+                            className={`absolute inset-0 transition-opacity duration-500 ease-in-out pointer-events-none z-0 ${isSelected ? "opacity-100 delay-500" : "opacity-0 group-hover:opacity-100 delay-0"
+                                }`}
                             style={{
-                                height: "40%",
-                                background: "linear-gradient(to bottom, rgba(255,255,255,0.45), transparent)",
+                                background: `linear-gradient(to top, ${c.glow}ff 0%, ${c.glow}88 50%, transparent 100%)`,
+                                mixBlendMode: "screen",
                             }}
                         />
-                        <span className="text-[0.50rem] font-bold text-white/90 uppercase tracking-widest truncate w-full text-center select-none px-0.5 relative">
+                        {/* Gloss stripe on front */}
+                        <div
+                            className="absolute top-0 left-0 w-full pointer-events-none z-0"
+                            style={{
+                                height: "40%",
+                                background: "linear-gradient(to bottom, rgba(255,255,255,0.35), transparent)",
+                            }}
+                        />
+                        <span className="text-[0.50rem] font-bold text-white/90 uppercase tracking-widest truncate w-full text-center select-none px-0.5 relative z-10" style={{ textShadow: `0 0 8px ${c.glow}` }}>
                             {bookmark.title}
                         </span>
                     </div>
@@ -214,6 +235,14 @@ function IsoBook({
                             className="absolute top-0 left-0 w-1/2 h-full pointer-events-none"
                             style={{ background: "linear-gradient(to right, rgba(255,255,255,0.2), transparent)" }}
                         />
+                        <div
+                            className={`absolute inset-0 transition-opacity duration-500 ease-in-out pointer-events-none ${isSelected ? "opacity-100 delay-150" : "opacity-0 group-hover:opacity-100 delay-0"
+                                }`}
+                            style={{
+                                background: `linear-gradient(to left, ${c.glow}ff 0%, ${c.glow}88 50%, transparent 100%)`,
+                                mixBlendMode: "screen",
+                            }}
+                        />
                     </div>
                     {/* Left face */}
                     <div
@@ -228,13 +257,37 @@ function IsoBook({
                             className="absolute inset-0 pointer-events-none"
                             style={{ background: "rgba(0,0,0,0.15)" }}
                         />
+                        <div
+                            className={`absolute inset-0 transition-opacity duration-500 ease-in-out pointer-events-none ${isSelected ? "opacity-100 delay-150" : "opacity-0 group-hover:opacity-100 delay-0"
+                                }`}
+                            style={{
+                                background: `linear-gradient(to right, ${c.glow}ff 0%, ${c.glow}88 50%, transparent 100%)`,
+                                mixBlendMode: "screen",
+                            }}
+                        />
                     </div>
-                    {/* Glow on hover */}
+                    {/* Inner Neon Core */}
                     <div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                        className={`absolute transition-opacity duration-500 ease-in-out pointer-events-none border border-white/50 ${isSelected ? "opacity-100 delay-200" : "opacity-0 group-hover:opacity-100 delay-0"
+                            }`}
                         style={{
-                            transform: `translateZ(${BOOK_Z}px)`,
-                            boxShadow: `0 0 28px ${c.glow}bb`,
+                            left: "5%",
+                            top: "5%",
+                            width: "90%",
+                            height: "90%",
+                            transform: `translateZ(2px)`,
+                            boxShadow: `0 0 60px 20px ${c.glow}, inset 0 0 30px 10px ${c.glow}ff`,
+                            background: `${c.glow}ee`,
+                            borderRadius: "4px",
+                        }}
+                    />
+                    {/* Outer ambient glow */}
+                    <div
+                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out pointer-events-none ${isSelected ? "opacity-100 delay-200" : "opacity-0 group-hover:opacity-100 delay-0"
+                            }`}
+                        style={{
+                            transform: `translateZ(0px)`,
+                            boxShadow: `0 0 100px 40px ${c.glow}cc`,
                         }}
                     />
                 </div>
@@ -248,10 +301,12 @@ function IsoShelfRow({
     items,
     rowY,
     onBookClick,
+    selectedBookmark,
 }: {
     items: Bookmark[];
     rowY: number;
     onBookClick: (b: Bookmark) => void;
+    selectedBookmark: Bookmark | null;
 }) {
     return (
         <div
@@ -303,6 +358,7 @@ function IsoShelfRow({
                     bookmark={bookmark}
                     posX={6 + i * (BOOK_W + BOOK_GAP)}
                     onClick={() => onBookClick(bookmark)}
+                    isSelected={selectedBookmark?.title === bookmark.title}
                 />
             ))}
         </div>
@@ -402,7 +458,22 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
 
     if (bookmarks.length === 0) return null;
 
-    const categories = [...new Set(bookmarks.map((b) => b.category))];
+    // Define your desired rendering order here
+    const CATEGORY_ORDER = ["Workflow", "Terminal", "Customization", "Browsers", "Editors"];
+
+    const categories = [...new Set(bookmarks.map((b) => b.category))].sort((a, b) => {
+        const indexA = CATEGORY_ORDER.indexOf(a ?? "");
+        const indexB = CATEGORY_ORDER.indexOf(b ?? "");
+
+        // If both are in the array, sort by array order
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        // If only A is in array, it comes first
+        if (indexA !== -1) return -1;
+        // If only B is in array, it comes first
+        if (indexB !== -1) return 1;
+        // If neither are in array, sort alphabetically as a fallback
+        return (a ?? "").localeCompare(b ?? "");
+    });
     const numRows = categories.length;
     const SCENE_H = SCENE_TOP_PAD + numRows * ROW_STRIDE + 48;
 
@@ -446,11 +517,10 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
                 The scene is absolutely positioned inside it.
             */}
             <div
-                className="relative w-full"
+                className="relative w-full overflow-visible"
                 style={{
                     maxWidth: "100%",
                     height: `${visH + topClip}px`,
-                    overflow: "hidden",
                 }}
             >
                 <div
@@ -474,6 +544,7 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
                                 items={items}
                                 rowY={SCENE_TOP_PAD + idx * ROW_STRIDE}
                                 onBookClick={setSelected}
+                                selectedBookmark={selected}
                             />
                         );
                     })}

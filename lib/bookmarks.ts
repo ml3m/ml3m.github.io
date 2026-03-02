@@ -42,12 +42,12 @@ export const bookmarks: Bookmark[] = [
   },
   {
     title: "Zen Browser",
-    description: "Experience tranquility while browsing the web. Zen is a beautifully designed, fast, and privacy-focused browser that helps you focus on what matters.",
+    description: "A fast, beautiful, and privacy-focused browser built for the modern web.",
     href: "https://zen-browser.app/",
-    tags: ["Browser", "Privacy", "Productivity"],
+    tags: ["Browser", "Privacy", "Fast"],
     category: "Browsers",
-    type: "Tool",
-    accent: "magenta"
+    type: "Website",
+    accent: "pink"
   },
   {
     title: "Undotree",
@@ -97,15 +97,13 @@ export const bookmarks: Bookmark[] = [
     category: "Customization",
     type: "Repository",
     stats: [{ label: "Stars", value: "10k" }],
-    accent: "pink"
+    accent: "magenta"
   },
   {
     title: "Tmux Sessionizer",
     description: "Quickly switch between tmux sessions across all your projects. A must-have tool for heavy tmux users.",
-    href: "https://github.com/ThePrimeagen/tmux-sessionizer",
-    tags: ["Tmux", "Script", "Workflow"],
-    category: "Terminal",
-    type: "Repository",
-    accent: "purple"
+    href: "https://github.com/ThePrimeagen/tmux-session",
+    type: "Website",
+    accent: "pink"
   }
 ];
