@@ -103,7 +103,9 @@ export const bookmarks: Bookmark[] = [
     title: "Tmux Sessionizer",
     description: "Quickly switch between tmux sessions across all your projects. A must-have tool for heavy tmux users.",
     href: "https://github.com/ThePrimeagen/tmux-session",
-    type: "Website",
+    tags: ["Tmux", "Script", "Productivity"],
+    category: "Tools",
+    type: "Repository",
     accent: "pink"
   }
 ];
