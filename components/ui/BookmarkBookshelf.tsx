@@ -1,8 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Bookmark } from "@/lib/bookmarks";
 import { ExternalLink, X } from "lucide-react";
+
+// ─── Glitch Typing Hook ──────────────────────────────────────────────────────
+function useGlitchText(text: string, speedMs: number = 400, glitchChars: string = "!<>-_\\\\/[]{}—=+*^?#________") {
+    const [displayText, setDisplayText] = useState("");
+    const iterationRef = useRef(0);
+
+    useEffect(() => {
+        iterationRef.current = 0;
+        setDisplayText("");
+
+        const length = text.length;
+        if (!length) return;
+
+        const interval = setInterval(() => {
+            setDisplayText((prev) => {
+                let newText = "";
+                // Base increment based on word length for a smooth but quick reveal
+                const increment = Math.max(1, text.length / 30);
+                iterationRef.current += increment;
+
+                let isDone = true;
+                for (let i = 0; i < length; i++) {
+                    if (i < iterationRef.current) {
+                        newText += text[i];
+                    } else if (i < iterationRef.current + 8) {
+                        // Glitch trail
+                        isDone = false;
+                        newText += glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                    } else {
+                        isDone = false;
+                        // Leave the rest empty instead of fully glitching the whole unseen string
+                    }
+                }
+
+                if (isDone) {
+                    clearInterval(interval);
+                    return text;
+                }
+                return newText;
+            });
+        }, speedMs);
+
+        return () => clearInterval(interval);
+    }, [text, speedMs, glitchChars]);
+
+    return displayText;
+}
 
 interface BookmarkBookshelfProps {
     bookmarks: Bookmark[];
@@ -275,6 +322,10 @@ function BookInfoCard({
     const accent = (bookmark.accent as NeonAccent) ?? "lavender";
     const c = accentColors[accent];
 
+    // Apply glitch effect to title and description
+    const glitchedTitle = useGlitchText(bookmark.title, 150);
+    const glitchedDesc = useGlitchText(bookmark.description, 80);
+
     return (
         <div
             className={`relative w-full neon-card rounded-sm border ${c.borderClass} bg-bg-card p-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-300`}
@@ -294,13 +345,13 @@ function BookInfoCard({
                 >
                     {bookmark.type}
                 </span>
-                <h3 className={`text-xl font-bold leading-tight ${c.textClass}`}>
-                    {bookmark.title}
+                <h3 className={`text-xl font-bold leading-tight ${c.textClass} font-mono mix-blend-plus-lighter`}>
+                    {glitchedTitle}
                 </h3>
             </div>
 
-            <p className="text-text-secondary text-[0.78rem] leading-relaxed">
-                {bookmark.description}
+            <p className="text-text-secondary text-[0.78rem] leading-relaxed font-mono min-h-[4rem]">
+                {glitchedDesc}
             </p>
 
             {bookmark.stats && bookmark.stats.length > 0 && (
