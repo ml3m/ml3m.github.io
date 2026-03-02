@@ -17,7 +17,7 @@ function useGlitchText(text: string, speedMs: number = 400, glitchChars: string 
         if (!length) return;
 
         const interval = setInterval(() => {
-            setDisplayText((prev) => {
+            setDisplayText(() => {
                 let newText = "";
                 // Base increment based on word length for a smooth but quick reveal
                 const increment = Math.max(1, text.length / 30);
@@ -243,14 +243,12 @@ function IsoBook({
     );
 }
 
-// ─── One shelf (plank + books + category label) ───────────────────────────────
+// ─── One shelf (plank + books) ───────────────────────────────────────────────
 function IsoShelfRow({
-    category,
     items,
     rowY,
     onBookClick,
 }: {
-    category: string;
     items: Bookmark[];
     rowY: number;
     onBookClick: (b: Bookmark) => void;
@@ -473,7 +471,6 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
                         return (
                             <IsoShelfRow
                                 key={category}
-                                category={category}
                                 items={items}
                                 rowY={SCENE_TOP_PAD + idx * ROW_STRIDE}
                                 onBookClick={setSelected}

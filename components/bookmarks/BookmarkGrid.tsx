@@ -8,7 +8,7 @@ interface BookmarkGridProps {
   asList?: boolean;
 }
 
-export default function BookmarkGrid({ bookmarks, asList = false }: BookmarkGridProps) {
+export default function BookmarkGrid({ bookmarks }: BookmarkGridProps) {
   if (bookmarks.length === 0) {
     return (
       <p className="text-text-muted text-center text-[0.85rem]">
