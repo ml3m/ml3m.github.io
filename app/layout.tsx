@@ -3,7 +3,9 @@ import { Space_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Oneko from "@/components/ui/Oneko";
+import dynamic from "next/dynamic";
+
+const Oneko = dynamic(() => import("@/components/ui/Oneko"), { ssr: false });
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -46,9 +48,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preload" href="/img/oneko.gif" as="image" />
-      </head>
       <body className={`${spaceMono.variable} font-mono antialiased relative`}>
         <div className="min-h-screen flex flex-col scanlines">
           <Header />
