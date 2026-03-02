@@ -66,17 +66,20 @@ const accentColors: Record<
 };
 
 // ─── Scene and book layout constants ────────────────────────────────────────
-const SCENE_W = 340;      // width of the floor plan
-const ROW_STRIDE = 110;   // Y distance between shelf tops (scene space)
+const SCENE_W = 350;      // width of the floor plan
+const ROW_STRIDE = 85;   // Y distance between shelf tops (scene space)
 const SCENE_TOP_PAD = 16;
 
 const BOOK_W = 50;        // book footprint width
-const BOOK_H = 64;        // book footprint depth  
-const BOOK_Z = 20;        // book height (Z, vertical in scene)
-const BOOK_GAP = 6;       // gap between books
+const BOOK_H = 50;        // book footprint depth  
+const BOOK_Z = 60;        // book height (Z, vertical in scene)
+const BOOK_GAP = 8;       // gap between books
 
 const PLANK_THICK = 8;    // shelf plank Z thickness
-const PLANK_FACE = 6;     // front face of plank (visible depth)
+const PLANK_FACE = 10;     // front face of plank (visible depth)
+const PLANK_HEIGHT = 10;
+const PLANK_LENGTH_OFFSET = 40;
+const PLANK_WIDTH = SCENE_W - PLANK_LENGTH_OFFSET;
 
 // ─── Single 3-D book ─────────────────────────────────────────────────────────
 function IsoBook({
@@ -114,35 +117,71 @@ function IsoBook({
                 >
                     {/* Top face */}
                     <div
-                        className="absolute inset-0 border border-black/20"
+                        className="absolute inset-0 border border-white/30"
                         style={{
-                            background: c.top,
+                            background: `linear-gradient(135deg, ${c.top}cc 0%, ${c.top}88 60%, ${c.top}44 100%)`,
                             transform: `translateZ(${BOOK_Z}px)`,
                             boxShadow: `0 0 18px ${c.glow}88`,
                         }}
-                    />
+                    >
+                        {/* Glass specular on top */}
+                        <div
+                            className="absolute inset-0 pointer-events-none"
+                            style={{
+                                background: "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 40%, transparent 65%)",
+                                mixBlendMode: "screen",
+                            }}
+                        />
+                    </div>
                     {/* Front face */}
                     <div
-                        className="absolute bottom-0 left-0 w-full border border-black/20 flex items-center justify-center overflow-hidden origin-bottom"
+                        className="absolute bottom-0 left-0 w-full border border-white/20 flex items-center justify-center overflow-hidden origin-bottom"
                         style={{
                             height: `${BOOK_Z}px`,
-                            background: c.front,
+                            background: `linear-gradient(to bottom, ${c.front}ee 0%, ${c.front}99 100%)`,
                             transform: "rotateX(-90deg)",
                         }}
                     >
-                        <span className="text-[0.28rem] font-bold text-black/70 uppercase tracking-widest truncate w-full text-center select-none px-0.5">
+                        {/* Gloss stripe on front */}
+                        <div
+                            className="absolute top-0 left-0 w-full pointer-events-none"
+                            style={{
+                                height: "40%",
+                                background: "linear-gradient(to bottom, rgba(255,255,255,0.45), transparent)",
+                            }}
+                        />
+                        <span className="text-[0.50rem] font-bold text-white/90 uppercase tracking-widest truncate w-full text-center select-none px-0.5 relative">
                             {bookmark.title}
                         </span>
                     </div>
                     {/* Right face */}
                     <div
-                        className="absolute top-0 right-0 h-full border border-black/20 origin-right"
+                        className="absolute top-0 right-0 h-full border border-white/10 origin-right overflow-hidden"
                         style={{
                             width: `${BOOK_Z}px`,
-                            background: c.side,
+                            background: `linear-gradient(to right, ${c.side}cc, ${c.side}ff)`,
                             transform: "rotateY(90deg)",
                         }}
-                    />
+                    >
+                        <div
+                            className="absolute top-0 left-0 w-1/2 h-full pointer-events-none"
+                            style={{ background: "linear-gradient(to right, rgba(255,255,255,0.2), transparent)" }}
+                        />
+                    </div>
+                    {/* Left face */}
+                    <div
+                        className="absolute top-0 left-0 h-full border border-white/10 origin-left overflow-hidden"
+                        style={{
+                            width: `${BOOK_Z}px`,
+                            background: `linear-gradient(to left, ${c.side}99, ${c.side}cc)`,
+                            transform: "rotateY(-90deg)",
+                        }}
+                    >
+                        <div
+                            className="absolute inset-0 pointer-events-none"
+                            style={{ background: "rgba(0,0,0,0.15)" }}
+                        />
+                    </div>
                     {/* Glow on hover */}
                     <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -185,13 +224,13 @@ function IsoShelfRow({
             <div
                 className="absolute left-0 bottom-0"
                 style={{
-                    width: SCENE_W,
-                    height: BOOK_H + 4,
+                    width: PLANK_WIDTH,
+                    height: BOOK_H + PLANK_HEIGHT,
                     background:
                         "linear-gradient(135deg,rgba(130,60,220,0.18) 0%,rgba(70,20,140,0.10) 100%)",
                     border: "1px solid rgba(123,53,204,0.28)",
                     boxShadow: "inset 0 0 20px rgba(100,30,200,0.14)",
-                    borderRadius: "1px",
+                    borderRadius: "4px",
                     transformStyle: "preserve-3d",
                 }}
             >
@@ -212,24 +251,6 @@ function IsoShelfRow({
                 />
             </div>
 
-            {/* Category label — counter-rotated back to face the viewer */}
-            <div
-                className="absolute"
-                style={{
-                    left: 4,
-                    bottom: PLANK_THICK + 2,
-                    transformStyle: "preserve-3d",
-                    // Undo the isometric projection to make the label readable
-                    transform:
-                        "rotateZ(45deg) rotateX(-60deg) translateX(-85%) translateY(4px)",
-                    transformOrigin: "right bottom",
-                }}
-            >
-                <span className="block text-neon-lavender text-[0.58rem] font-bold uppercase tracking-widest whitespace-nowrap opacity-75 select-none bg-bg-card/80 px-2 py-0.5 border border-border-glow/25 rounded-sm">
-                    {category}
-                </span>
-            </div>
-
             {/* Books */}
             {items.map((bookmark, i) => (
                 <IsoBook
@@ -243,8 +264,8 @@ function IsoShelfRow({
     );
 }
 
-// ─── Popup modal ─────────────────────────────────────────────────────────────
-function BookPopup({
+// ─── Inline Information Card ──────────────────────────────────────────────────
+function BookInfoCard({
     bookmark,
     onClose,
 }: {
@@ -256,77 +277,70 @@ function BookPopup({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            onClick={onClose}
+            className={`relative w-full neon-card rounded-sm border ${c.borderClass} bg-bg-card p-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-300`}
+            style={{ boxShadow: `0 0 32px ${c.glow}22, 0 16px 32px rgba(0,0,0,0.4)` }}
         >
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
-            <div
-                className={`relative z-10 w-full max-w-sm neon-card rounded-sm border ${c.borderClass} bg-bg-card p-6 flex flex-col gap-4`}
-                style={{ boxShadow: `0 0 48px ${c.glow}55, 0 24px 48px rgba(0,0,0,0.6)` }}
-                onClick={(e) => e.stopPropagation()}
+            <button
+                onClick={onClose}
+                className="absolute top-3 right-3 text-text-muted hover:text-white transition-colors"
+                aria-label="Close"
             >
-                <button
-                    onClick={onClose}
-                    className="absolute top-3 right-3 text-text-muted hover:text-white transition-colors"
-                    aria-label="Close"
+                <X size={15} />
+            </button>
+
+            <div className="flex flex-col gap-1.5 pr-6">
+                <span
+                    className={`text-[0.58rem] font-mono tracking-widest uppercase ${c.textClass} ${c.badgeBg} border ${c.tagBorder} px-2 py-0.5 rounded-sm w-fit`}
                 >
-                    <X size={15} />
-                </button>
-
-                <div className="flex flex-col gap-1.5 pr-6">
-                    <span
-                        className={`text-[0.58rem] font-mono tracking-widest uppercase ${c.textClass} ${c.badgeBg} border ${c.tagBorder} px-2 py-0.5 rounded-sm w-fit`}
-                    >
-                        {bookmark.type}
-                    </span>
-                    <h3 className={`text-xl font-bold leading-tight ${c.textClass}`}>
-                        {bookmark.title}
-                    </h3>
-                </div>
-
-                <p className="text-text-secondary text-[0.78rem] leading-relaxed">
-                    {bookmark.description}
-                </p>
-
-                {bookmark.stats && bookmark.stats.length > 0 && (
-                    <div className={`flex gap-4 p-3 rounded-sm border ${c.tagBorder} bg-bg-primary/50`}>
-                        {bookmark.stats.map((stat, i) => (
-                            <div key={i} className="flex flex-col">
-                                <span className="text-[0.58rem] uppercase tracking-wider text-text-muted">
-                                    {stat.label}
-                                </span>
-                                <span className={`text-[0.82rem] font-bold ${c.textClass}`}>
-                                    {stat.value}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-                {bookmark.tags && bookmark.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5">
-                        {bookmark.tags.map((tag) => (
-                            <span
-                                key={tag}
-                                className={`text-[0.58rem] px-2 py-0.5 rounded-sm border ${c.tagBorder} ${c.textClass} bg-bg-primary/80`}
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                )}
-
-                <a
-                    href={bookmark.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 text-[0.68rem] uppercase tracking-widest font-bold transition-all px-4 py-2.5 rounded-sm border ${c.borderClass} ${c.textClass} ${c.badgeBg} hover:brightness-125 w-full justify-center`}
-                    style={{ boxShadow: `0 0 12px ${c.glow}44` }}
-                >
-                    <ExternalLink size={12} />
-                    Visit {bookmark.title}
-                </a>
+                    {bookmark.type}
+                </span>
+                <h3 className={`text-xl font-bold leading-tight ${c.textClass}`}>
+                    {bookmark.title}
+                </h3>
             </div>
+
+            <p className="text-text-secondary text-[0.78rem] leading-relaxed">
+                {bookmark.description}
+            </p>
+
+            {bookmark.stats && bookmark.stats.length > 0 && (
+                <div className={`flex gap-4 p-3 rounded-sm border ${c.tagBorder} bg-bg-primary/50`}>
+                    {bookmark.stats.map((stat, i) => (
+                        <div key={i} className="flex flex-col">
+                            <span className="text-[0.58rem] uppercase tracking-wider text-text-muted">
+                                {stat.label}
+                            </span>
+                            <span className={`text-[0.82rem] font-bold ${c.textClass}`}>
+                                {stat.value}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {bookmark.tags && bookmark.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                    {bookmark.tags.map((tag) => (
+                        <span
+                            key={tag}
+                            className={`text-[0.58rem] px-2 py-0.5 rounded-sm border ${c.tagBorder} ${c.textClass} bg-bg-primary/80`}
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )}
+
+            <a
+                href={bookmark.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-2 text-[0.68rem] uppercase tracking-widest font-bold transition-all px-4 py-2.5 rounded-sm border ${c.borderClass} ${c.textClass} ${c.badgeBg} hover:brightness-125 w-full justify-center`}
+                style={{ boxShadow: `0 0 12px ${c.glow}44` }}
+            >
+                <ExternalLink size={12} />
+                Visit {bookmark.title}
+            </a>
         </div>
     );
 }
@@ -358,25 +372,28 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
     //
     // Additionally books extrude Z, adding +BOOK_Z more to the bottom.
 
+    const SCALE = 1.35; // Size multiplier
     const C45 = Math.SQRT1_2; // cos(45°) = sin(45°) = 0.7071
+    const COS60 = 0.5; // cos(60°)
 
-    const visW = (SCENE_W + SCENE_H) * C45;
-    const topClip = SCENE_W * C45 * 0.5;     // how much TR corner goes above 0
-    const visH = (SCENE_W + SCENE_H) * C45 * 0.5 + BOOK_Z + PLANK_THICK + 32;
+    // The scene is rotated Z -45deg, then X 60deg.
+    // Length along the screen Y axis for a line on the floor plane is scaled by COS60.
+    const visW = (SCENE_W + SCENE_H) * C45 * SCALE;
+    const topClip = (SCENE_W * C45 * COS60) * SCALE;
+
+    // Total vertical span is the projected diagonal (SCENE_W + SCENE_H)*C45*COS60,
+    // plus the unscaled vertical height of the books/planks (BOOK_Z + PLANK_THICK).
+    const visH = ((SCENE_W + SCENE_H) * C45 * COS60 + BOOK_Z + PLANK_THICK - 170) * SCALE;
 
     // ── Centering: position the scene so its visual midpoint = container center ──
-    // The visual horizontal span after the iso transform is visW = (W+H)*C45.
-    // We want: scene_left + visW/2 = 50% of container.
-    // → scene_left = calc(50% - visW/2)
-    // But add labelOverhang so counter-rotated labels on the left aren't clipped.
     const halfVisW = Math.round(visW / 2);
 
     return (
-        <>
+        <div className="flex flex-col items-center w-full">
             {/* 
-        Outer container: exactly visW × visH, overflow hidden.
-        The scene is absolutely positioned inside it.
-      */}
+                Outer container: exactly visW × visH, overflow hidden.
+                The scene is absolutely positioned inside it.
+            */}
             <div
                 className="relative w-full"
                 style={{
@@ -390,12 +407,12 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
                         position: "absolute",
                         top: topClip,
                         // Center the visual output on the container midpoint
-                        left: `calc(50% - ${halfVisW + 50}px)`,
+                        left: `calc(50% - ${halfVisW - 34 * SCALE}px)`, // change int value for allignment of shelf left-right
                         width: `${SCENE_W}px`,
                         height: `${SCENE_H}px`,
                         transformStyle: "preserve-3d",
                         transformOrigin: "top left",
-                        transform: "rotateX(60deg) rotateZ(-45deg)",
+                        transform: `scale(${SCALE}) rotateX(60deg) rotateZ(-45deg)`,
                     }}
                 >
                     {categories.map((category, idx) => {
@@ -414,8 +431,10 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
             </div>
 
             {selected && (
-                <BookPopup bookmark={selected} onClose={() => setSelected(null)} />
+                <div className="w-full max-w-2xl px-4 pb-12 mt-[-2rem] relative z-20">
+                    <BookInfoCard bookmark={selected} onClose={() => setSelected(null)} />
+                </div>
             )}
-        </>
+        </div>
     );
 }
