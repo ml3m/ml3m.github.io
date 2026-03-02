@@ -168,13 +168,13 @@ export default function BentoCard({ project }: { project: BentoProject }) {
                 }}
             />
 
+            {/* Corner accent L-lines */}
+            <div className={`absolute top-0 left-0 w-8 h-[2px] ${c.barBg} opacity-50 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none`} />
+            <div className={`absolute top-0 left-0 h-8 w-[2px] ${c.barBg} opacity-50 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none`} />
+
             {/* Content wrapper with relative positioning so it sits atop the spotlight */}
             <div className="relative z-10 flex flex-col flex-1 h-full w-full pointer-events-none">
                 <div className="pointer-events-auto flex flex-col flex-1 h-full">
-
-                    {/* Corner accent L-lines */}
-                    <div className={`absolute top-0 left-0 w-8 h-[2px] ${c.barBg} opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
-                    <div className={`absolute top-0 left-0 h-8 w-[2px] ${c.barBg} opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
 
                     {/* ══════════════════════════════════════════════════
                 LORENZ — text left | canvas right

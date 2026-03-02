@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Oneko from "@/components/ui/Oneko";
-import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -51,14 +50,12 @@ export default function RootLayout({
         <link rel="preload" href="/img/oneko.gif" as="image" />
       </head>
       <body className={`${spaceMono.variable} font-mono antialiased relative`}>
-        <SmoothScrollProvider>
-          <div className="min-h-screen flex flex-col scanlines">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <Oneko />
-          </div>
-        </SmoothScrollProvider>
+        <div className="min-h-screen flex flex-col scanlines">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <Oneko />
+        </div>
       </body>
     </html>
   );
