@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Bookmark } from "@/lib/bookmarks";
 import BookmarkGrid from "./BookmarkGrid";
 import BookmarkBookshelf from "@/components/ui/BookmarkBookshelf";
+import BookmarkCardHand from "@/components/ui/BookmarkCardHand";
 import { LayoutGrid, Library, Component } from "lucide-react";
 
 interface BookmarksViewManagerProps {
@@ -51,7 +52,7 @@ export default function BookmarksViewManager({ bookmarks }: BookmarksViewManager
 
             {/* Render Component */}
             <div className="min-h-[500px] transition-all duration-500">
-                {view === "deck" && <BookmarkGrid bookmarks={bookmarks} asList={false} />}
+                {view === "deck" && <BookmarkCardHand bookmarks={bookmarks} />}
                 {view === "list" && <BookmarkGrid bookmarks={bookmarks} asList={true} />}
                 {view === "bookshelf" && <BookmarkBookshelf bookmarks={bookmarks} />}
             </div>
