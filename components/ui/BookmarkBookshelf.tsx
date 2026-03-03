@@ -167,11 +167,11 @@ function IsoBook({
                 >
                     {/* Top face */}
                     <div
-                        className="absolute inset-0 border border-white/30"
+                        className="absolute inset-0 border border-white/10 backdrop-blur-xl"
                         style={{
-                            background: `linear-gradient(135deg, ${c.top}cc 0%, ${c.top}88 60%, ${c.top}44 100%)`,
+                            background: `linear-gradient(135deg, ${c.top}44 30%, ${c.top}66 60%, ${c.top}22 100%)`,
                             transform: `translateZ(${BOOK_Z}px)`,
-                            boxShadow: `0 0 10px ${c.glow}50`,
+                            boxShadow: `0 0 10px ${c.glow}30`,
                         }}
                     >
                         {/* Glass specular on top */}
@@ -194,10 +194,10 @@ function IsoBook({
                     </div>
                     {/* Front face */}
                     <div
-                        className="absolute bottom-0 left-0 w-full border border-white/20 flex items-center justify-center overflow-hidden origin-bottom"
+                        className="absolute bottom-0 left-0 w-full border border-white/10 flex items-center justify-center overflow-hidden origin-bottom backdrop-blur-xl"
                         style={{
                             height: `${BOOK_Z}px`,
-                            background: `linear-gradient(to bottom, ${c.front}ee 0%, ${c.front}99 100%)`,
+                            background: `linear-gradient(to bottom, ${c.front}bb 80%, ${c.front}88 100%)`,
                             transform: "rotateX(-90deg)",
                         }}
                     >
@@ -218,16 +218,16 @@ function IsoBook({
                                 background: "linear-gradient(to bottom, rgba(255,255,255,0.35), transparent)",
                             }}
                         />
-                        <span className="text-[0.50rem] font-bold text-white/90 uppercase tracking-widest truncate w-full text-center select-none px-0.5 relative z-10" style={{ textShadow: `0 0 8px ${c.glow}` }}>
+                        <span className={`text-[0.45rem] font-bold uppercase tracking-widest truncate w-full text-center select-none px-0.5 relative z-10 transition-all duration-500 ${isSelected ? "text-white/100" : "text-white/40 group-hover:text-white/90"}`} style={{ textShadow: isSelected ? `0 0 8px ${c.glow}` : "none" }}>
                             {bookmark.title}
                         </span>
                     </div>
                     {/* Right face */}
                     <div
-                        className="absolute top-0 right-0 h-full border border-white/10 origin-right overflow-hidden"
+                        className="absolute top-0 right-0 h-full border border-white/5 origin-right overflow-hidden backdrop-blur-lg"
                         style={{
                             width: `${BOOK_Z}px`,
-                            background: `linear-gradient(to right, ${c.side}cc, ${c.side}ff)`,
+                            background: `linear-gradient(to right, ${c.side}66, ${c.side}AA)`,
                             transform: "rotateY(90deg)",
                         }}
                     >
@@ -246,10 +246,10 @@ function IsoBook({
                     </div>
                     {/* Left face */}
                     <div
-                        className="absolute top-0 left-0 h-full border border-white/10 origin-left overflow-hidden"
+                        className="absolute top-0 left-0 h-full border border-white/5 origin-left overflow-hidden backdrop-blur-lg"
                         style={{
                             width: `${BOOK_Z}px`,
-                            background: `linear-gradient(to left, ${c.side}99, ${c.side}cc)`,
+                            background: `linear-gradient(to left, ${c.side}55, ${c.side}77)`,
                             transform: "rotateY(-90deg)",
                         }}
                     >
@@ -327,7 +327,7 @@ function IsoShelfRow({
                     width: PLANK_WIDTH,
                     height: BOOK_H + PLANK_HEIGHT,
                     background:
-                        "linear-gradient(135deg,rgba(130,60,220,0.18) 0%,rgba(70,20,140,0.10) 100%)",
+                        "linear-gradient(135deg,rgba(130,60,220,0.45) 0%,rgba(70,20,140,0.10) 100%)",
                     border: "1px solid rgba(123,53,204,0.28)",
                     boxShadow: "inset 0 0 20px rgba(100,30,200,0.14)",
                     borderRadius: "4px",
@@ -341,12 +341,13 @@ function IsoShelfRow({
                         width: "100%",
                         height: `${PLANK_FACE}px`,
                         background:
-                            "linear-gradient(to bottom,rgba(100,40,200,0.55),rgba(50,15,100,0.72))",
+                            "linear-gradient(to bottom,rgba(100,40,200,0.60),rgba(50,15,100,0.80))",
                         borderLeft: "1px solid rgba(123,53,204,0.3)",
                         borderRight: "1px solid rgba(123,53,204,0.3)",
                         borderBottom: "1px solid rgba(123,53,204,0.3)",
                         boxShadow: "0 4px 14px rgba(0,0,0,0.6)",
                         transform: "rotateX(-90deg)",
+                        borderRadius: "1px",
                     }}
                 />
             </div>
