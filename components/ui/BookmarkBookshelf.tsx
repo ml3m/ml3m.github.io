@@ -456,11 +456,44 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
         return bookmarks.find(b => b.title === "Rosé Pine") || null;
     });
 
+    const scrollToFixedPosition = () => {
+        const el = document.getElementById("bookmark-bookshelf-container");
+        if (el) {
+            // we scroll to exactly where the container starts, plus some offset
+            const rect = el.getBoundingClientRect();
+            // Negative offset stops slightly above the container
+            const offset = -200;
+            const targetY = window.scrollY + rect.top + offset;
+
+            window.scrollTo({
+                top: targetY,
+                behavior: "smooth"
+            });
+        }
+    };
+
+    const handleBookClick = (b: Bookmark) => {
+        setSelected(b);
+        // Wait for rendering and text glitch animation initialization (which changes layout)
+        setTimeout(() => {
+            scrollToFixedPosition();
+        }, 150);
+    };
+
+    useEffect(() => {
+        // Scroll once on initial load (since the first book is usually pre-selected)
+        if (selected) {
+            setTimeout(() => {
+                scrollToFixedPosition();
+            }, 300); // slightly longer wait on initial render
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     if (bookmarks.length === 0) return null;
 
     // Define your desired rendering order here
     const CATEGORY_ORDER = ["Workflow", "Terminal", "Customization", "Browsers", "Editors"];
-
     const categories = [...new Set(bookmarks.map((b) => b.category))].sort((a, b) => {
         const indexA = CATEGORY_ORDER.indexOf(a ?? "");
         const indexB = CATEGORY_ORDER.indexOf(b ?? "");
@@ -511,7 +544,7 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
     const halfVisW = Math.round(visW / 2);
 
     return (
-        <div className="flex flex-col items-center w-full">
+        <div id="bookmark-bookshelf-container" className="flex flex-col items-center w-full">
             {/* 
                 Outer container: exactly visW × visH, overflow hidden.
                 The scene is absolutely positioned inside it.
@@ -543,7 +576,7 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
                                 key={category}
                                 items={items}
                                 rowY={SCENE_TOP_PAD + idx * ROW_STRIDE}
-                                onBookClick={setSelected}
+                                onBookClick={handleBookClick}
                                 selectedBookmark={selected}
                             />
                         );
@@ -552,7 +585,7 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
             </div>
 
             {selected && (
-                <div className="w-full max-w-2xl px-4 pb-12 mt-[-2rem] relative z-20">
+                <div id="bookmark-info-card" className="w-full max-w-2xl px-4 pb-12 mt-[-2rem] relative z-20">
                     <BookInfoCard bookmark={selected} onClose={() => setSelected(null)} />
                 </div>
             )}
