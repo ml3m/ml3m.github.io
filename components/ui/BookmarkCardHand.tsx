@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { Bookmark } from "@/lib/bookmarks";
-import { ExternalLink, Zap } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 // ── Palette ──────────────────────────────────────────────────────────────────
 type NeonAccent = "pink" | "purple" | "lavender" | "magenta";
@@ -118,7 +118,7 @@ function ScoringOverlay({ active, scores, onDone }: { active: boolean; scores: A
     return (
         <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 8000 }}>
             {/* Score number pops */}
-            {scores.map(({ b, idx, val }, i) => {
+            {scores.map(({ b, val }, i) => {
                 const { c } = A[(b.accent as NeonAccent) ?? "lavender"];
                 return (
                     <div key={b.title} style={{
@@ -249,7 +249,7 @@ export default function BookmarkCardHand({ bookmarks: init }: { bookmarks: Bookm
             document.removeEventListener("pointermove", onMove);
             document.removeEventListener("pointerup", onUp);
         };
-    }, [dragIdx, cards, STEP]);
+    }, [dragIdx, cards]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // ── Pointer down on card ────────────────────────────────────────────────
     const onCardDown = useCallback((e: React.PointerEvent, orig: number) => {
@@ -277,7 +277,7 @@ export default function BookmarkCardHand({ bookmarks: init }: { bookmarks: Bookm
                 // Click → toggle select
                 setSelected(prev => {
                     const n = new Set(prev);
-                    n.has(orig) ? n.delete(orig) : n.add(orig);
+                    if (n.has(orig)) n.delete(orig); else n.add(orig);
                     return n;
                 });
             }
