@@ -1,3 +1,4 @@
+import Image from "next/image";
 import NeonCard from "@/components/ui/NeonCard";
 import type { YappingPost } from "@/lib/yapping";
 
@@ -75,10 +76,13 @@ function renderContent(content: string): React.ReactNode[] {
     if (imgMatch) {
       return (
         <figure key={i} className="my-3 relative z-0 hover:z-10">
-          <img
+          <Image
             src={imgMatch[2]}
             alt={imgMatch[1]}
-            className="w-full rounded border border-border-glow/40 object-cover transition-transform duration-300 ease-in-out hover:scale-[1.5]"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto rounded border border-border-glow/40 object-cover transition-transform duration-300 ease-in-out hover:scale-[1.5]"
           />
           {imgMatch[1] && (
             <figcaption className="text-text-muted text-[0.73rem] text-center mt-1 italic">
