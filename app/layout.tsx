@@ -39,6 +39,10 @@ export const metadata: Metadata = {
     description: "software engineer, tinkerer, builder of useless things",
     type: "website",
   },
+  twitter: {
+    card: "summary",
+    creator: "@ml3ml3m",
+  },
 };
 
 export default function RootLayout({

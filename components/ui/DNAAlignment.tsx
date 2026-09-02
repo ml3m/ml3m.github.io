@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useIntersectionPause } from "@/lib/useIntersectionPause";
 
 /* ── Aligned sequences (Needleman-Wunsch style) ─────────────────────────── */
 const SEQ1_RAW =
@@ -156,7 +157,18 @@ export interface DNAAlignmentProps {
 }
 
 export default function DNAAlignment({ width: widthProp, height = 105 }: DNAAlignmentProps) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [canvasRef, isVisible] = useIntersectionPause<HTMLCanvasElement>();
+    const isVisibleRef = useRef(isVisible);
+    isVisibleRef.current = isVisible;
+    const drawRef = useRef<(() => void) | null>(null);
+
+    useEffect(() => {
+        if (isVisible && drawRef.current) {
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = requestAnimationFrame(drawRef.current);
+        }
+    }, [isVisible]);
+
     const rafRef = useRef<number>(0);
     const stateRef = useRef({ offset: 0, pauseUntil: 0 });
     const dimsRef = useRef({ w: widthProp ?? 300, h: height, visible: 0 });
@@ -196,6 +208,7 @@ export default function DNAAlignment({ width: widthProp, height = 105 }: DNAAlig
         const ctx = canvas.getContext("2d")!;
 
         function draw() {
+            if (!isVisibleRef.current) return;
             const { w, h, visible } = dimsRef.current;
             const s = stateRef.current;
 
@@ -206,6 +219,7 @@ export default function DNAAlignment({ width: widthProp, height = 105 }: DNAAlig
             rafRef.current = requestAnimationFrame(draw);
         }
 
+        drawRef.current = draw;
         rafRef.current = requestAnimationFrame(draw);
         return () => {
             cancelAnimationFrame(rafRef.current);

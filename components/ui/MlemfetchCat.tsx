@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useIntersectionPause } from "@/lib/useIntersectionPause";
 
 // ASCII cat frames from https://github.com/ml3m/mlemfetch
 // ALL frames normalized to exactly 16 lines so the <pre> never changes height.
@@ -163,21 +164,32 @@ export default function MlemfetchCat({ className = "" }: { className?: string })
     // Store frame + color in a ref to avoid stale closure in the interval
     const frameRef = useRef(0);
     const colorRef = useRef(0);
-    // A ref to the <pre> DOM element so we can update it directly (no re-render → no resize flicker)
+    const [containerRef, isVisible] = useIntersectionPause<HTMLDivElement>();
+    const isVisibleRef = useRef(isVisible);
+    isVisibleRef.current = isVisible;
     const preRef = useRef<HTMLPreElement>(null);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const tickRef = useRef<(() => void) | null>(null);
+
+    useEffect(() => {
+        if (isVisible && tickRef.current) {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            intervalRef.current = setInterval(() => tickRef.current!(), 350);
+        } else {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        }
+    }, [isVisible]);
 
     useEffect(() => {
         // Render the initial frame immediately
         renderFrame(frameRef.current, colorRef.current);
 
-        // 350 ms per frame — slow enough to clearly read, fast enough to feel alive
-        intervalRef.current = setInterval(() => {
+        tickRef.current = () => {
+            if (!isVisibleRef.current) return;
             frameRef.current = (frameRef.current + 1) % FRAMES.length;
-            // Color cycles at 2× the frame rate (every other tick increment it twice)
             colorRef.current = (colorRef.current + 1) % NEON_PALETTE.length;
             renderFrame(frameRef.current, colorRef.current);
-        }, 350);
+        };
 
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
@@ -205,6 +217,7 @@ export default function MlemfetchCat({ className = "" }: { className?: string })
     return (
         // Fixed-size wrapper so card dimensions never change between frames
         <div
+            ref={containerRef}
             className={`overflow-hidden flex-shrink-0 ${className}`}
             style={{ width: "35ch", lineHeight: "2.35" }}
             aria-hidden="true"

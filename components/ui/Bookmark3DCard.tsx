@@ -109,9 +109,15 @@ export default function Bookmark3DCard({ bookmark }: Bookmark3DCardProps) {
 
                 {/* Title & Description */}
                 <div className="flex-grow flex flex-col justify-center" style={{ transform: "translateZ(40px)" }}>
-                    <h3 className={`text-xl font-bold leading-tight mb-2 ${c.text}`}>
-                        {bookmark.title}
-                    </h3>
+                    <a
+                        href={bookmark.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`text-xl font-bold leading-tight mb-2 ${c.text} hover:underline underline-offset-2 transition-colors`}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3>{bookmark.title}</h3>
+                    </a>
                     <p className="text-text-secondary text-[0.75rem] leading-relaxed line-clamp-3">
                         {bookmark.description}
                     </p>
@@ -139,8 +145,8 @@ export default function Bookmark3DCard({ bookmark }: Bookmark3DCardProps) {
                 {/* Spacer if no stats */}
                 {(!bookmark.stats || bookmark.stats.length === 0) && <div className="my-4" />}
 
-                {/* Tags & Action */}
-                <div className="flex flex-col gap-3 mt-auto" style={{ transform: "translateZ(20px)" }}>
+                {/* Tags */}
+                <div className="mt-auto" style={{ transform: "translateZ(20px)" }}>
                     <div className="flex flex-wrap gap-1.5">
                         {bookmark.tags.map((tag) => (
                             <span
@@ -151,19 +157,6 @@ export default function Bookmark3DCard({ bookmark }: Bookmark3DCardProps) {
                             </span>
                         ))}
                     </div>
-
-                    <a
-                        href={bookmark.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-1.5 text-[0.7rem] uppercase tracking-widest font-bold mt-2 ${c.linkHover} transition-colors group/link w-fit`}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <span className={`${c.text}`}>Initialize Link</span>
-                        <span className={`opacity-0 group-hover/link:opacity-100 transition-opacity ${c.text}`}>
-                            →
-                        </span>
-                    </a>
                 </div>
             </div>
         </div>

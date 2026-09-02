@@ -63,7 +63,7 @@ While the model was doing its thing, I wasn't just sitting there watching loss c
 
 **Hyprland**: this one made me actually rethink how I work. Before the Mac (where I use Rectangle + Raycast keybinds for window management), I had been running i3 in an Arch VM on Windows 11. Hyprland on Wayland hits different. The tiling workflow is genuinely good and the animations don't feel like an overhead.
 
-![The workspace: tmux, btop, neovim, chezmoi, and mlemfetch all at once](/img/yapping/omarchy-from-zero/setup.png)
+![The workspace: tmux, btop, neovim, chezmoi, and mlemfetch all at once](/img/yapping/omarchy-from-zero/setup.webp)
 
 ---
 
@@ -97,7 +97,7 @@ I'm using **[Chezmoi](https://www.chezmoi.io)** to manage them. Cool project, ha
 
 The repo: [ml3m/dot](https://github.com/ml3m/dot)
 
-![The vibe warm, cozy, and very much not Windows](/img/yapping/omarchy-from-zero/dotfiles.png)
+![The vibe warm, cozy, and very much not Windows](/img/yapping/omarchy-from-zero/dotfiles.webp)
 
 mlem`,
   },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useIntersectionPause } from "@/lib/useIntersectionPause";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Types
@@ -210,7 +211,18 @@ function arcY(s: Pt, sweepY: number, x: number): number {
 export interface FortuneVoronoiProps { width?: number; height?: number; }
 
 export default function FortuneVoronoi({ width = 210, height = 210 }: FortuneVoronoiProps) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [canvasRef, isVisible] = useIntersectionPause<HTMLCanvasElement>();
+    const isVisibleRef = useRef(isVisible);
+    isVisibleRef.current = isVisible;
+    const drawRef = useRef<((now: number) => void) | null>(null);
+
+    useEffect(() => {
+        if (isVisible && drawRef.current) {
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = requestAnimationFrame(drawRef.current);
+        }
+    }, [isVisible]);
+
     const rafRef = useRef<number>(0);
 
     useEffect(() => {
@@ -239,6 +251,7 @@ export default function FortuneVoronoi({ width = 210, height = 210 }: FortuneVor
         let pauseUntil = 0;
 
         function draw(now: number) {
+            if (!isVisibleRef.current) return;
             ctx.clearRect(0, 0, w, h);
 
             if (now < pauseUntil) {
@@ -283,6 +296,7 @@ export default function FortuneVoronoi({ width = 210, height = 210 }: FortuneVor
             rafRef.current = requestAnimationFrame(draw);
         }
 
+        drawRef.current = draw;
         rafRef.current = requestAnimationFrame(draw);
         return () => cancelAnimationFrame(rafRef.current);
         // eslint-disable-next-line react-hooks/exhaustive-deps

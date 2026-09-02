@@ -1,7 +1,10 @@
+import { BookOpen, LucideIcon } from "lucide-react";
+
 export interface SocialLink {
   label: string;
   href: string;
   badgeColor: string;
+  icon?: LucideIcon;
 }
 
 export const socialLinks: SocialLink[] = [
@@ -10,6 +13,7 @@ export const socialLinks: SocialLink[] = [
   { label: "Twitter", href: "https://x.com/ml3ml3m", badgeColor: "#000000" },
   { label: "Discord", href: "#", badgeColor: "#5865f2" },
   { label: "Steam", href: "https://steamcommunity.com/id/ml3ml3m/", badgeColor: "#1b2838" },
+  { label: "ORCID", href: "https://orcid.org/0009-0007-7033-1832", badgeColor: "#A6CE39", icon: BookOpen },
 ];
 
 export const linkTable = [
@@ -22,4 +26,5 @@ export const linkTable = [
   { label: "Matrix", href: "https://matrix.to/#/@ml3mml3mml3m:matrix.org" },
   { label: "Steam", href: "https://steamcommunity.com/id/ml3ml3m/" },
   { label: "Discord", href: "@m13w" },
+  { label: "ORCID", href: "https://orcid.org/0009-0007-7033-1832" },
 ];

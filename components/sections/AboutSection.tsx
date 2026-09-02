@@ -13,7 +13,7 @@ export default function AboutSection() {
         </p>
         <hr className="border-border-default my-3" />
         <p className="max-w-[50em] text-text-secondary">
-          i&apos;m currently a cs student at west university of timisoara,
+          i&apos;m currently a cse student at tu/e,
           messing around with algorithms, systems programming, and whatever
           catches my eye.
         </p>

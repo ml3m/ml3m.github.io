@@ -10,7 +10,9 @@ const navLinks = [
   { title: "Projects", href: "/projects" },
   { title: "Yapping", href: "/yapping" },
   { title: "Bookmarks", href: "/bookmarks" },
-  { title: "Garden", href: "/garden" },
+  { title: "Garden", href: "/garden", accent: "green" as const },
+  { title: "Gallery", href: "/gallery", accent: "amber" as const },
+  { title: "Tools", href: "/tools" },
 ];
 
 // Characters used for the scramble effect
@@ -125,27 +127,50 @@ function GlitchLink({
   title,
   href,
   isActive,
+  accent,
 }: {
   title: string;
   href: string;
   isActive: boolean;
+  accent?: "green" | "amber";
 }) {
   const { displayed, startScramble, stopScramble } = useGlitch(title, isActive);
+
+  const isGreen = accent === "green";
+  const isAmber = accent === "amber";
+  
+  const activeClass = isGreen
+    ? "text-emerald-400 drop-shadow-[0_0_6px_#34d399]"
+    : isAmber
+    ? "text-amber-400 drop-shadow-[0_0_6px_#fbbf24]"
+    : "text-neon-pink glow-pink";
+    
+  const inactiveClass = isGreen
+    ? "text-emerald-400/70 hover:text-emerald-300"
+    : isAmber
+    ? "text-amber-400/70 hover:text-amber-300"
+    : "text-neon-lavender hover:text-neon-pink";
+
+  const getBorderColor = () => {
+    if (isGreen) return "bg-emerald-400/10 border border-emerald-400/30";
+    if (isAmber) return "bg-amber-400/10 border border-amber-400/30";
+    return "bg-neon-pink/10 border border-neon-pink/30";
+  };
 
   return (
     <Link
       href={href}
       className={`relative px-3 py-1.5 transition-colors duration-200 select-none ${isActive
-        ? "text-neon-pink glow-pink"
-        : "text-neon-lavender hover:text-neon-pink"
-        }`}
+        ? activeClass
+        : inactiveClass
+        }${!isActive && (isGreen || isAmber) ? ` animate-[${isGreen ? 'garden' : 'gallery'}-pulse_3s_ease-in-out_infinite]` : ""}`}
       onMouseEnter={startScramble}
       onMouseLeave={stopScramble}
     >
       {isActive && (
         <motion.span
           layoutId="nav-active"
-          className="absolute inset-0 bg-neon-pink/10 border border-neon-pink/30 rounded flex-shrink-0"
+          className={`absolute inset-0 ${getBorderColor()} rounded flex-shrink-0`}
           style={{ zIndex: -1 }}
           transition={{ type: "spring", stiffness: 350, damping: 30 }}
         />
@@ -166,6 +191,7 @@ export default function Nav() {
             title={link.title}
             href={link.href}
             isActive={pathname === link.href}
+            accent={(link as { accent?: "green" }).accent}
           />
           {i < navLinks.length - 1 && (
             <span className="text-text-muted mx-2">|</span>

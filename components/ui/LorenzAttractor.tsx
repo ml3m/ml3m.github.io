@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useIntersectionPause } from "@/lib/useIntersectionPause";
 
 /* ── Lorenz system parameters ─────────────────────────────────────────────── */
 const SIGMA = 10, RHO = 28, BETA = 8 / 3, DT = 0.005;
@@ -91,7 +92,18 @@ export default function LorenzAttractor({
     width = 220,
     height = 220,
 }: LorenzAttractorProps) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [canvasRef, isVisible] = useIntersectionPause<HTMLCanvasElement>();
+    const isVisibleRef = useRef(isVisible);
+    isVisibleRef.current = isVisible;
+    const drawRef = useRef<(() => void) | null>(null);
+
+    useEffect(() => {
+        if (isVisible && drawRef.current) {
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = requestAnimationFrame(drawRef.current);
+        }
+    }, [isVisible]);
+
     const rafRef = useRef<number>(0);
     const stateRef = useRef({
         count: 0,
@@ -126,6 +138,7 @@ export default function LorenzAttractor({
 
         /* ── render loop ── */
         function draw() {
+            if (!isVisibleRef.current) return;
             ctx.clearRect(0, 0, w, h);
 
             const s = stateRef.current;
@@ -204,6 +217,7 @@ export default function LorenzAttractor({
         canvas.addEventListener("pointerleave", onUp);
         canvas.style.cursor = "grab";
 
+        drawRef.current = draw;
         rafRef.current = requestAnimationFrame(draw);
         return () => {
             cancelAnimationFrame(rafRef.current);
