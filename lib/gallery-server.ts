@@ -4,13 +4,13 @@ import sizeOf from "image-size";
 import { Photo, PhotoCategory, categories } from "./gallery";
 
 export async function getGalleryPhotos(): Promise<Photo[]> {
-  const imgDir = path.join(process.cwd(), "public", "img", "gallery");
+  const origDir = path.join(process.cwd(), "public", "img", "gallery-originals");
   
-  if (!fs.existsSync(imgDir)) {
+  if (!fs.existsSync(origDir)) {
     return [];
   }
 
-  const files = fs.readdirSync(imgDir);
+  const files = fs.readdirSync(origDir);
   const imageExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
   
   const validCategories = new Set(categories);
@@ -29,9 +29,8 @@ export async function getGalleryPhotos(): Promise<Photo[]> {
       category = parts[0] as PhotoCategory;
     }
 
-    const filePath = path.join(imgDir, file);
+    const filePath = path.join(origDir, file);
     try {
-      // Read buffer to avoid image-size filepath bug
       const buffer = fs.readFileSync(filePath);
       const dims = sizeOf(buffer);
       
@@ -41,7 +40,9 @@ export async function getGalleryPhotos(): Promise<Photo[]> {
 
       photos.push({
         id: basename,
-        src: `/img/gallery/${file}`,
+        src: `/img/gallery-originals/${file}`,
+        thumbnailSrc: `/img/gallery/${basename}-800.webp`,
+        lightboxSrc: `/img/gallery/${basename}-2400.webp`,
         alt: `Gallery Image ${basename}`,
         category,
         orientation,

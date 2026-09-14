@@ -128,7 +128,7 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={photo.src}
+                        src={photo.thumbnailSrc}
                         alt={photo.alt}
                         loading="lazy"
                         className="w-full h-auto object-cover"
@@ -187,7 +187,7 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
               <div className="flex-1 flex items-center justify-center min-h-[40vh] md:min-h-[70vh] bg-bg-primary rounded-sm overflow-hidden group/image">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={lightboxPhoto.src}
+                  src={lightboxPhoto.lightboxSrc}
                   alt={lightboxPhoto.alt}
                   onClick={() => window.open(lightboxPhoto.src, "_blank")}
                   className="max-w-full max-h-[70vh] object-contain cursor-pointer transition-transform duration-300 group-hover/image:scale-[1.02]"

@@ -3,7 +3,9 @@ export type PhotoOrientation = "portrait" | "landscape" | "square";
 
 export interface Photo {
   id: string;
-  src: string;
+  src: string; // The original full-res source for downloading
+  thumbnailSrc: string; // 800px width webp for grid
+  lightboxSrc: string; // 2400px width webp for modal
   alt: string;
   category: PhotoCategory;
   orientation: PhotoOrientation;
