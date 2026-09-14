@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import GalleryClient from "@/components/gallery/GalleryClient";
-import { photos } from "@/lib/gallery";
+import { getGalleryPhotos } from "@/lib/gallery-server";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 
 export const metadata: Metadata = {
@@ -8,7 +8,9 @@ export const metadata: Metadata = {
   description: "A curated collection of street photography, plants, and city exploration.",
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const photos = await getGalleryPhotos();
+
   return (
     <div className="max-w-[1200px] mx-auto pb-16">
       <AnimatedSection>

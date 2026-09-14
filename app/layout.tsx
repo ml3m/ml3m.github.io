@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import dynamic from "next/dynamic";
 
 const Oneko = dynamic(() => import("@/components/ui/Oneko"), { ssr: false });
+const Scanlines = dynamic(() => import("@/components/ui/Scanlines"), { ssr: false });
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -53,7 +54,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${spaceMono.variable} font-mono antialiased relative`}>
-        <div className="min-h-screen flex flex-col scanlines">
+        <div className="min-h-screen flex flex-col">
+          <Scanlines />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
