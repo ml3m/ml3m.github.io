@@ -16,9 +16,13 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
   const [mounted, setMounted] = useState(false);
   const [numCols, setNumCols] = useState(3);
 
-  // Track window size for responsive columns
+  // Track window size for responsive columns and inject custom scrollbar
   useEffect(() => {
     setMounted(true);
+    
+    // Inject fancy scrollbar
+    document.documentElement.classList.add("gallery-scroll");
+    
     const updateCols = () => {
       if (window.innerWidth < 640) setNumCols(1);
       else if (window.innerWidth < 1024) setNumCols(2);
@@ -26,7 +30,11 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
     };
     updateCols();
     window.addEventListener("resize", updateCols);
-    return () => window.removeEventListener("resize", updateCols);
+    
+    return () => {
+      window.removeEventListener("resize", updateCols);
+      document.documentElement.classList.remove("gallery-scroll");
+    };
   }, []);
 
   // Shuffle photos whenever the filter changes

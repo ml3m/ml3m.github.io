@@ -94,11 +94,43 @@ a:hover {
 
 html {
   font-size: 112.5%;
-  scrollbar-width: none;
+  scrollbar-width: none; /* Hide by default */
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  display: none; /* Hide by default */
+}
+
+/* Fancy Gallery Scrollbar (Activated via JS on Gallery page) */
+html.gallery-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #c77dff transparent;
+}
+
+html.gallery-scroll::-webkit-scrollbar,
+html.gallery-scroll ::-webkit-scrollbar {
+  display: block;
+  width: 12px;
+}
+
+html.gallery-scroll::-webkit-scrollbar-track,
+html.gallery-scroll ::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-left: 1px solid var(--border-default);
+}
+
+html.gallery-scroll::-webkit-scrollbar-thumb,
+html.gallery-scroll ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f59e0b, #fb7185, #c77dff, #60a5fa, #34d399);
+  border-radius: 100px;
+  border: 3px solid var(--bg-primary);
+  background-clip: padding-box;
+}
+
+html.gallery-scroll::-webkit-scrollbar-thumb:hover,
+html.gallery-scroll ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #fb7185, #e879f9, #60a5fa);
+  border: 2px solid var(--bg-primary);
 }
 
 @layer utilities {
