@@ -140,13 +140,7 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
                         className="w-full h-auto object-cover"
                       />
                       
-                      {/* Overlay Info */}
-                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-bg-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        <span className={`text-[0.65rem] uppercase tracking-wider font-bold ${meta.accentText}`}>
-                          {meta.label}
-                        </span>
-                        <p className="text-sm font-bold text-text-primary mt-1 line-clamp-1">{photo.alt}</p>
-                      </div>
+
                     </motion.div>
                   );
                 })}
