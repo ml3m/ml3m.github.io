@@ -11,7 +11,7 @@ const navLinks = [
   { title: "Yapping", href: "/yapping" },
   { title: "Bookmarks", href: "/bookmarks" },
   { title: "Garden", href: "/garden", accent: "green" as const },
-  { title: "Gallery", href: "/gallery", accent: "amber" as const },
+  { title: "Photography", href: "/photography", accent: "amber" as const },
 ];
 
 // Characters used for the scramble effect

@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/yapping",
     "/bookmarks",
     "/garden",
-    "/gallery",
+    "/photography",
     "/tools",
     "/tools/byond-ckey",
     "/tools/byte-shifter",

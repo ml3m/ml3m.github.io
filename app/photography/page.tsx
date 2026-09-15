@@ -4,7 +4,7 @@ import { getGalleryPhotos } from "@/lib/gallery-server";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 
 export const metadata: Metadata = {
-  title: "Gallery",
+  title: "Photography",
   description: "A curated collection of photos.",
 };
 
@@ -16,7 +16,7 @@ export default async function GalleryPage() {
       <AnimatedSection>
         <div className="mb-10 text-center">
           <h1 className="text-3xl font-bold text-neon-pink glow-pink mb-4">
-            Gallery
+            Photography
           </h1>
         </div>
 

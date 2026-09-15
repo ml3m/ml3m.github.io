@@ -3,11 +3,11 @@
 import { usePathname } from "next/navigation";
 
 /**
- * CRT scanline overlay. Disabled on /gallery so photos display cleanly.
+ * CRT scanline overlay. Disabled on /photography so photos display cleanly.
  */
 export default function Scanlines() {
   const pathname = usePathname();
-  const isGallery = pathname === "/gallery";
+  const isGallery = pathname === "/photography";
 
   if (isGallery) return null;
 
