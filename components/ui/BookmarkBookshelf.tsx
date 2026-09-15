@@ -528,7 +528,20 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
     //
     // Additionally books extrude Z, adding +BOOK_Z more to the bottom.
 
-    const SCALE = 1.35; // Size multiplier
+    const [SCALE, setSCALE] = useState(1.35);
+
+    useEffect(() => {
+        const updateScale = () => {
+            if (window.innerWidth < 480) setSCALE(0.65);
+            else if (window.innerWidth < 640) setSCALE(0.85);
+            else if (window.innerWidth < 1024) setSCALE(1.0);
+            else setSCALE(1.35);
+        };
+        updateScale();
+        window.addEventListener("resize", updateScale);
+        return () => window.removeEventListener("resize", updateScale);
+    }, []);
+
     const C45 = Math.SQRT1_2; // cos(45°) = sin(45°) = 0.7071
     const COS60 = 0.5; // cos(60°)
 

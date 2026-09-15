@@ -53,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${spaceMono.variable} font-mono antialiased relative`}>
+      <body className={`${spaceMono.variable} font-mono antialiased relative overflow-x-hidden bg-bg-primary text-text-primary`}>
         <div className="min-h-screen flex flex-col">
           <Scanlines />
           <Header />

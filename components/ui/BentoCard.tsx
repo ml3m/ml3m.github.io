@@ -31,12 +31,12 @@ export interface BentoProject {
 
 // Tailwind span classes — complete literals for Tailwind scanner
 const variantClasses: Record<BentoVariant, string> = {
-    hero: "col-span-8 row-span-2",
-    tall: "col-span-4 row-span-2",
-    wide: "col-span-8 row-span-1",
-    small: "col-span-4 row-span-1",
-    "square-sm": "col-span-4 row-span-4",
-    "square-md": "col-span-6 row-span-5",
+    hero: "col-span-12 lg:col-span-8 row-span-2",
+    tall: "col-span-12 md:col-span-6 lg:col-span-4 row-span-2",
+    wide: "col-span-12 lg:col-span-8 row-span-1",
+    small: "col-span-12 md:col-span-6 lg:col-span-4 row-span-1",
+    "square-sm": "col-span-12 md:col-span-6 lg:col-span-4 row-span-4",
+    "square-md": "col-span-12 md:col-span-6 lg:col-span-6 row-span-5",
 };
 
 const accentMap: Record<NeonAccent, {
@@ -180,7 +180,7 @@ export default function BentoCard({ project }: { project: BentoProject }) {
                 LORENZ — text left | canvas right
                ══════════════════════════════════════════════════ */}
                     {hasLorenz ? (
-                        <div className="flex flex-row items-center gap-4 flex-1">
+                        <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
                             <div className="flex flex-col flex-1 min-w-0 gap-1.5">
                                 {project.stat && (
                                     <div className="mb-0.5">
@@ -212,7 +212,7 @@ export default function BentoCard({ project }: { project: BentoProject }) {
                             FORTUNE — canvas left | text right
                            ══════════════════════════════════════════════════ */
                     ) : hasFortune ? (
-                        <div className="flex flex-row items-center gap-4 flex-1">
+                        <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
                             <div className="flex-shrink-0 opacity-85 group-hover:opacity-100 transition-opacity duration-500">
                                 <FortuneVoronoi width={150} height={150} />
                             </div>
@@ -244,7 +244,7 @@ export default function BentoCard({ project }: { project: BentoProject }) {
                             DNA ALIGNMENT — text left | canvas right
                            ══════════════════════════════════════════════════ */
                     ) : hasDNA ? (
-                        <div className="flex flex-row items-center gap-4 flex-1">
+                        <div className="flex flex-col sm:flex-row items-center gap-4 flex-1">
                             <div className="flex flex-col flex-1 min-w-0 gap-1.5">
                                 {project.stat && (
                                     <div className="mb-0.5">

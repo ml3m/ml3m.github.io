@@ -19,7 +19,7 @@ export default function BookmarksViewManager({ bookmarks }: BookmarksViewManager
         <div className="space-y-8">
             {/* View Toggle */}
             <div className="flex justify-center mb-8">
-                <div className="inline-flex p-1 bg-bg-card border border-border-default rounded-sm gap-1 neon-card">
+                <div className="flex flex-col sm:flex-row p-1 bg-bg-card border border-border-default rounded-sm gap-1 neon-card">
                     <button
                         onClick={() => setView("deck")}
                         className={`flex items-center gap-2 px-4 py-2 text-[0.75rem] font-bold uppercase tracking-widest transition-all rounded-sm ${view === "deck"

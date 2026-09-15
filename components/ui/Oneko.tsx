@@ -361,7 +361,7 @@ export default function Oneko() {
     <div
       ref={nekoRef}
       aria-hidden="true"
-      className="neko-glow"
+      className="neko-glow hidden sm:block"
       style={{
         width: 32,
         height: 32,

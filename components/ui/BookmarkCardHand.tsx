@@ -16,8 +16,7 @@ const A: Record<NeonAccent, { c: string; t: string; s: string }> = {
 const SUITS = ["♠", "♥", "♦", "♣"] as const;
 
 // ── Layout ───────────────────────────────────────────────────────────────────
-const CW = 142, CH = 200, OV = 50; // card w/h, overlap
-const STEP = CW - OV;
+const CW = 142, CH = 200; // card w/h
 
 function fanAngle(pos: number, total: number, spread: number) {
     const t = total === 1 ? 0 : pos / (total - 1) - 0.5;
@@ -124,7 +123,7 @@ function ScoringOverlay({ active, scores, onDone }: { active: boolean; scores: A
                     <div key={b.title} style={{
                         position: "fixed",
                         bottom: `calc(50% - ${CH / 2}px)`,
-                        left: `calc(50% + ${(i - (scores.length - 1) / 2) * (STEP + 4)}px - ${CW / 2}px)`,
+                        left: `calc(50% + ${(i - (scores.length - 1) / 2) * (92 + 4)}px - ${CW / 2}px)`,
                         width: CW, textAlign: "center",
                         fontFamily: "monospace", fontSize: 22, fontWeight: 900,
                         color: c, textShadow: `0 0 20px ${c},0 0 40px ${c}`,
@@ -167,6 +166,17 @@ export default function BookmarkCardHand({ bookmarks: init }: { bookmarks: Bookm
     const [scoreItems, setScoreItems] = useState<Array<{ b: Bookmark; idx: number; val: number }>>([]);
 
     const [mounted, setMounted] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(800);
+    useEffect(() => {
+        setWindowWidth(window.innerWidth);
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const isMobile = windowWidth < 640;
+    const OV = isMobile ? 85 : 50; // More overlap on mobile to fit the screen
+    const STEP = CW - OV;
     useEffect(() => setMounted(true), []);
 
     // Refs for perf-critical drag

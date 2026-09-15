@@ -184,19 +184,19 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav className="text-center my-2 text-[0.85rem] tracking-wide">
+    <nav className="flex flex-wrap justify-center items-center gap-x-2 gap-y-3 mt-4 text-[0.85rem] tracking-wide px-4">
       {navLinks.map((link, i) => (
-        <span key={link.href}>
+        <div key={link.href} className="flex items-center">
           <GlitchLink
             title={link.title}
             href={link.href}
-            isActive={pathname === link.href}
-            accent={(link as { accent?: "green" }).accent}
+            isActive={pathname === link.href || pathname.startsWith(link.href + "/")}
+            accent={(link as { accent?: "green" | "amber" }).accent}
           />
           {i < navLinks.length - 1 && (
-            <span className="text-text-muted mx-2">|</span>
+            <span className="text-text-muted mx-2 hidden sm:inline-block select-none">/</span>
           )}
-        </span>
+        </div>
       ))}
     </nav>
   );
