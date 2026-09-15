@@ -24,9 +24,7 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
     document.documentElement.classList.add("gallery-scroll");
     
     const updateCols = () => {
-      if (window.innerWidth < 640) setNumCols(1);
-      else if (window.innerWidth < 1024) setNumCols(2);
-      else setNumCols(3);
+      setNumCols(3); // User requested 3 columns even on phones
     };
     updateCols();
     window.addEventListener("resize", updateCols);
@@ -118,9 +116,9 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
       {!mounted ? (
         <div className="min-h-[50vh] flex items-center justify-center text-text-muted">Loading gallery...</div>
       ) : columns.some(c => c.length > 0) ? (
-        <div className="flex gap-4 group">
+        <div className="flex gap-2 sm:gap-4 group">
           {columns.map((colPhotos, colIdx) => (
-            <div key={colIdx} className="flex-1 flex flex-col gap-4">
+            <div key={colIdx} className="flex-1 flex flex-col gap-2 sm:gap-4">
               <AnimatePresence>
                 {colPhotos.map((photo) => {
                   const meta = categoryMeta[photo.category];
