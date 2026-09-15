@@ -491,6 +491,21 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // ── Moved hooks here to fix rules of hooks ──
+    const [SCALE, setSCALE] = useState(1.35);
+
+    useEffect(() => {
+        const updateScale = () => {
+            if (window.innerWidth < 480) setSCALE(0.65);
+            else if (window.innerWidth < 640) setSCALE(0.85);
+            else if (window.innerWidth < 1024) setSCALE(1.0);
+            else setSCALE(1.35);
+        };
+        updateScale();
+        window.addEventListener("resize", updateScale);
+        return () => window.removeEventListener("resize", updateScale);
+    }, []);
+
     if (bookmarks.length === 0) return null;
 
     // Define your desired rendering order here
@@ -527,20 +542,6 @@ export default function BookmarkBookshelf({ bookmarks }: BookmarkBookshelfProps)
     //   So we need to translate the whole scene DOWN by W·0.354 to avoid clipping top.
     //
     // Additionally books extrude Z, adding +BOOK_Z more to the bottom.
-
-    const [SCALE, setSCALE] = useState(1.35);
-
-    useEffect(() => {
-        const updateScale = () => {
-            if (window.innerWidth < 480) setSCALE(0.65);
-            else if (window.innerWidth < 640) setSCALE(0.85);
-            else if (window.innerWidth < 1024) setSCALE(1.0);
-            else setSCALE(1.35);
-        };
-        updateScale();
-        window.addEventListener("resize", updateScale);
-        return () => window.removeEventListener("resize", updateScale);
-    }, []);
 
     const C45 = Math.SQRT1_2; // cos(45°) = sin(45°) = 0.7071
     const COS60 = 0.5; // cos(60°)
