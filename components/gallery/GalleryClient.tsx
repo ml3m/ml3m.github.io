@@ -131,6 +131,11 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
                       transition={{ duration: 0.3 }}
                       className={`break-inside-avoid relative overflow-hidden rounded-sm border border-border-default bg-bg-card transition-all duration-200 cursor-zoom-in group-hover:opacity-40 hover:!opacity-100 ${meta.hoverBorder} ${meta.hoverGlow}`}
                       onClick={() => setLightboxPhoto(photo)}
+                      onPointerEnter={() => {
+                        // Silently preload the high-res image so it opens instantly
+                        const img = new window.Image();
+                        img.src = photo.lightboxSrc;
+                      }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
