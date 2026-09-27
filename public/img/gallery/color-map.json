@@ -1,0 +1,378 @@
+{
+  "architecture-38ae7e": [
+    "white"
+  ],
+  "architecture-78fccb": [
+    "orange",
+    "yellow"
+  ],
+  "architecture-8ca318": [
+    "yellow",
+    "green"
+  ],
+  "architecture-b13be3": [
+    "green"
+  ],
+  "architecture-b79160": [
+    "white"
+  ],
+  "architecture-c71d9c": [
+    "white"
+  ],
+  "architecture-da00c9": [
+    "green",
+    "yellow"
+  ],
+  "architecture-dcbc38": [
+    "white"
+  ],
+  "architecture-e2ab8e": [
+    "green",
+    "yellow"
+  ],
+  "architecture-f0978d": [
+    "white"
+  ],
+  "architecture-f27cfa": [
+    "yellow"
+  ],
+  "events-0a20ce": [
+    "white"
+  ],
+  "events-111aa7": [
+    "white"
+  ],
+  "events-36a35b": [
+    "red",
+    "purple"
+  ],
+  "events-3ce91e": [
+    "white"
+  ],
+  "events-400924": [
+    "white"
+  ],
+  "events-49c821": [
+    "white"
+  ],
+  "events-5b4e00": [
+    "white"
+  ],
+  "events-6311ef": [
+    "yellow",
+    "orange"
+  ],
+  "events-6c1a5a": [
+    "white"
+  ],
+  "events-7209dd": [
+    "white"
+  ],
+  "events-7b0fb7": [
+    "white"
+  ],
+  "events-7ccf0a": [
+    "white"
+  ],
+  "events-93845c": [
+    "white"
+  ],
+  "events-a2078c": [
+    "white"
+  ],
+  "events-a5ee46": [
+    "purple",
+    "blue"
+  ],
+  "events-ade9cb": [
+    "white"
+  ],
+  "events-b94b0c": [
+    "white"
+  ],
+  "events-bf42d0": [
+    "white"
+  ],
+  "events-c2af0e": [
+    "white"
+  ],
+  "events-d67501": [
+    "white"
+  ],
+  "events-df654f": [
+    "white"
+  ],
+  "events-e22931": [
+    "white"
+  ],
+  "events-ef8e3d": [
+    "white"
+  ],
+  "events-f731ce": [
+    "white"
+  ],
+  "events-f86d8e": [
+    "white"
+  ],
+  "events-fef338": [
+    "white"
+  ],
+  "nature-1cce7c": [
+    "green"
+  ],
+  "nature-2228ed": [
+    "green"
+  ],
+  "nature-431496": [
+    "white"
+  ],
+  "nature-4f48d9": [
+    "green"
+  ],
+  "nature-52e340": [
+    "orange",
+    "green"
+  ],
+  "nature-55d5eb": [
+    "blue",
+    "green"
+  ],
+  "nature-6afb46": [
+    "green"
+  ],
+  "nature-72ece2": [
+    "blue",
+    "purple"
+  ],
+  "nature-84ed2f": [
+    "blue",
+    "purple"
+  ],
+  "nature-89a1ed": [
+    "green",
+    "purple"
+  ],
+  "nature-8a110c": [
+    "purple"
+  ],
+  "nature-8f4b80": [
+    "green",
+    "yellow"
+  ],
+  "nature-b5975b": [
+    "blue"
+  ],
+  "nature-b65009": [
+    "green",
+    "orange"
+  ],
+  "nature-c75116": [
+    "blue",
+    "purple"
+  ],
+  "nature-d87dee": [
+    "blue"
+  ],
+  "nature-e4f773": [
+    "green"
+  ],
+  "nature-e59869": [
+    "blue",
+    "green"
+  ],
+  "nature-f1383b": [
+    "blue",
+    "purple"
+  ],
+  "nature-f56f89": [
+    "green"
+  ],
+  "nature-fe6014": [
+    "blue"
+  ],
+  "other-25b76b": [
+    "orange",
+    "purple"
+  ],
+  "other-34d539": [
+    "blue",
+    "orange"
+  ],
+  "other-5207e2": [
+    "white"
+  ],
+  "other-6f8190": [
+    "red",
+    "yellow"
+  ],
+  "other-74e798": [
+    "red",
+    "purple"
+  ],
+  "other-88e14c": [
+    "white"
+  ],
+  "rotterdam-DSC04361": [
+    "blue",
+    "yellow"
+  ],
+  "rotterdam-DSC04368": [
+    "blue",
+    "yellow"
+  ],
+  "rotterdam-DSC04375": [
+    "yellow",
+    "blue"
+  ],
+  "rotterdam-DSC04376": [
+    "blue",
+    "yellow"
+  ],
+  "rotterdam-DSC04387": [
+    "yellow"
+  ],
+  "rotterdam-DSC04531": [
+    "blue"
+  ],
+  "rotterdam-DSC04641": [
+    "blue"
+  ],
+  "rotterdam-DSC04822": [
+    "yellow"
+  ],
+  "rotterdam-DSC04905": [
+    "yellow",
+    "blue"
+  ],
+  "rotterdam-DSC04932": [
+    "blue",
+    "yellow"
+  ],
+  "rotterdam-DSC04934": [
+    "blue",
+    "yellow"
+  ],
+  "rotterdam-DSC04974": [
+    "red",
+    "yellow"
+  ],
+  "souls-03ce8b": [
+    "white"
+  ],
+  "souls-0e5be7": [
+    "white"
+  ],
+  "souls-2ebdaf": [
+    "green"
+  ],
+  "souls-588614": [
+    "blue",
+    "purple"
+  ],
+  "souls-5a41c3": [
+    "white"
+  ],
+  "souls-820311": [
+    "green",
+    "orange"
+  ],
+  "souls-8488e1": [
+    "orange"
+  ],
+  "souls-84eaee": [
+    "orange",
+    "green"
+  ],
+  "souls-8add9f": [
+    "white"
+  ],
+  "souls-9e9aba": [
+    "orange"
+  ],
+  "souls-a43565": [
+    "white"
+  ],
+  "souls-ac0c76": [
+    "white"
+  ],
+  "souls-af6366": [
+    "white"
+  ],
+  "souls-af94ee": [
+    "orange",
+    "green"
+  ],
+  "souls-c875ab": [
+    "white"
+  ],
+  "souls-cbb453": [
+    "white"
+  ],
+  "souls-cf6129": [
+    "green",
+    "yellow"
+  ],
+  "souls-f63bb2": [
+    "white"
+  ],
+  "souls-f6c857": [
+    "yellow",
+    "green"
+  ],
+  "street-0079bd": [
+    "white"
+  ],
+  "street-1daff9": [
+    "white"
+  ],
+  "street-2d82f8": [
+    "white"
+  ],
+  "street-2f0779": [
+    "white"
+  ],
+  "street-3d4274": [
+    "white"
+  ],
+  "street-3e5ceb": [
+    "white"
+  ],
+  "street-52276d": [
+    "white"
+  ],
+  "street-7b7cd9": [
+    "white"
+  ],
+  "street-7bb5ee": [
+    "white"
+  ],
+  "street-8bb590": [
+    "white"
+  ],
+  "street-92f33e": [
+    "white"
+  ],
+  "street-99ae12": [
+    "white"
+  ],
+  "street-9d8fcd": [
+    "white"
+  ],
+  "street-a67c61": [
+    "green",
+    "purple"
+  ],
+  "street-c9b965": [
+    "white"
+  ],
+  "street-e69a8a": [
+    "blue",
+    "red"
+  ],
+  "street-fa0483": [
+    "white"
+  ],
+  "architecture-6eb942": [
+    "white"
+  ]
+}

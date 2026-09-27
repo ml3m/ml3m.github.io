@@ -151,6 +151,13 @@ html {
   .glow-border {
     box-shadow: 0 0 8px #7b35cc44, inset 0 0 8px #7b35cc22;
   }
+
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
 }
 
 @layer components {

@@ -1,5 +1,16 @@
 export type PhotoCategory = "street" | "nature" | "events" | "architecture" | "souls" | "rotterdam" | "other";
 export type PhotoOrientation = "portrait" | "landscape" | "square";
+export type AppleColor = "green" | "yellow" | "orange" | "red" | "purple" | "blue" | "white";
+
+export const APPLE_COLORS: { name: AppleColor; hex: string }[] = [
+  { name: "green",  hex: "#75bd21" },
+  { name: "yellow", hex: "#ffc728" },
+  { name: "orange", hex: "#ff661c" },
+  { name: "red",    hex: "#cf0f2b" },
+  { name: "purple", hex: "#b01cab" },
+  { name: "blue",   hex: "#00a1de" },
+  { name: "white",  hex: "#e0e0e0" },
+];
 
 export interface Photo {
   id: string;
@@ -13,6 +24,8 @@ export interface Photo {
   width: number;
   /** height in px (used for masonry aspect ratio) */
   height: number;
+  /** Top 1-2 dominant Apple-rainbow colors (saturation-weighted) */
+  dominantColors: AppleColor[];
   location?: string;
   date?: string;
   caption?: string;

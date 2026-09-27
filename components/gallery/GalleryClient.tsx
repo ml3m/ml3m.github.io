@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { X, Camera, MapPin, Calendar, Aperture, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
-import { Photo, categories, categoryMeta, PhotoCategory } from "@/lib/gallery";
+import { X, MapPin, Calendar, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { Photo, categories, categoryMeta, PhotoCategory, APPLE_COLORS, AppleColor } from "@/lib/gallery";
 import Image from "next/image";
 
 // 💡 TWEAK THE TILT SPEED HERE
@@ -13,7 +13,7 @@ import Image from "next/image";
 const TILT_SPEED = { damping: 20, stiffness: 300, mass: 0.5 };
 
 // 3D Tilt Card Component for the Grid
-function PhotoCard({ photo, meta, onClick }: { photo: Photo; meta: any; onClick: () => void; }) {
+function PhotoCard({ photo, meta, onClick }: { photo: Photo; meta: (typeof categoryMeta)[PhotoCategory]; onClick: () => void; }) {
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
 
@@ -93,6 +93,7 @@ interface GalleryClientProps {
 
 export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
   const [filter, setFilter] = useState<PhotoCategory | "all">("all");
+  const [colorFilter, setColorFilter] = useState<AppleColor | null>(null);
   const [lightboxPhoto, setLightboxPhoto] = useState<Photo | null>(null);
 
   const [mounted, setMounted] = useState(false);
@@ -127,14 +128,18 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
     };
   }, []);
 
-  // Shuffle photos whenever the filter changes
+  // Shuffle photos whenever any filter changes (category + color)
   const shuffledPhotos = useMemo(() => {
-    const photosToShuffle = filter === "all" 
+    let photos = filter === "all" 
       ? initialPhotos 
       : initialPhotos.filter(p => p.category === filter);
     
-    return [...photosToShuffle].sort(() => Math.random() - 0.5);
-  }, [filter, initialPhotos]);
+    if (colorFilter) {
+      photos = photos.filter(p => p.dominantColors.includes(colorFilter));
+    }
+    
+    return [...photos].sort(() => Math.random() - 0.5);
+  }, [filter, colorFilter, initialPhotos]);
 
   // Feature 4 & 2: Update URL State & Keyboard Navigation
   useEffect(() => {
@@ -229,7 +234,7 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
   return (
     <div className="space-y-8">
       {/* Filters */}
-      <div className="flex flex-wrap gap-3 justify-center">
+      <div className="flex flex-wrap gap-3 justify-center items-center">
         <button
           onClick={() => setFilter("all")}
           className={`px-3 py-1 text-sm rounded-sm border transition-all ${
@@ -257,6 +262,36 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
             </button>
           );
         })}
+
+        {/* Vertical divider */}
+        <div className="w-px h-6 bg-border-default/50 mx-1 hidden sm:block" />
+
+        {/* Rainbow Capsule */}
+        <div className="liquid-glass rounded-full px-2 py-1.5 flex items-center gap-1.5">
+          {APPLE_COLORS.map((color) => {
+            const isActive = colorFilter === color.name;
+            return (
+              <button
+                key={color.name}
+                onClick={() => setColorFilter(isActive ? null : color.name)}
+                className="relative rounded-full transition-all duration-300 ease-out"
+                style={{
+                  width: isActive ? 28 : 20,
+                  height: isActive ? 28 : 20,
+                  backgroundColor: color.hex,
+                  opacity: colorFilter && !isActive ? 0.35 : 1,
+                  boxShadow: isActive
+                    ? `0 0 10px ${color.hex}, 0 0 22px ${color.hex}60, inset 0 1px 2px rgba(255,255,255,0.3)`
+                    : `inset 0 1px 2px rgba(255,255,255,0.15)`,
+                  border: isActive
+                    ? `2px solid rgba(255,255,255,0.5)`
+                    : `1px solid rgba(255,255,255,0.1)`,
+                }}
+                title={color.name.charAt(0).toUpperCase() + color.name.slice(1)}
+              />
+            );
+          })}
+        </div>
       </div>
 
       {/* Masonry Grid with Spotlight Effect */}
@@ -358,7 +393,7 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
                     Open Full Quality
                   </button>
                   {lightboxPhoto.caption && (
-                    <p className="text-sm text-text-secondary mt-2 italic">"{lightboxPhoto.caption}"</p>
+                    <p className="text-sm text-text-secondary mt-2 italic">&quot;{lightboxPhoto.caption}&quot;</p>
                   )}
                 </div>
 
