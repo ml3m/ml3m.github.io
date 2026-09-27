@@ -1,4 +1,4 @@
-export type PhotoCategory = "street" | "nature" | "events" | "architecture" | "souls" | "other";
+export type PhotoCategory = "street" | "nature" | "events" | "architecture" | "souls" | "rotterdam" | "other";
 export type PhotoOrientation = "portrait" | "landscape" | "square";
 
 export interface Photo {
@@ -82,6 +82,15 @@ export const categoryMeta: Record<
     accentBg: "bg-neon-lavender/10",
     hoverBorder: "hover:border-neon-lavender",
     hoverGlow: "hover:shadow-[0_0_20px_#c77dff]",
+  },
+  rotterdam: {
+    label: "Rotterdam",
+    accent: "#f97316",
+    accentBorder: "border-orange-500/40",
+    accentText: "text-orange-500",
+    accentBg: "bg-orange-500/10",
+    hoverBorder: "hover:border-orange-500",
+    hoverGlow: "hover:shadow-[0_0_20px_#f97316]",
   },
 };
 

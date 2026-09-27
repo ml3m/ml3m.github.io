@@ -13,7 +13,8 @@ export type NodeGroup =
   | "languages"
   | "tools"
   | "theory"
-  | "projects";
+  | "projects"
+  | "education";
 
 export interface GardenNode {
   id: string;
@@ -42,6 +43,7 @@ export const GROUP_COLORS: Record<NodeGroup, string> = {
   tools: "#88ff88",
   theory: "#ddaaff",
   projects: "#ff88cc",
+  education: "#ffd700",
 };
 
 export const GROUP_LABELS: Record<NodeGroup, string> = {
@@ -58,6 +60,7 @@ export const GROUP_LABELS: Record<NodeGroup, string> = {
   tools: "Tools",
   theory: "Theory",
   projects: "Projects",
+  education: "Education",
 };
 
 // Helper to create nodes compactly
@@ -414,6 +417,15 @@ export const nodes: GardenNode[] = [
   n("proj-balatro", "Elemental Balatro-like", "projects", "Card game in TypeScript.", "seedling"),
   n("proj-3dhull", "Convex Hull 3D Mesh", "projects", "3D hull algorithm in MATLAB.", "sprout"),
   n("proj-cgal", "CGAL Playground", "projects", "Mesh generation with CGAL/gmsh.", "sprout"),
+
+  // ═══════════════════════════════════════
+  // EDUCATION
+  // ═══════════════════════════════════════
+  n("bachelor", "Bachelor (TU/e CSE)", "education", "BSc Computer Science and Engineering", "evergreen"),
+  n("masters", "Masters (TU/e CSE)", "education", "MSc Computer Science and Engineering", "seedling"),
+  n("automated-reasoning", "Automated Reasoning", "theory", "Logic, SAT/SMT solvers, theorem proving", "seedling"),
+  n("data-protection", "Principles of Data Protection", "crypto", "Privacy, GDPR, cryptographic protocols", "seedling"),
+  n("process-mining", "Process Mining", "ai-ml", "Event logs, process discovery, conformance checking", "seedling"),
 ];
 
 export const edges: GardenEdge[] = [
@@ -734,4 +746,22 @@ export const edges: GardenEdge[] = [
   { source: "proj-3dhull", target: "matlab" },
   { source: "proj-cgal", target: "cgal" },
   { source: "proj-cgal", target: "mesh-gen" },
+
+  // ── Education connections ──
+  { source: "masters", target: "automated-reasoning" },
+  { source: "masters", target: "data-protection" },
+  { source: "masters", target: "process-mining" },
+  { source: "bachelor", target: "algo-design" },
+  { source: "bachelor", target: "arrays" },
+  { source: "bachelor", target: "set-theory" },
+  { source: "bachelor", target: "propositional-logic" },
+  { source: "bachelor", target: "os-concepts" },
+  { source: "bachelor", target: "ray-tracing" },
+  { source: "bachelor", target: "ai-intro" },
+  { source: "bachelor", target: "comp-geo-general" },
+  { source: "bachelor", target: "html-css" },
+  { source: "bachelor", target: "sql" },
+  { source: "bachelor", target: "agile" },
+  { source: "bachelor", target: "oop" },
+  { source: "bachelor", target: "c-lang" },
 ];
