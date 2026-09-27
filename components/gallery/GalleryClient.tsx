@@ -1,9 +1,91 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Camera, MapPin, Calendar, Aperture, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { X, Camera, MapPin, Calendar, Aperture, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { Photo, categories, categoryMeta, PhotoCategory } from "@/lib/gallery";
+import Image from "next/image";
+
+// 💡 TWEAK THE TILT SPEED HERE
+// stiffness: Higher = faster/snappier. Lower = slower.
+// damping: Higher = stops quicker. Lower = more bouncy.
+// mass: Higher = heavier/slower to start. Lower = lighter/quicker.
+const TILT_SPEED = { damping: 20, stiffness: 300, mass: 0.5 };
+
+// 3D Tilt Card Component for the Grid
+function PhotoCard({ photo, meta, onClick }: { photo: Photo; meta: any; onClick: () => void; }) {
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  // Spring animation for smooth return and movement
+  const smoothX = useSpring(x, TILT_SPEED);
+  const smoothY = useSpring(y, TILT_SPEED);
+
+  // Rotate between -15 and 15 degrees
+  const rotateX = useTransform(smoothY, [0, 1], [15, -15]);
+  const rotateY = useTransform(smoothX, [0, 1], [-15, 15]);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Normalize mouse position from 0 to 1
+    x.set(mouseX / rect.width);
+    y.set(mouseY / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    // Reset to center
+    x.set(0.5);
+    y.set(0.5);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.3 }}
+      style={{ perspective: 1000 }} // Enables 3D space
+      className={`break-inside-avoid relative transition-all duration-300 cursor-zoom-in group-hover:opacity-40 hover:!opacity-100 z-10 hover:z-20`}
+      onClick={onClick}
+      onPointerEnter={() => {
+        // Silently preload the high-res image
+        const img = new window.Image();
+        img.src = photo.lightboxSrc;
+      }}
+    >
+      <motion.div
+        style={{ rotateX, rotateY }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className={`relative overflow-hidden rounded-sm border border-border-default bg-bg-card transition-colors duration-200 ${meta.hoverBorder} ${meta.hoverGlow}`}
+      >
+        <Image
+          src={photo.thumbnailSrc}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          onLoad={() => setIsLoaded(true)}
+          className={`w-full h-auto object-cover transition-all duration-700 ${
+            isLoaded ? 'blur-0 opacity-100 scale-100' : 'blur-xl opacity-0 scale-105'
+          }`}
+        />
+        
+        {/* Subtle hover overlay for context */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 md:hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 pointer-events-none">
+           <span className={`text-[0.65rem] uppercase tracking-wider font-bold ${meta.accentText} drop-shadow-md`}>
+              {meta.label}
+           </span>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 
 interface GalleryClientProps {
   initialPhotos: Photo[];
@@ -15,6 +97,16 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
 
   const [mounted, setMounted] = useState(false);
   const [numCols, setNumCols] = useState(3);
+
+  // Feature 4: Initialize deep link on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const photoId = params.get("photo");
+    if (photoId) {
+      const p = initialPhotos.find(x => x.id === photoId);
+      if (p) setLightboxPhoto(p);
+    }
+  }, [initialPhotos]);
 
   // Track window size for responsive columns and inject custom scrollbar
   useEffect(() => {
@@ -43,6 +135,40 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
     
     return [...photosToShuffle].sort(() => Math.random() - 0.5);
   }, [filter, initialPhotos]);
+
+  // Feature 4 & 2: Update URL State & Keyboard Navigation
+  useEffect(() => {
+    if (mounted) {
+      if (lightboxPhoto) {
+        window.history.pushState(null, '', `?photo=${lightboxPhoto.id}`);
+      } else {
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxPhoto) return;
+      
+      if (e.key === "Escape") {
+        setLightboxPhoto(null);
+      } else if (e.key === "ArrowRight") {
+        const idx = shuffledPhotos.findIndex(p => p.id === lightboxPhoto.id);
+        if (idx !== -1) {
+          const next = (idx + 1) % shuffledPhotos.length;
+          setLightboxPhoto(shuffledPhotos[next]);
+        }
+      } else if (e.key === "ArrowLeft") {
+        const idx = shuffledPhotos.findIndex(p => p.id === lightboxPhoto.id);
+        if (idx !== -1) {
+          const prev = (idx - 1 + shuffledPhotos.length) % shuffledPhotos.length;
+          setLightboxPhoto(shuffledPhotos[prev]);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxPhoto, shuffledPhotos, mounted]);
 
   // Distribute photos into columns enforcing the P-L-P rule
   const columns = useMemo(() => {
@@ -78,6 +204,27 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
     
     return cols;
   }, [shuffledPhotos, numCols]);
+
+  // Navigate handlers for UI buttons
+  const nextPhoto = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (!lightboxPhoto) return;
+    const idx = shuffledPhotos.findIndex(p => p.id === lightboxPhoto.id);
+    if (idx !== -1) {
+      const next = (idx + 1) % shuffledPhotos.length;
+      setLightboxPhoto(shuffledPhotos[next]);
+    }
+  };
+
+  const prevPhoto = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (!lightboxPhoto) return;
+    const idx = shuffledPhotos.findIndex(p => p.id === lightboxPhoto.id);
+    if (idx !== -1) {
+      const prev = (idx - 1 + shuffledPhotos.length) % shuffledPhotos.length;
+      setLightboxPhoto(shuffledPhotos[prev]);
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -120,35 +267,14 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
           {columns.map((colPhotos, colIdx) => (
             <div key={colIdx} className="flex-1 flex flex-col gap-2 sm:gap-4">
               <AnimatePresence>
-                {colPhotos.map((photo) => {
-                  const meta = categoryMeta[photo.category];
-                  return (
-                    <motion.div
-                      key={photo.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.3 }}
-                      className={`break-inside-avoid relative overflow-hidden rounded-sm border border-border-default bg-bg-card transition-all duration-200 cursor-zoom-in group-hover:opacity-40 hover:!opacity-100 ${meta.hoverBorder} ${meta.hoverGlow}`}
-                      onClick={() => setLightboxPhoto(photo)}
-                      onPointerEnter={() => {
-                        // Silently preload the high-res image so it opens instantly
-                        const img = new window.Image();
-                        img.src = photo.lightboxSrc;
-                      }}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={photo.thumbnailSrc}
-                        alt={photo.alt}
-                        loading="lazy"
-                        className="w-full h-auto object-cover"
-                      />
-                      
-
-                    </motion.div>
-                  );
-                })}
+                {colPhotos.map((photo) => (
+                  <PhotoCard 
+                    key={photo.id} 
+                    photo={photo} 
+                    meta={categoryMeta[photo.category]} 
+                    onClick={() => setLightboxPhoto(photo)} 
+                  />
+                ))}
               </AnimatePresence>
             </div>
           ))}
@@ -176,10 +302,25 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
               <X size={28} />
             </button>
 
+            {/* Feature 2: Navigation Arrows in UI */}
+            <button 
+              onClick={prevPhoto}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-neon-pink transition-colors z-50 hidden sm:flex items-center justify-center p-2 bg-bg-card/50 rounded-full border border-border-default backdrop-blur"
+            >
+              <ChevronLeft size={32} />
+            </button>
+            <button 
+              onClick={nextPhoto}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-neon-pink transition-colors z-50 hidden sm:flex items-center justify-center p-2 bg-bg-card/50 rounded-full border border-border-default backdrop-blur"
+            >
+              <ChevronRight size={32} />
+            </button>
+
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              key={lightboxPhoto.id} // Forces re-animation when changing photos
+              initial={{ scale: 0.95, opacity: 0, x: 20 }}
+              animate={{ scale: 1, opacity: 1, x: 0 }}
+              exit={{ scale: 0.95, opacity: 0, x: -20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="relative max-w-5xl w-full max-h-full flex flex-col md:flex-row gap-6 bg-bg-card p-2 rounded-sm border overflow-y-auto"
               style={{
@@ -189,11 +330,12 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Image Container */}
-              <div className="flex-1 flex items-center justify-center min-h-[40vh] md:min-h-[70vh] bg-bg-primary rounded-sm overflow-hidden group/image">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              <div className="flex-1 flex items-center justify-center min-h-[40vh] md:min-h-[70vh] bg-bg-primary rounded-sm overflow-hidden group/image relative">
+                <Image
                   src={lightboxPhoto.lightboxSrc}
                   alt={lightboxPhoto.alt}
+                  width={lightboxPhoto.width}
+                  height={lightboxPhoto.height}
                   onClick={() => window.open(lightboxPhoto.src, "_blank")}
                   className="max-w-full max-h-[70vh] object-contain cursor-pointer transition-transform duration-300 group-hover/image:scale-[1.02]"
                   title="Click to open full quality image"
@@ -216,7 +358,7 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
                     Open Full Quality
                   </button>
                   {lightboxPhoto.caption && (
-                    <p className="text-sm text-text-secondary mt-2 italic">&quot;{lightboxPhoto.caption}&quot;</p>
+                    <p className="text-sm text-text-secondary mt-2 italic">"{lightboxPhoto.caption}"</p>
                   )}
                 </div>
 
@@ -237,43 +379,6 @@ export default function GalleryClient({ initialPhotos }: GalleryClientProps) {
                   )}
                 </div>
 
-                {lightboxPhoto.exif && (
-                  <>
-                    <div className="w-full h-px bg-border-default/50 my-2" />
-                    <div className="space-y-2">
-                      <div className="text-[0.65rem] uppercase tracking-widest text-text-muted/70 mb-2">Technical</div>
-                      {lightboxPhoto.exif.camera && (
-                        <div className="flex items-center gap-2 text-xs text-text-secondary">
-                          <Camera size={12} />
-                          <span>{lightboxPhoto.exif.camera}</span>
-                        </div>
-                      )}
-                      {lightboxPhoto.exif.lens && (
-                        <div className="flex items-center gap-2 text-xs text-text-secondary">
-                          <Aperture size={12} />
-                          <span>{lightboxPhoto.exif.lens}</span>
-                        </div>
-                      )}
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {lightboxPhoto.exif.aperture && (
-                          <span className="text-[0.65rem] bg-bg-primary px-2 py-0.5 rounded border border-border-default text-text-muted">
-                            {lightboxPhoto.exif.aperture}
-                          </span>
-                        )}
-                        {lightboxPhoto.exif.shutter && (
-                          <span className="text-[0.65rem] bg-bg-primary px-2 py-0.5 rounded border border-border-default text-text-muted">
-                            {lightboxPhoto.exif.shutter}
-                          </span>
-                        )}
-                        {lightboxPhoto.exif.iso && (
-                          <span className="text-[0.65rem] bg-bg-primary px-2 py-0.5 rounded border border-border-default text-text-muted">
-                            ISO {lightboxPhoto.exif.iso}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                )}
               </div>
             </motion.div>
           </motion.div>
